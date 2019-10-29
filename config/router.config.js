@@ -54,7 +54,7 @@ export default [
               {
                 path: '/dashboard/analssysis',
                 name: '党的建设',
-                component: './Dashboard/Analysis',
+                component: './News/party',
               },
               {
                 path: '/dashboard/analssyddsis',

@@ -2,6 +2,8 @@ import React from 'react';
 import { Breadcrumb, Icon, Row, Col, Card, List, Calendar, Badge, Comment, Tooltip } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import styles from './Home.less';
+import UsualProgram from './UsualProgram';
+import ImageList from './imageList';
 
 const edata = [
   {
@@ -150,6 +152,7 @@ export default () => (
       <Breadcrumb.Item>详情</Breadcrumb.Item>
     </Breadcrumb>
     <div className={styles.content}>
+      <UsualProgram />
       <Row gutter={16}>
         <Col span={18}>
           <Row gutter={16}>
@@ -399,6 +402,7 @@ export default () => (
         </Col>
       </Row>
       <div />
+      <ImageList />
     </div>
   </div>
 );
