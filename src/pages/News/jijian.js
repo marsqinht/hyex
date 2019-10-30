@@ -1,8 +1,10 @@
 import { Component } from "react";
-import { Tabs, Table, Select } from 'antd';
+import { Tabs, Table, Select, Input } from 'antd';
+import styles from './jijian.less';
 
 const { TabPane } = Tabs;
 const { Option } = Select;
+const { Search } = Input;
 
 
 const columns = [
@@ -98,16 +100,25 @@ export default class Jijian extends Component {
           {
             tabs.map(tab => {
               return <TabPane tab={tab.name} key={tab.name} style={{backgroundColor: '#fff'}}>
-                <Select defaultValue="lucy" style={{ width: 120 }}>
-                  <Option value="jack">Jack</Option>
-                  <Option value="lucy">Lucy</Option>
-                  <Option value="disabled">
-                    Disabled
-                  </Option>
-                  <Option value="Yiminghe">yiminghe</Option>
-                </Select>
+                <div className={styles.search}>
+                  <Select defaultValue="lucy" style={{ width: 120 }}>
+                    <Option value="jack">标题</Option>
+                    <Option value="lucy">内容</Option>
+                    <Option value="disabled">
+                      Disabled
+                    </Option>
+                    <Option value="Yiminghe">yiminghe</Option>
+                  </Select>
+                  <Search
+                    placeholder="请输入关键字搜索"
+                    enterButton="Search"
+                    size="mini"
+                    style={{ width: 200, marginLeft: 20 }}
+                    onSearch={value => console.log(value)}
+                  />
+                </div>
                 {tab.content}
-              </TabPane>
+                     </TabPane>
             })
           }
           
