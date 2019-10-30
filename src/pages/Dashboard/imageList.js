@@ -5,10 +5,8 @@ import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import Icon from 'antd/lib/icon';
 
 const textData = {
-  content: 'Taiwan called motorcycle, motor bike [1] or a motorcycle,' +
-  ' the motorcycle referred to in the mainland, Hong Kong and Southeast' +
-  ' Asia known as motorcycles.',
-  title: 'Motorcycle',
+  content: '华谊工程公司是一家很厉害的公司',
+  title: '华谊工程',
 };
 let dataArray = [
   { image: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8f6puz0mcj31400u0qv7.jpg' },

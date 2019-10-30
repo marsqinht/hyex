@@ -153,6 +153,7 @@ export default () => (
     </Breadcrumb>
     <div className={styles.content}>
       <UsualProgram />
+      <ImageList />
       <Row gutter={16}>
         <Col span={18}>
           <Row gutter={16}>
@@ -402,7 +403,6 @@ export default () => (
         </Col>
       </Row>
       <div />
-      <ImageList />
     </div>
   </div>
 );

@@ -57,6 +57,12 @@ export default [
                 component: './News/party',
               },
               {
+                path: '/dashboard/huayi',
+                name: '华谊工程',
+                hideInMenu: true,
+                component: './News/huayi',
+              },
+              {
                 path: '/dashboard/analssyddsis',
                 name: '纪检监察',
                 component: './Dashboard/Analysis',
