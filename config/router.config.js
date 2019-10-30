@@ -63,9 +63,15 @@ export default [
                 component: './News/huayi',
               },
               {
+                path: '/dashboard/zhiduHuibian',
+                name: '制度汇编',
+                hideInMenu: true,
+                component: './News/zhiduHuibian',
+              },
+              {
                 path: '/dashboard/analssyddsis',
                 name: '纪检监察',
-                component: './Dashboard/Analysis',
+                component: './News/jijian',
               },
             ],
           },

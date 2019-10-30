@@ -7,8 +7,12 @@ import styles from './party.less';
 const { Meta } = Card;
 
 export default class Huayi extends Component {
-  goHuayi = ()=> {
+  goHuayi = () => {
     router.push('/dashboard/huayi')
+  }
+
+  goZhidu = () => {
+    router.push('/dashboard/zhiduHuibian')
   }
   
   render() {
@@ -25,6 +29,7 @@ export default class Huayi extends Component {
         <Card
           hoverable
           style={{ width: 240 }}
+          onClick={this.goZhidu}
           cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
         >
           <Meta title="Europe Street beat" description="www.instagram.com" />
