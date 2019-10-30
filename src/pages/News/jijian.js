@@ -117,7 +117,9 @@ export default class Jijian extends Component {
                     onSearch={value => console.log(value)}
                   />
                 </div>
-                {tab.content}
+                <div style={{padding: '0 20px 0'}}> 
+                  {tab.content}
+                </div>
                      </TabPane>
             })
           }
