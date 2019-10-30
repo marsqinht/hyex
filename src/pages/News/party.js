@@ -1,4 +1,3 @@
-
 import { Card } from 'antd';
 import { Component } from 'react';
 import router from 'umi/router';
@@ -8,13 +7,13 @@ const { Meta } = Card;
 
 export default class Huayi extends Component {
   goHuayi = () => {
-    router.push('/dashboard/huayi')
-  }
+    router.push('/dashboard/huayi');
+  };
 
   goZhidu = () => {
-    router.push('/dashboard/zhiduHuibian')
-  }
-  
+    router.push('/dashboard/zhiduHuibian');
+  };
+
   render() {
     return (
       <div className={styles.party}>
@@ -22,17 +21,27 @@ export default class Huayi extends Component {
           hoverable
           style={{ width: 240 }}
           onClick={this.goHuayi}
-          cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+          cover={
+            <img
+              alt="example"
+              src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8gineojurj30n00dw0ss.jpg"
+            />
+          }
         >
-          <Meta title="Europe Street beat" description="www.instagram.com" />
+          <Meta title="华谊工程" description="www.instagram.com" />
         </Card>
         <Card
           hoverable
           style={{ width: 240 }}
           onClick={this.goZhidu}
-          cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+          cover={
+            <img
+              alt="example"
+              src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8giq8eclgj30dw098q3l.jpg"
+            />
+          }
         >
-          <Meta title="Europe Street beat" description="www.instagram.com" />
+          <Meta title="制度汇编" description="www.instagram.com" />
         </Card>
       </div>
     );

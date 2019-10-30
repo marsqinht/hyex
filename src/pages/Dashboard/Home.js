@@ -1,9 +1,32 @@
-import React from 'react';
-import { Breadcrumb, Icon, Row, Col, Card, List, Calendar, Badge, Comment, Tooltip } from 'antd';
+import React, { Component } from 'react';
+import {
+  Breadcrumb,
+  Icon,
+  Row,
+  Col,
+  Card,
+  List,
+  Calendar,
+  Badge,
+  Comment,
+  Tooltip,
+  Popover,
+  Drawer,
+} from 'antd';
+import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
+import numeral from 'numeral';
+import moment from 'moment';
 import QueueAnim from 'rc-queue-anim';
+import Trend from '@/components/Trend';
+import Yuan from '@/utils/Yuan';
+
+import { ChartCard, MiniArea, MiniBar, MiniProgress, Field } from '@/components/Charts';
 import styles from './Home.less';
 import UsualProgram from './UsualProgram';
 import ImageList from './imageList';
+import ImageD from './image3D';
+import Cc from './Clendar';
+import BarCharts from './Charts';
 
 const edata = [
   {
@@ -28,6 +51,12 @@ const edata = [
   },
 ];
 
+const content = (
+  <div>
+    <p>Content</p>
+    <p>Content</p>
+  </div>
+);
 const data = [
   {
     title: '中共上海华谊工程有限公司第二次党员大会隆重召开',
@@ -80,7 +109,36 @@ const holidayData = [
     name: '郑淑婷',
     type: '调休',
   },
+  {
+    name: '李子煜',
+    type: '公出',
+  },
+  {
+    name: '郑淑婷',
+    type: '调休',
+  },
+  {
+    name: '秦奋',
+    type: '公出',
+  },
+  {
+    name: '李子煜',
+    type: '公出',
+  },
+  {
+    name: '郑淑婷',
+    type: '调休',
+  },
 ];
+
+const visitData = [];
+const beginDay = new Date().getTime();
+for (let i = 0; i < 20; i += 1) {
+  visitData.push({
+    x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),
+    y: Math.floor(Math.random() * 100) + 10,
+  });
+}
 
 function getListData(value) {
   let listData;
@@ -139,270 +197,434 @@ function onPanelChange(value, mode) {
   console.log(value, mode);
 }
 
-export default () => (
-  <div>
-    <Breadcrumb>
-      <Breadcrumb.Item href="">
-        <Icon type="home" />
-      </Breadcrumb.Item>
-      <Breadcrumb.Item href="">
-        <Icon type="user" />
-        <span>概况</span>
-      </Breadcrumb.Item>
-      <Breadcrumb.Item>详情</Breadcrumb.Item>
-    </Breadcrumb>
-    <div className={styles.content}>
-      <UsualProgram />
-      <ImageList />
-      <Row gutter={16}>
-        <Col span={18}>
+export default class Home extends Component {
+  state = { visible: false, placement: 'top' };
+
+  showDrawer = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  onClose = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  onChange = e => {
+    this.setState({
+      placement: e.target.value,
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <Breadcrumb>
+          <Breadcrumb.Item href="">
+            <Icon type="home" />
+          </Breadcrumb.Item>
+          <Breadcrumb.Item href="">
+            <Icon type="user" />
+            <span>概况</span>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>详情</Breadcrumb.Item>
+        </Breadcrumb>
+        <div className={styles.content}>
           <Row gutter={16}>
-            <Col span={12}>
-              <Card
-                title={
-                  <div>
-                    <Icon type="profile" theme="twoTone" /> 最新新闻
-                  </div>
-                }
-                bordered={false}
-                cover={
-                  <img
-                    alt="example"
-                    height={200}
-                    src="http://ww1.sinaimg.cn/large/006tNc79ly1g46wd1wiqjj30y60fqwop.jpg"
-                  />
-                }
-                extra={<a href="#">更多</a>}
-              >
-                <List
-                  itemLayout="horizontal"
-                  dataSource={data}
-                  renderItem={item => (
-                    <QueueAnim delay={300} className="queue-simple">
-                      <List.Item actions={[<a>{item.time}</a>]}>
-                        <List.Item.Meta
-                          // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                          title={<a href="https://www.hyec.com">{item.title}</a>}
-                        />
-                      </List.Item>
-                    </QueueAnim>
-                  )}
-                />
-              </Card>
-            </Col>
-            <Col span={12}>
-              <Card
-                title={
-                  <div>
-                    <Icon type="tool" theme="twoTone" /> QHSE信息
-                  </div>
-                }
-                bordered={false}
-                cover={
-                  <img
-                    alt="example"
-                    height={200}
-                    src="http://ww3.sinaimg.cn/large/006tNc79ly1g46wi972fxj31020h4ttq.jpg"
-                  />
-                }
-                extra={<a href="#">更多</a>}
-              >
-                <List
-                  itemLayout="horizontal"
-                  dataSource={data}
-                  renderItem={item => (
-                    <List.Item actions={[<a>{item.time}</a>]}>
-                      <List.Item.Meta
-                        // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                        title={<a href="https://www.hyec.com">{item.title}</a>}
+            <Col span={18}>
+              <UsualProgram />
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Card
+                    hoverable
+                    title={
+                      <div>
+                        <Icon type="profile" theme="twoTone" /> 最新新闻
+                      </div>
+                    }
+                    bordered={false}
+                    cover={
+                      <img
+                        alt="example"
+                        height={200}
+                        src="http://ww1.sinaimg.cn/large/006tNc79ly1g46wd1wiqjj30y60fqwop.jpg"
                       />
-                    </List.Item>
-                  )}
-                />
+                    }
+                    extra={<a href="#">更多</a>}
+                  >
+                    <List
+                      itemLayout="horizontal"
+                      dataSource={data}
+                      renderItem={item => (
+                        <List.Item actions={[<a>{item.time}</a>]}>
+                          <List.Item.Meta
+                            // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                            title={<a href="https://www.hyec.com">{item.title}</a>}
+                          />
+                        </List.Item>
+                      )}
+                    />
+                  </Card>
+                </Col>
+                <Col span={12}>
+                  <Card
+                    title={
+                      <div>
+                        <Icon type="tool" theme="twoTone" /> QHSE信息
+                      </div>
+                    }
+                    bordered={false}
+                    cover={
+                      <img
+                        alt="example"
+                        height={200}
+                        src="http://ww3.sinaimg.cn/large/006tNc79ly1g46wi972fxj31020h4ttq.jpg"
+                      />
+                    }
+                    extra={<a href="#">更多</a>}
+                  >
+                    <List
+                      itemLayout="horizontal"
+                      dataSource={data}
+                      renderItem={item => (
+                        <List.Item actions={[<a>{item.time}</a>]}>
+                          <List.Item.Meta
+                            // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                            title={<a href="https://www.hyec.com">{item.title}</a>}
+                          />
+                        </List.Item>
+                      )}
+                    />
+                  </Card>
+                </Col>
+              </Row>
+              <Row gutter={16} style={{ marginTop: 14 }}>
+                <Col span={12}>
+                  <Card
+                    title={
+                      <div>
+                        <Icon type="bulb" theme="twoTone" /> 知识经验
+                      </div>
+                    }
+                    bordered={false}
+                    cover={
+                      <img
+                        alt="example"
+                        height={200}
+                        src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
+                      />
+                    }
+                    extra={<a href="#">更多</a>}
+                  >
+                    <List
+                      itemLayout="horizontal"
+                      dataSource={data}
+                      renderItem={item => (
+                        <List.Item actions={[<a>{item.time}</a>]}>
+                          <List.Item.Meta
+                            // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                            title={<a href="https://www.hyec.com">{item.title}</a>}
+                          />
+                        </List.Item>
+                      )}
+                    />
+                  </Card>
+                </Col>
+                <Col span={12}>
+                  <Card
+                    title={
+                      <div>
+                        <Icon type="book" theme="twoTone" /> 近期培训
+                      </div>
+                    }
+                    bordered={false}
+                    cover={
+                      <img
+                        alt="example"
+                        height={200}
+                        src="http://ww4.sinaimg.cn/large/006tNc79ly1g46zehotlmj310k0hcx2w.jpg"
+                      />
+                    }
+                    extra={<a href="#">更多</a>}
+                  >
+                    <List
+                      itemLayout="horizontal"
+                      dataSource={data}
+                      renderItem={item => (
+                        <List.Item actions={[<a>{item.time}</a>]}>
+                          <List.Item.Meta
+                            // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                            title={<a href="https://www.hyec.com">{item.title}</a>}
+                          />
+                        </List.Item>
+                      )}
+                    />
+                  </Card>
+                </Col>
+              </Row>
+            </Col>
+            <Col span={6}>
+              <Card
+                title={
+                  <div>
+                    <Icon type="like" theme="twoTone" /> 高层学习分享
+                  </div>
+                }
+                bordered={false}
+              >
+                <Popover placement="leftTop" content={content} title="活动" trigger="hover">
+                  <p>公司开展“大手牵小手，阳光谊路走</p>
+                </Popover>
+                <Popover placement="leftTop" content={content} title="活动" trigger="hover">
+                  <p>公司召开庆“七一”党员、干部暨先进表彰大会</p>
+                </Popover>
+                <Popover placement="leftTop" content={content} title="活动" trigger="hover">
+                  <p>公司召开党委、纪委换届选举启动</p>
+                </Popover>
+                <Popover placement="leftTop" content={content} title="活动" trigger="hover">
+                  <p>公司党委下基层调研党建工作</p>
+                </Popover>
+
+                <p>公司进行华谊园区停车场车棚建设</p>
               </Card>
+              <Card
+                style={{ marginTop: 14, height: 320, overflow: 'hidden' }}
+                title={
+                  <div>
+                    <Icon type="flag" theme="twoTone" /> 今日请假
+                  </div>
+                }
+                bordered={false}
+              >
+                <div style={{ overflow: 'hidden' }}>
+                  <List
+                    className="mymove"
+                    style={{ position: 'relative' }}
+                    size="small"
+                    split={false}
+                    dataSource={holidayData}
+                    renderItem={item => (
+                      <List.Item actions={[<a>{item.type}</a>]}>{item.name}</List.Item>
+                    )}
+                  />
+                </div>
+              </Card>
+              <ChartCard
+                bordered={false}
+                style={{ marginTop: 14 }}
+                title={
+                  <FormattedMessage id="app.analysis.total-sales" defaultMessage="Total Sales" />
+                }
+                action={
+                  <Tooltip
+                    title={
+                      <FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />
+                    }
+                  >
+                    <Icon type="info-circle-o" />
+                  </Tooltip>
+                }
+                total={() => <Yuan>126560</Yuan>}
+                footer={
+                  <Field
+                    label={
+                      <FormattedMessage id="app.analysis.day-sales" defaultMessage="Daily Sales" />
+                    }
+                    value={`￥${numeral(12423).format('0,0')}`}
+                  />
+                }
+                contentHeight={46}
+              >
+                <Trend flag="up" style={{ marginRight: 16 }}>
+                  <FormattedMessage id="app.analysis.week" defaultMessage="Weekly Changes" />
+                  <span className={styles.trendText}>12%</span>
+                </Trend>
+                <Trend flag="down">
+                  <FormattedMessage id="app.analysis.day" defaultMessage="Daily Changes" />
+                  <span className={styles.trendText}>11%</span>
+                </Trend>
+              </ChartCard>
+              <ChartCard
+                bordered={false}
+                style={{ marginTop: 14 }}
+                // loading={loading}
+                title="访问量"
+                action={
+                  <Tooltip
+                    title={
+                      <FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />
+                    }
+                  >
+                    <Icon type="info-circle-o" />
+                  </Tooltip>
+                }
+                total={numeral(8846).format('0,0')}
+                footer={
+                  <Field
+                    label={
+                      <FormattedMessage
+                        id="app.analysis.day-visits"
+                        defaultMessage="Daily Visits"
+                      />
+                    }
+                    value={numeral(1234).format('0,0')}
+                  />
+                }
+                contentHeight={46}
+              >
+                <MiniArea color="#975FE4" data={visitData} />
+              </ChartCard>
+              <ChartCard
+                bordered={false}
+                style={{ marginTop: 14 }}
+                title={<FormattedMessage id="app.analysis.payments" defaultMessage="Payments" />}
+                action={
+                  <Tooltip
+                    title={
+                      <FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />
+                    }
+                  >
+                    <Icon type="info-circle-o" />
+                  </Tooltip>
+                }
+                total={numeral(6560).format('0,0')}
+                footer={
+                  <Field
+                    label={
+                      <FormattedMessage
+                        id="app.analysis.conversion-rate"
+                        defaultMessage="Conversion Rate"
+                      />
+                    }
+                    value="60%"
+                  />
+                }
+                contentHeight={46}
+              >
+                <MiniBar data={visitData} />
+              </ChartCard>
+              <ChartCard
+                bordered={false}
+                style={{ marginTop: 14 }}
+                title={
+                  <FormattedMessage
+                    id="app.analysis.operational-effect"
+                    defaultMessage="Operational Effect"
+                  />
+                }
+                action={
+                  <Tooltip
+                    title={
+                      <FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />
+                    }
+                  >
+                    <Icon type="info-circle-o" />
+                  </Tooltip>
+                }
+                total="78%"
+                footer={
+                  <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
+                    <Trend flag="up" style={{ marginRight: 16 }}>
+                      <FormattedMessage id="app.analysis.week" defaultMessage="Weekly Changes" />
+                      <span className={styles.trendText}>12%</span>
+                    </Trend>
+                    <Trend flag="down">
+                      <FormattedMessage id="app.analysis.day" defaultMessage="Weekly Changes" />
+                      <span className={styles.trendText}>11%</span>
+                    </Trend>
+                  </div>
+                }
+                contentHeight={46}
+              >
+                <MiniProgress
+                  percent={78}
+                  strokeWidth={8}
+                  target={80}
+                  targetLabel={`${formatMessage({
+                    id: 'component.miniProgress.tooltipDefault',
+                  }).concat(': ')}80%`}
+                  color="#13C2C2"
+                />
+              </ChartCard>
             </Col>
           </Row>
-          <Row gutter={16} style={{ marginTop: '20px' }}>
-            <Col span={12}>
-              <Card
-                title={
-                  <div>
-                    <Icon type="bulb" theme="twoTone" /> 知识经验
-                  </div>
-                }
-                bordered={false}
-                cover={
-                  <img
-                    alt="example"
-                    height={200}
-                    src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
-                  />
-                }
-                extra={<a href="#">更多</a>}
-              >
-                <List
-                  itemLayout="horizontal"
-                  dataSource={data}
-                  renderItem={item => (
-                    <List.Item actions={[<a>{item.time}</a>]}>
-                      <List.Item.Meta
-                        // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                        title={<a href="https://www.hyec.com">{item.title}</a>}
-                      />
-                    </List.Item>
-                  )}
+
+          <ImageD />
+          <Row gutter={16} style={{ marginTop: 20 }}>
+            <Col span={14}>
+              <div style={{ display: 'flex', height: '320px' }}>
+                <img
+                  style={{ width: '260px' }}
+                  onClick={this.showDrawer}
+                  src="http://ww3.sinaimg.cn/large/006tNc79ly1g47yu3i6w5j30la0pawsx.jpg"
                 />
-              </Card>
+                <div
+                  style={{
+                    // width: '400px',
+                    border: '1px solid #d9d9d9',
+                    borderRadius: 4,
+                    backgroundColor: '#fff',
+                    flex: 1,
+                  }}
+                >
+                  <Calendar fullscreen={false} onPanelChange={onPanelChange} />
+                </div>
+              </div>
             </Col>
-            <Col span={12}>
-              <Card
-                title={
-                  <div>
-                    <Icon type="book" theme="twoTone" /> 近期培训
-                  </div>
-                }
-                bordered={false}
-                cover={
-                  <img
-                    alt="example"
-                    height={200}
-                    src="http://ww4.sinaimg.cn/large/006tNc79ly1g46zehotlmj310k0hcx2w.jpg"
-                  />
-                }
-                extra={<a href="#">更多</a>}
-              >
+            <Col span={10}>
+              <div style={{ height: '100%' }}>
                 <List
+                  className="comment-list"
+                  // header={`${data.length} replies`}
                   itemLayout="horizontal"
-                  dataSource={data}
+                  style={{ backgroundColor: '#fff', height: '320px' }}
+                  dataSource={edata}
                   renderItem={item => (
-                    <List.Item actions={[<a>{item.time}</a>]}>
-                      <List.Item.Meta
-                        // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                        title={<a href="https://www.hyec.com">{item.title}</a>}
+                    <li>
+                      <Comment
+                        // actions={item.actions}
+                        author={item.author}
+                        // avatar={item.avatar}
+                        content={item.content}
+                        datetime={item.datetime}
                       />
-                    </List.Item>
+                    </li>
                   )}
                 />
-              </Card>
+              </div>
             </Col>
           </Row>
-        </Col>
-        <Col span={6}>
-          <Card
-            title={
-              <div>
-                <Icon type="like" theme="twoTone" /> 高层学习分享
-              </div>
-            }
-            bordered={false}
-          >
-            <p>公司开展“大手牵小手，阳光谊路走”六一亲子活动</p>
-            <p>公司召开庆“七一”党员、干部暨先进表彰大会</p>
-            <p>公司召开党委、纪委换届选举启动</p>
-            <p>公司党委下基层调研党建工作</p>
-            <p>公司进行华谊园区停车场车棚建设</p>
-          </Card>
+          <div />
+          <Row gutter={16} style={{ marginTop: 20 }}>
+            <Col span={12}>
+              <Card
+                title={
+                  <div>
+                    <Icon type="flag" theme="twoTone" /> 公司文化墙
+                  </div>
+                }
+                bordered={false}
+              >
+                <ImageList />
+              </Card>
+            </Col>
+            <Col span={12}>{/* <BarCharts /> */}</Col>
+          </Row>
 
-          <Card
-            style={{ marginTop: '20px', height: 553 }}
-            title={
-              <div>
-                <Icon type="flag" theme="twoTone" /> 今日请假
-              </div>
-            }
-            bordered={false}
+          <Drawer
+            title="完整日历"
+            height={880}
+            placement={this.state.placement}
+            closable={false}
+            onClose={this.onClose}
+            visible={this.state.visible}
           >
-            <List
-              size="small"
-              split={false}
-              dataSource={holidayData}
-              renderItem={item => <List.Item actions={[<a>{item.type}</a>]}>{item.name}</List.Item>}
-            />
-          </Card>
-
-          <Card
-            style={{ marginTop: '20px' }}
-            title={
-              <div>
-                <Icon type="appstore" theme="twoTone" /> 常用程序
-              </div>
-            }
-            bordered={false}
-          >
-            <div style={{ fontSize: '16px' }}>
-              <div className={styles.program}>
-                <IconFont type="iconmonitor" />
-
-                <p>HYPM 项目平台</p>
-              </div>
-              <div className={styles.program}>
-                <IconFont type="icondingcan" />
-                <p>订餐系统</p>
-              </div>
-              <div className={styles.program}>
-                <IconFont type="iconchecklist" />
-                <p> 本周菜单</p>
-              </div>
-              <div className={styles.program}>
-                <IconFont type="icongroup" />
-                <p>员工信息</p>
-              </div>
-              <div className={styles.program}>
-                <IconFont type="iconcalendar2" />
-                <p>请假系统</p>
-              </div>
-              <div className={styles.program}>
-                <IconFont type="iconfolder" />
-                <p> 图纸入库系统</p>
-              </div>
-            </div>
-          </Card>
-        </Col>
-      </Row>
-      <Row gutter={16} style={{ marginTop: 20 }}>
-        <Col span={14}>
-          <div style={{ display: 'flex', height: '320px' }}>
-            <img
-              style={{ width: '260px' }}
-              src="http://ww3.sinaimg.cn/large/006tNc79ly1g47yu3i6w5j30la0pawsx.jpg"
-            />
-            <div
-              style={{
-                // width: '400px',
-                border: '1px solid #d9d9d9',
-                borderRadius: 4,
-                backgroundColor: '#fff',
-                flex: 1,
-              }}
-            >
-              <Calendar fullscreen={false} onPanelChange={onPanelChange} />
-            </div>
-          </div>
-        </Col>
-        <Col span={10}>
-          <div style={{ height: '100%' }}>
-            <List
-              className="comment-list"
-              // header={`${data.length} replies`}
-              itemLayout="horizontal"
-              style={{ backgroundColor: '#fff', height: '320px' }}
-              dataSource={edata}
-              renderItem={item => (
-                <li>
-                  <Comment
-                    // actions={item.actions}
-                    author={item.author}
-                    // avatar={item.avatar}
-                    content={item.content}
-                    datetime={item.datetime}
-                  />
-                </li>
-              )}
-            />
-          </div>
-        </Col>
-      </Row>
-      <div />
-    </div>
-  </div>
-);
+            <Cc />
+          </Drawer>
+        </div>
+      </div>
+    );
+  }
+}

@@ -41,7 +41,7 @@ export default class ImageList extends React.Component {
 
   onImgClick = (e, i) => {
     const { picOpen } = this.state;
-    Object.keys(picOpen).forEach((key) => {
+    Object.keys(picOpen).forEach(key => {
       if (key !== i && picOpen[key]) {
         picOpen[key] = false;
       }
@@ -60,7 +60,7 @@ export default class ImageList extends React.Component {
     });
   };
 
-  onTweenEnd = (i) => {
+  onTweenEnd = i => {
     const { picOpen } = this.state;
     delete picOpen[i];
     this.setState({
@@ -68,8 +68,8 @@ export default class ImageList extends React.Component {
     });
   };
 
-  getDelay = (e) => {
-    const i = e.index + dataArray.length % 4;
+  getDelay = e => {
+    const i = e.index + (dataArray.length % 4);
     return (i % 4) * 100 + Math.floor(i / 4) * 100 + 200;
   };
 
@@ -93,27 +93,29 @@ export default class ImageList extends React.Component {
       imgTop = isEnter ? imgTop : 0;
 
       const liStyle = isEnter ? { width: '100%', height: 175, zIndex: 1 } : null;
-      const liAnimation = isOpen ?
-        ({ boxShadow: '0 2px 8px rgba(140, 140, 140, .35)' }) :
-        ({ boxShadow: '0 0px 0px rgba(140, 140, 140, 0)' });
-      let aAnimation = isEnter ?
-        ({
-          delay: 400,
-          ease: 'easeInOutCubic',
-          width: imgWidth,
-          height: imgHeight,
-          onComplete: this.onTweenEnd.bind(this, i),
-          left: imgBoxWidth * (i % 4),
-          top: isTop ? imgBoxHeight : 0,
-        }) : null;
-      aAnimation = isOpen ?
-        ({
-          ease: 'easeInOutCubic',
-          left: isRight ? (imgBoxWidth * 2) - 10 : 0,
-          width: '50%',
-          height: 175,
-          top: 0,
-        }) : aAnimation;
+      const liAnimation = isOpen
+        ? { boxShadow: '0 2px 8px rgba(140, 140, 140, .35)' }
+        : { boxShadow: '0 0px 0px rgba(140, 140, 140, 0)' };
+      let aAnimation = isEnter
+        ? {
+            delay: 400,
+            ease: 'easeInOutCubic',
+            width: imgWidth,
+            height: imgHeight,
+            onComplete: this.onTweenEnd.bind(this, i),
+            left: imgBoxWidth * (i % 4),
+            top: isTop ? imgBoxHeight : 0,
+          }
+        : null;
+      aAnimation = isOpen
+        ? {
+            ease: 'easeInOutCubic',
+            left: isRight ? imgBoxWidth * 2 - 10 : 0,
+            width: '50%',
+            height: 175,
+            top: 0,
+          }
+        : aAnimation;
 
       // 位置 js 控制；
       return (
@@ -142,7 +144,10 @@ export default class ImageList extends React.Component {
           <TweenOneGroup
             enter={[
               {
-                opacity: 0, duration: 0, type: 'from', delay: 400,
+                opacity: 0,
+                duration: 0,
+                type: 'from',
+                delay: 400,
               },
               { ease: 'easeOutCubic', type: 'from', left: isRight ? '50%' : '0%' },
             ]}
@@ -181,8 +186,8 @@ export default class ImageList extends React.Component {
             <li />
           </ul>
           <QueueAnim type="bottom" className={`${this.props.className}-title`}>
-            <h1 key="h1">公司一览</h1>
-            <p key="p">The react animation solution</p>
+            {/* <h1 key="h1">公司一览</h1>
+            <p key="p">The react animation solution</p> */}
           </QueueAnim>
           <QueueAnim
             delay={this.getDelay}

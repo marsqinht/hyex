@@ -5,7 +5,91 @@ body,
 #root {
   height: 100%;
 }
+.ant-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.ant-card-cover {
+  overflow: hidden;
+}
+.ant-card-cover img {
+  transition: all 1s;
+}
+.ant-card-cover img:hover {
+  transform: scale(1.1);
+}
+.mymove {
+  animation: mymove 14s linear infinite;
+}
 
+@keyframes mymove {
+  from {
+    top: 0px;
+  }
+  to {
+    top: -200px;
+  }
+}
+.carousel-demo-wrapper {
+  position: relative;
+  background: #3949c0;
+  overflow: hidden;
+  height: 500px;
+}
+
+.carousel-demo {
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-wrapper {
+  position: absolute;
+  width: 250px;
+  height: 300px;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 120px;
+  padding-top: 350px;
+  margin-top: -350px;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  margin: auto;
+  height: 100%;
+}
+
+.carouselContent {
+  transform-style: preserve-3d;
+  width: 100%;
+}
+
+.itemWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-style: preserve-3d;
+  width: 100%;
+}
+
+.itemWrapper .rotateLayer .bgAndBlurLayer {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  transition: filter 0.45s;
+  margin: auto;
+}
+
+.itemWrapper .rotateLayer .bgAndBlurLayer .contentLayer {
+  transition: opacity 0.65s;
+}
+
+.img-wrapper {
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+}
 .colorWeak {
   filter: invert(80%);
 }
@@ -2397,17 +2481,17 @@ section.markdown {
 /* 外壳样式 */
 .pic-details-demo-wrapper {
   position: relative;
-  background: #DEEDCC;
+  background: #deedcc;
   overflow: hidden;
-  height: 500px;
+  height: 360px;
 }
 
 .pic-details-demo {
-  margin: 40px auto;
+  // margin: 40px auto;
   // box-shadow: 0 10px 40px #C7D7B5;
   width: 60%;
   min-width: 550px;
-  height: 420px;
+  height: 314px;
   background: #fff;
   border-radius: 6px;
   overflow: hidden;
@@ -2429,16 +2513,16 @@ section.markdown {
 }
 
 .pic-details-demo-header ul li:nth-child(1) {
-  background: #CF3333;
+  background: #cf3333;
   margin-left: 3%;
 }
 
 .pic-details-demo-header ul li:nth-child(2) {
-  background: #DEC811;
+  background: #dec811;
 }
 
 .pic-details-demo-header ul li:nth-child(3) {
-  background: #28C026;
+  background: #28c026;
 }
 
 .pic-details-demo-header ul li:nth-child(4) {
@@ -2454,7 +2538,7 @@ section.markdown {
 .pic-details-demo-header ul li:nth-child(5):after {
   width: 20px;
   height: 2px;
-  background: #BABABA;
+  background: #bababa;
   border-radius: 2px;
 }
 
@@ -2516,7 +2600,7 @@ section.markdown {
 .pic-details-demo-image-box-shadow {
   box-shadow: 0 0 0 rgba(140, 140, 140, 0);
   height: 100%;
-  transition: box-shadow .3s;
+  transition: box-shadow 0.3s;
 }
 
 .pic-details-demo-image-wrapper li.open .pic-details-demo-image-box-shadow {
@@ -2530,7 +2614,8 @@ section.markdown {
   position: absolute;
 }
 
-.pic-details-demo-image-wrapper li a, .pic-details-demo-image-wrapper li a img {
+.pic-details-demo-image-wrapper li a,
+.pic-details-demo-image-wrapper li a img {
   display: block;
 }
 
@@ -2559,7 +2644,7 @@ section.markdown {
 .pic-details-demo-text-wrapper em {
   height: 2px;
   width: 60px;
-  background: #FA1F4E;
+  background: #fa1f4e;
   border-radius: 2px;
   display: block;
 }
@@ -2570,18 +2655,78 @@ section.markdown {
   line-height: 16px;
 }
 @media screen and (max-width: 414px) {
-  .pic-details-demo{
-    transform: scale(.65) translateX(12px);
+  .pic-details-demo {
+    transform: scale(0.65) translateX(12px);
     transform-origin: left center;
   }
 }
 @media screen and (max-width: 375px) {
-  .pic-details-demo{
-    transform: scale(.6) translateX(7px);
+  .pic-details-demo {
+    transform: scale(0.6) translateX(7px);
   }
 }
 @media screen and (max-width: 320px) {
-  .pic-details-demo{
-    transform: scale(.5) translateX(12px);
+  .pic-details-demo {
+    transform: scale(0.5) translateX(12px);
   }
+}
+.snow-demo-wrapper {
+  background: #dfeaff;
+  overflow: hidden;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.snow-demo {
+  width: 300px;
+  height: 90%;
+  margin: auto;
+  position: relative;
+  background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g8gkowpeyzj305k05kdft.jpg);
+  background-position: top;
+  background-size: 100% auto;
+  box-shadow: 0 0 32px rgba(0, 0, 0, 0.15);
+}
+
+.snow {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  overflow: hidden;
+}
+
+.snowChild {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.snowRotate {
+  transform-origin: center center;
+}
+.addMoneyAnim {
+  background: url('https://tva1.sinaimg.cn/large/006y8mN6ly1g8gkowpeyzj305k05kdft.jpg') center
+    no-repeat;
+  background-size: cover;
+  width: 52px;
+  height: 52px;
+  animation: rotateMoney 0.45s step-start infinite;
+}
+
+.addMoneyFrame(@one, @frame, @i: 0, @name: 0%) when (@i =< @frame) {
+  .addMoneyFrame(@one, @frame, @i + 1, (100% / @frame * (@i + 1)));
+  @{name} {
+    background-position: -(mod(@i, @one) * 52px) - (floor(@i / @one) * 52px);
+  }
+}
+
+@keyframes rotateMoney {
+  .addMoneyFrame(8, 15);
+}
+.main-charts {
+  width: 100%;
+  height: 500px;
 }

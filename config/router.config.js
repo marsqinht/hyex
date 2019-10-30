@@ -57,6 +57,11 @@ export default [
                 component: './News/party',
               },
               {
+                path: '/dashboard/sss',
+                name: 'ss',
+                component: './Dashboard/Analysis',
+              },
+              {
                 path: '/dashboard/huayi',
                 name: '华谊工程',
                 hideInMenu: true,
