@@ -1,4 +1,3 @@
-
 import { Icon, Button, Table, Modal, Tabs, Upload, message } from 'antd';
 import { Component } from 'react';
 // import router from 'umi/router';
@@ -8,8 +7,6 @@ import styles from './huayi.less';
 // const { Option } = Select;
 const { TabPane } = Tabs;
 const { Dragger } = Upload;
-
-
 
 const columns = [
   {
@@ -40,7 +37,7 @@ const data = [
     name: '中共上海华谊工程有限公司第二次党员大会隆重召',
     time: '2019-09-10',
     address: 'New York No. 1 Lake Park',
-    commet: 'dd'
+    commet: 'dd',
   },
   {
     key: '2',
@@ -59,22 +56,25 @@ const data = [
     name: '中共上海华谊工程有限公司第二次党员大会隆重召',
     time: '2019-09-21',
     address: 'Sidney No. 1 Lake Park',
-  },{
+  },
+  {
     key: '3',
     name: '中共上海华谊工程有限公司第二次党员大会隆重召',
     time: '2019-09-21',
     address: 'Sidney No. 1 Lake Park',
-  },{
+  },
+  {
     key: '3',
     name: '中共上海华谊工程有限公司第二次党员大会隆重召',
     time: '2019-09-21',
     address: 'Sidney No. 1 Lake Park',
-  },{
+  },
+  {
     key: '3',
     name: '中共上海华谊工程有限公司第二次党员大会隆重召',
     time: '2019-09-21',
     address: 'Sidney No. 1 Lake Park',
-  }
+  },
 ];
 
 const props = {
@@ -94,7 +94,7 @@ const props = {
   },
 };
 
-export default class ZhiduHuibian extends Component{
+export default class ZhiduHuibian extends Component {
   state = {
     visible: false,
   };
@@ -134,28 +134,30 @@ export default class ZhiduHuibian extends Component{
                 </p>
                 <p className="ant-upload-text">点击或拖拽到这个区域上传文件</p>
                 <p className="ant-upload-hint">
-                    Support for a single or bulk upload. Strictly prohibit from uploading company data
-                    or other band files
+                  Support for a single or bulk upload. Strictly prohibit from uploading company data
+                  or other band files
                 </p>
               </Dragger>
             </TabPane>
             <TabPane tab="修改" key="2">
               <Upload
                 defaultFileList={[
-                    {
-                      uid: '1',
-                      name: '华谊工程新闻.doc',
-                      status: 'done',
-                      response: 'Server Error 500', // custom error message to show
-                      url: 'http://www.baidu.com/xxx.png',
-                    },
-                  ]}
+                  {
+                    uid: '1',
+                    name: '华谊工程新闻.doc',
+                    status: 'done',
+                    response: 'Server Error 500', // custom error message to show
+                    url: 'http://www.baidu.com/xxx.png',
+                  },
+                ]}
               />
             </TabPane>
           </Tabs>
         </Modal>
         <div className={styles.edit}>
-          <Button type="primary" onClick={this.openEdit}>编辑</Button>
+          <Button type="primary" onClick={this.openEdit}>
+            编辑
+          </Button>
         </div>
         <Tabs defaultActiveKey="1" type="card">
           <TabPane tab="上级单位文件" key="1">
@@ -163,12 +165,19 @@ export default class ZhiduHuibian extends Component{
               columns={columns}
               dataSource={data}
               bordered
-              title={() => (<div style={{ textAlign: 'center'}}>制度汇编</div>)}
+              title={() => <div style={{ textAlign: 'center' }}>制度汇编</div>}
             />
           </TabPane>
-          
+          <TabPane tab="公司制度" key="2">
+            <Table
+              columns={columns}
+              dataSource={data}
+              bordered
+              title={() => <div style={{ textAlign: 'center' }}>公司制度</div>}
+            />
+          </TabPane>
         </Tabs>
       </div>
-    )
+    );
   }
 }

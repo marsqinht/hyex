@@ -12,6 +12,7 @@ import {
   Tooltip,
   Popover,
   Drawer,
+  Descriptions,
 } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import numeral from 'numeral';
@@ -55,6 +56,31 @@ const content = (
   <div>
     <p>Content</p>
     <p>Content</p>
+  </div>
+);
+const info = (
+  <div>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <img
+        src="http://pic2.52pk.com/files/150911/1283574_093700_6640.jpeg"
+        width={50}
+        height={50}
+      />
+      <div style={{ marginLeft: 14 }}>
+        姓名: 李子煜
+        <br />
+        部门: 工程事业部
+        <br />
+        室号: 8508
+        <br />
+        分机: 703829
+        <br />
+      </div>
+    </div>
+    <div style={{ marginTop: 6 }}>
+      <div>职位: 工程师</div>
+      <div>Email: liziyu@heyc.com</div>
+    </div>
   </div>
 );
 const data = [
@@ -235,6 +261,19 @@ export default class Home extends Component {
           <Row gutter={16}>
             <Col span={18}>
               <UsualProgram />
+              <div style={{ background: '#fff', marginBottom: 12, padding: 10 }}>
+                温馨提示:{' '}
+                <img
+                  width={20}
+                  height={20}
+                  src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8hrb9tgguj305k05kwed.jpg"
+                />
+                诚祝{' '}
+                <Popover content={info} title="员工信息" placement="rightBottom">
+                  <a href="javascript:;">李子煜</a>{' '}
+                </Popover>
+                生日快乐
+              </div>
               <Row gutter={16}>
                 <Col span={12}>
                   <Card
@@ -623,6 +662,21 @@ export default class Home extends Component {
           >
             <Cc />
           </Drawer>
+          <Descriptions style={{ backgroundColor: '#fff', marginTop: 20, padding: '20px 20px 0' }}>
+            <Descriptions.Item>
+              <Badge status="processing" text=" 华谊信息运维" />
+              <p>6# 号楼: 李建新(703897) 丁毅(703895) 孟爽(703893) 钟强(703889) 李磊(709195)</p>
+            </Descriptions.Item>
+
+            <Descriptions.Item>
+              <Badge status="processing" text="大楼设备维修" />
+              <p>11# 号楼: 刘洪(703882)</p>
+            </Descriptions.Item>
+            <Descriptions.Item>
+              <Badge status="processing" text="公司门卫24小时值班电话" />
+              <p>6470588</p>
+            </Descriptions.Item>
+          </Descriptions>
         </div>
       </div>
     );

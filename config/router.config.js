@@ -56,11 +56,11 @@ export default [
                 name: '党的建设',
                 component: './News/party',
               },
-              {
-                path: '/dashboard/sss',
-                name: 'ss',
-                component: './Dashboard/Analysis',
-              },
+              // {
+              //   path: '/dashboard/sss',
+              //   name: 'ss',
+              //   component: './Dashboard/Analysis',
+              // },
               {
                 path: '/dashboard/huayi',
                 name: '华谊工程',

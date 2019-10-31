@@ -21,7 +21,7 @@ const textData = {
 
 const dataArray = [
   {
-    pic: 'https://zos.alipayobjects.com/rmsportal/ogXcvssYXpECqKG.png',
+    pic: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8f6puz0mcj31400u0qv7.jpg',
     map: 'https://zos.alipayobjects.com/rmsportal/HfBaRfhTkeXFwHJ.png',
     color: '#FFF43D',
     background: '#F6B429',
@@ -30,7 +30,7 @@ const dataArray = [
       'HYEC 将成为让员工有为、使顾客满意、对股东有利和被社会认可的工程公司，并持之以恒地追求协力、创新和高效。',
   },
   {
-    pic: 'https://zos.alipayobjects.com/rmsportal/iCVhrDRFOAJnJgy.png',
+    pic: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8f6pqvaigj31400u07wi.jpg',
     map: 'https://zos.alipayobjects.com/rmsportal/XRfQxYENhzbfZXt.png',
     color: '#FF4058',
     background: '#FC1E4F',
@@ -42,7 +42,7 @@ const dataArray = [
     操守。时刻关注顾客对项目安全、费用、进度和质量等环节控制的明确和潜在
     要求；
     <br/>
-    
+
     HYEC 将对自己的承诺负责；坚持市场导向，把技术和服务作为立身之本，力
     求为股东提供战略支撑、长期内在价值和持续投资回报；
     <br/>
@@ -51,7 +51,7 @@ const dataArray = [
     济和社会的进步。`,
   },
   {
-    pic: 'https://zos.alipayobjects.com/rmsportal/zMswSbPBiQKvARY.png',
+    pic: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8f6pom70tj31400u0u0y.jpg',
     map: 'https://zos.alipayobjects.com/rmsportal/syuaaBOvttVcNks.png',
     color: '#9FDA7F',
     background: '#64D487',
@@ -60,7 +60,7 @@ const dataArray = [
       'HYEC 将成为让员工有为、使顾客满意、对股东有利和被社会认可的工程公司，并持之以恒地追求协力、创新和高效。',
   },
   {
-    pic: 'https://zos.alipayobjects.com/rmsportal/ogXcvssYXpECqKG.png',
+    pic: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8f6pom70tj31400u0u0y.jpg',
     map: 'https://zos.alipayobjects.com/rmsportal/HfBaRfhTkeXFwHJ.png',
     color: '#FFF43D',
     background: '#F6B429',
@@ -69,7 +69,7 @@ const dataArray = [
       'HYEC 将成为让员工有为、使顾客满意、对股东有利和被社会认可的工程公司，并持之以恒地追求协力、创新和高效。',
   },
   {
-    pic: 'https://zos.alipayobjects.com/rmsportal/iCVhrDRFOAJnJgy.png',
+    pic: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8f6pj2ci6j31400u0x6p.jpg',
     map: 'https://zos.alipayobjects.com/rmsportal/XRfQxYENhzbfZXt.png',
     color: '#FF4058',
     background: '#FC1E4F',
@@ -78,7 +78,7 @@ const dataArray = [
       'HYEC 将成为让员工有为、使顾客满意、对股东有利和被社会认可的工程公司，并持之以恒地追求协力、创新和高效。',
   },
   {
-    pic: 'https://zos.alipayobjects.com/rmsportal/zMswSbPBiQKvARY.png',
+    pic: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8f6pj2ci6j31400u0x6p.jpg',
     map: 'https://zos.alipayobjects.com/rmsportal/syuaaBOvttVcNks.png',
     color: '#9FDA7F',
     background: '#64D487',
