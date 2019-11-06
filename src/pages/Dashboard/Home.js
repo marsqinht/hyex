@@ -28,6 +28,7 @@ import ImageList from './imageList';
 import ImageD from './image3D';
 import Cc from './Clendar';
 import BarCharts from './Charts';
+import HomeBanner from './HomeBanner';
 
 const edata = [
   {
@@ -260,6 +261,7 @@ export default class Home extends Component {
         <div className={styles.content}>
           <Row gutter={16}>
             <Col span={18}>
+              <HomeBanner />
               <UsualProgram />
               <div style={{ background: '#fff', marginBottom: 12, padding: 10 }}>
                 温馨提示:{' '}
