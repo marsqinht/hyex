@@ -34,7 +34,7 @@ const IconFont = Icon.createFromIconfontCN({
 export default class Workplace extends PureComponent {
   render() {
     return (
-      <div className={styles.margin}>
+      <div>
         <Card
           className="blue-bg "
           title={

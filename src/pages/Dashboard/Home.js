@@ -264,10 +264,10 @@ export default class Home extends Component {
           <Breadcrumb.Item>详情</Breadcrumb.Item>
         </Breadcrumb>
         <div className={styles.content}>
+        <HomeBanner className={styles.mb}/>
           <Row gutter={16}>
             <Col span={18}>
-              <HomeBanner />
-              <UsualProgram />
+              <UsualProgram className={styles.mb}/>
               {/* <div style={{ background: '#fff', marginBottom: 12, padding: 10 }}>
                 温馨提示:{' '}
                 <img
