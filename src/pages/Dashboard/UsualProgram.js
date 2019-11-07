@@ -36,9 +36,10 @@ export default class Workplace extends PureComponent {
     return (
       <div className={styles.margin}>
         <Card
+          className="blue-bg "
           title={
             <div>
-              <Icon type="profile" theme="twoTone" /> 常用程序
+             常用程序
             </div>
         }
           bordered={false}

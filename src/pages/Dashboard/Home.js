@@ -13,6 +13,7 @@ import {
   Popover,
   Drawer,
   Descriptions,
+  Carousel
 } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import numeral from 'numeral';
@@ -106,7 +107,11 @@ const data = [
 const IconFont = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1251765_mco4fu4f3kr.js',
 });
-
+const colorMap = {
+  '调休': '#faad14',
+  '公出': '#1890ff',
+  '请假': '#f5222d'
+}
 const holidayData = [
   {
     name: '李翠',
@@ -122,7 +127,7 @@ const holidayData = [
   },
   {
     name: '郑淑婷',
-    type: '调休',
+    type: '请假',
   },
   {
     name: '秦奋',
@@ -263,7 +268,7 @@ export default class Home extends Component {
             <Col span={18}>
               <HomeBanner />
               <UsualProgram />
-              <div style={{ background: '#fff', marginBottom: 12, padding: 10 }}>
+              {/* <div style={{ background: '#fff', marginBottom: 12, padding: 10 }}>
                 温馨提示:{' '}
                 <img
                   width={20}
@@ -275,25 +280,33 @@ export default class Home extends Component {
                   <a href="javascript:;">李子煜</a>{' '}
                 </Popover>
                 生日快乐
-              </div>
+              </div> */}
               <Row gutter={16}>
                 <Col span={12}>
                   <Card
                     hoverable
                     title={
                       <div>
-                        <Icon type="profile" theme="twoTone" /> 最新新闻
+                        最新新闻
                       </div>
                     }
+                    className="blue-bg"
                     bordered={false}
                     cover={
-                      <img
-                        alt="example"
-                        height={200}
-                        src="http://ww1.sinaimg.cn/large/006tNc79ly1g46wd1wiqjj30y60fqwop.jpg"
-                      />
+                      <Carousel autoplay>
+                        <img
+                          alt="example"
+                          height={200}
+                          src="http://5b0988e595225.cdn.sohucs.com/images/20180604/cec8268873f54e70acf9bed4d75fdc18.jpeg"
+                        />
+                        <img
+                          alt="example"
+                          height={200}
+                          src="http://ww1.sinaimg.cn/large/006tNc79ly1g46wd1wiqjj30y60fqwop.jpg"
+                        />
+                      </Carousel>
                     }
-                    extra={<a href="#">更多</a>}
+                    extra={<Icon style={{color: '#fff'}} type="more" />}
                   >
                     <List
                       itemLayout="horizontal"
@@ -302,7 +315,7 @@ export default class Home extends Component {
                         <List.Item actions={[<a>{item.time}</a>]}>
                           <List.Item.Meta
                             // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title={<a href="https://www.hyec.com">{item.title}</a>}
+                            title={<div className={styles.list} href="https://www.hyec.com">{item.title}</div>}
                           />
                         </List.Item>
                       )}
@@ -313,18 +326,33 @@ export default class Home extends Component {
                   <Card
                     title={
                       <div>
-                        <Icon type="tool" theme="twoTone" /> QHSE信息
+                     QHSE信息
                       </div>
                     }
                     bordered={false}
+                    className="blue-bg"
                     cover={
-                      <img
-                        alt="example"
-                        height={200}
-                        src="http://ww3.sinaimg.cn/large/006tNc79ly1g46wi972fxj31020h4ttq.jpg"
-                      />
+                      <Carousel autoplay>
+                        <img
+                          alt="example"
+                          height={200}
+                          src="http://ww3.sinaimg.cn/large/006tNc79ly1g46wi972fxj31020h4ttq.jpg"
+                        />
+                        <img
+                          alt="example"
+                          height={200}
+                          src="http://5b0988e595225.cdn.sohucs.com/images/20180604/cec8268873f54e70acf9bed4d75fdc18.jpeg"
+                        />
+                       
+                        <img
+                          alt="example"
+                          height={200}
+                          src="http://ww1.sinaimg.cn/large/006tNc79ly1g46wd1wiqjj30y60fqwop.jpg"
+                        />
+                      </Carousel>
+
                     }
-                    extra={<a href="#">更多</a>}
+                    extra={<Icon style={{color: '#fff'}} type="more" />}
                   >
                     <List
                       itemLayout="horizontal"
@@ -344,9 +372,10 @@ export default class Home extends Component {
               <Row gutter={16} style={{ marginTop: 14 }}>
                 <Col span={12}>
                   <Card
+                    className="blue-bg"
                     title={
                       <div>
-                        <Icon type="bulb" theme="twoTone" /> 知识经验
+                   知识经验
                       </div>
                     }
                     bordered={false}
@@ -357,7 +386,7 @@ export default class Home extends Component {
                         src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
                       />
                     }
-                    extra={<a href="#">更多</a>}
+                    extra={<Icon style={{color: '#fff'}} type="more" />}
                   >
                     <List
                       itemLayout="horizontal"
@@ -375,9 +404,10 @@ export default class Home extends Component {
                 </Col>
                 <Col span={12}>
                   <Card
+                    className="blue-bg"
                     title={
                       <div>
-                        <Icon type="book" theme="twoTone" /> 近期培训
+                      近期培训
                       </div>
                     }
                     bordered={false}
@@ -388,7 +418,7 @@ export default class Home extends Component {
                         src="http://ww4.sinaimg.cn/large/006tNc79ly1g46zehotlmj310k0hcx2w.jpg"
                       />
                     }
-                    extra={<a href="#">更多</a>}
+                    extra={<Icon style={{color: '#fff'}} type="more" />}
                   >
                     <List
                       itemLayout="horizontal"
@@ -408,9 +438,10 @@ export default class Home extends Component {
             </Col>
             <Col span={6}>
               <Card
+                className="blue-bg"
                 title={
                   <div>
-                    <Icon type="like" theme="twoTone" /> 高层学习分享
+               学习分享
                   </div>
                 }
                 bordered={false}
@@ -431,10 +462,11 @@ export default class Home extends Component {
                 <p>公司进行华谊园区停车场车棚建设</p>
               </Card>
               <Card
+                className="blue-bg"
                 style={{ marginTop: 14, height: 320, overflow: 'hidden' }}
                 title={
                   <div>
-                    <Icon type="flag" theme="twoTone" /> 今日请假
+                今日请假
                   </div>
                 }
                 bordered={false}
@@ -447,7 +479,7 @@ export default class Home extends Component {
                     split={false}
                     dataSource={holidayData}
                     renderItem={item => (
-                      <List.Item actions={[<a>{item.type}</a>]}>{item.name}</List.Item>
+                      <List.Item actions={[<a style={{color: colorMap[item.type]}}>{item.type}</a>]}>{item.name}</List.Item>
                     )}
                   />
                 </div>
@@ -638,21 +670,6 @@ export default class Home extends Component {
             </Col>
           </Row>
           <div />
-          <Row gutter={16} style={{ marginTop: 20 }}>
-            <Col span={12}>
-              <Card
-                title={
-                  <div>
-                    <Icon type="flag" theme="twoTone" /> 公司文化墙
-                  </div>
-                }
-                bordered={false}
-              >
-                <ImageList />
-              </Card>
-            </Col>
-            <Col span={12}>{/* <BarCharts /> */}</Col>
-          </Row>
 
           <Drawer
             title="完整日历"
@@ -664,21 +681,35 @@ export default class Home extends Component {
           >
             <Cc />
           </Drawer>
-          <Descriptions style={{ backgroundColor: '#fff', marginTop: 20, padding: '20px 20px 0' }}>
-            <Descriptions.Item>
-              <Badge status="processing" text=" 华谊信息运维" />
-              <p>6# 号楼: 李建新(703897) 丁毅(703895) 孟爽(703893) 钟强(703889) 李磊(709195)</p>
-            </Descriptions.Item>
-
-            <Descriptions.Item>
-              <Badge status="processing" text="大楼设备维修" />
-              <p>11# 号楼: 刘洪(703882)</p>
-            </Descriptions.Item>
-            <Descriptions.Item>
-              <Badge status="processing" text="公司门卫24小时值班电话" />
-              <p>6470588</p>
-            </Descriptions.Item>
-          </Descriptions>
+          <Card
+            className="blue-bg"
+            title={
+              <div>
+              服务中心
+              </div>
+            }
+            style={{ marginTop: 20 }}
+            bordered={false}
+          >
+            <div className={styles.serv}>
+              <div style={{width: '25%'}}>
+                <a>华谊信息运维</a>
+                <p>6# 号楼: <br />李建新(703897) 丁毅(703895) 孟爽(703893) <br />钟强(703889) 李磊(709195)</p>
+              </div>
+              <div style={{width: '25%'}}>
+                <a>大楼设备维修</a>
+                <p>11# 号楼: <br />刘洪(703882)</p>
+              </div>
+              <div style={{width: '25%'}}>
+                <a>联系电话</a>
+                <p className={styles.banci}> 
+                  <Icon style={{fontSize: '60px'}} type="phone" theme="twoTone" twoToneColor="orange" />
+                  <p style={{fontSize: '24px', color: 'orange', 'line-height': 1.2, 'marginTop': 14}}>6470588</p>
+                  <p style={{color: 'orange'}}>公司门卫24小时值班电话</p>
+                </p>
+              </div>
+            </div>
+          </Card>
         </div>
       </div>
     );

@@ -8,6 +8,8 @@ import HeaderSearch from '../HeaderSearch';
 import HeaderDropdown from '../HeaderDropdown';
 import SelectLang from '../SelectLang';
 import ValueImg from './value';
+import ImageList from "../../pages/Dashboard/imageList";
+
 import styles from './index.less';
 
 export default class GlobalHeaderRight extends Component {
@@ -140,7 +142,7 @@ export default class GlobalHeaderRight extends Component {
           height="auto"
           visible={this.state.visible}
         >
-          <ValueImg />
+          <ImageList />
         </Drawer>
         <HeaderSearch
           className={`${styles.action} ${styles.search}`}

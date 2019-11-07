@@ -9,8 +9,8 @@ export default class Demo extends Component {
   constructor() {
     super(...arguments);
     this.imgArray = [
-      'https://zos.alipayobjects.com/rmsportal/hzPBTkqtFpLlWCi.jpg',
-      'https://zos.alipayobjects.com/rmsportal/gGlUMYGEIvjDOOw.jpg',
+      'https://tva1.sinaimg.cn/large/006y8mN6ly1g8ph58rc3nj318g0lzq8p.jpg',
+      'https://tva1.sinaimg.cn/large/006y8mN6ly1g8ph55ngx0j318g0la7dn.jpg',
     ];
     this.state = {
       intShow: 0,
