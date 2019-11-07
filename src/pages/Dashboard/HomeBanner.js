@@ -9,8 +9,41 @@ export default class Demo extends Component {
   constructor() {
     super(...arguments);
     this.imgArray = [
-      'https://tva1.sinaimg.cn/large/006y8mN6ly1g8ph58rc3nj318g0lzq8p.jpg',
-      'https://tva1.sinaimg.cn/large/006y8mN6ly1g8ph55ngx0j318g0la7dn.jpg',
+      {
+        img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8ph55ngx0j318g0la7dn.jpg',
+        title: '五年规划',
+        content: <div>
+          战略定位： 化工领域的工程设计和项目管理服务商。。<br />
+        一. 承担集团产业的工程化，包括推进集团工程管理的标准化、集团的技术资源协同集成。<br />
+        二. 工程设计业务市场化运作，业内外结合。<br />
+        工程服务特色化。<br />
+        业务范围涵盖能源化工、氯碱化工、精细化工和环境保护四大业务板块，成为项目前期、技术许可、项目实施、开车服务和工厂运营等全过程的工程服务商；
+                 </div>
+      },
+      {
+        img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8pzv8xbgbj31hc0u0b2a.jpg',
+        title: '公司愿景',
+        content: 'HYEC 将成为让员工有为、使顾客满意、对股东有利和被社会认可的工程公司，并持之以恒地追求协力、创新和高效。'
+      }, {
+        img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8ph55ngx0j318g0la7dn.jpg',
+        title: '公司使命',
+        content: ' HYEC 将人才视为最宝贵财富，鼓励承担责任和适度竞争，关注员工的态度和 意愿，倡导员工持续的学习力，为员工职业发展提供合理的机制和空间； HYEC 将致力于为顾客提供满意服务，奉行高质量和高执行力标准，坚持职业 操守。'
+      },
+      {
+        img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8pzvct5vfj31hc0u0qv5.jpg',
+        title: '核心价值观',
+        content: ' HYEC 将人才视为最宝贵财富，鼓励承担责任和适度竞争，关注员工的态度和 意愿，倡导员工持续的学习力，为员工职业发展提供合理的机制和空间； HYEC 将致力于为顾客提供满意服务，奉行高质量和高执行力标准，坚持职业 操守。'
+      },
+      {
+        img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8pzyruyigj315o0nf79z.jpg',
+        title: '人才观',
+        content: ' HYEC 将人才视为最宝贵财富，鼓励承担责任和适度竞争，关注员工的态度和 意愿，倡导员工持续的学习力，为员工职业发展提供合理的机制和空间； HYEC 将致力于为顾客提供满意服务，奉行高质量和高执行力标准，坚持职业 操守。'
+      },
+      {
+        img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8ph55ngx0j318g0la7dn.jpg',
+        title: '职业发展观',
+        content: ' HYEC 将人才视为最宝贵财富，鼓励承担责任和适度竞争，关注员工的态度和 意愿，倡导员工持续的学习力，为员工职业发展提供合理的机制和空间； HYEC 将致力于为顾客提供满意服务，奉行高质量和高执行力标准，坚持职业 操守。'
+      }
     ];
     this.state = {
       intShow: 0,
@@ -73,7 +106,7 @@ export default class Demo extends Component {
       nextEnter: false,
     });
   }
-  
+
   onMouseEnter() {
     this.setState({
       thumbEnter: true,
@@ -88,62 +121,44 @@ export default class Demo extends Component {
 
   render() {
     const intArray = this.getNextPrevNumber();
-    const thumbChildren = this.imgArray.map((img, i) =>
-      <span key={i}><i style={{ backgroundImage: `url(${img})` }} /></span>
+    const thumbChildren = this.imgArray.map((v, i) =>
+      <span key={i}><i style={{ backgroundImage: `url(${v.img})` }} /></span>
         );
     return (
-      <BannerAnim 
-        onChange={this.onChange} 
-        onMouseEnter={this.onMouseEnter} 
-        onMouseLeave={this.onMouseLeave} 
+      <BannerAnim
+        onChange={this.onChange}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
         prefixCls="custom-arrow-thumb"
       >
-        <Element
-          key="aaa"
-          prefixCls="banner-user-elem"
-        >
-          <BgElement
-            key="bg"
-            className="bg"
-            style={{
-              backgroundImage: `url(${this.imgArray[0]})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          />
-          <TweenOne className="banner-user-title" animation={{ y: 30, opacity: 0, type: 'from' }}>
-            公司愿景
-          </TweenOne>
-          <TweenOne 
-            className="banner-user-text" 
-            animation={{ y: 30, opacity: 0, type: 'from', delay: 100 }}
-          >
-          HYEC 将成为让员工有为、使顾客满意、对股东有利和被社会认可的工程公司，并持之以恒地追求协力、创新和高效。
-          </TweenOne>
-        </Element>
-        <Element
-          key="bbb"
-          prefixCls="banner-user-elem"
-        >
-          <BgElement
-            key="bg"
-            className="bg"
-            style={{
-              backgroundImage: `url(${this.imgArray[1]})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          />
-          <TweenOne className="banner-user-title" animation={{ y: 30, opacity: 0, type: 'from' }}>
-          公司使命
-          </TweenOne>
-          <TweenOne 
-            className="banner-user-text" 
-            animation={{ y: 30, opacity: 0, type: 'from', delay: 100 }}
-          >
-          HYEC 将人才视为最宝贵财富，鼓励承担责任和适度竞争，关注员工的态度和 意愿，倡导员工持续的学习力，为员工职业发展提供合理的机制和空间； HYEC 将致力于为顾客提供满意服务，奉行高质量和高执行力标准，坚持职业 操守。
-          </TweenOne>
-        </Element>
+        {this.imgArray.map((v,index) => {
+          return (
+            <Element
+              key={index}
+              prefixCls="banner-user-elem"
+            >
+              <BgElement
+                key="bg"
+                className="bg"
+                style={{
+                backgroundImage: `url(${v.img})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+              />
+              <TweenOne className="banner-user-title" animation={{ y: 30, opacity: 0, type: 'from' }}>
+                {v.title}
+              </TweenOne>
+              <TweenOne
+                className="banner-user-text"
+                animation={{ y: 30, opacity: 0, type: 'from', delay: 100 }}
+              >
+                {v.content}
+              </TweenOne>
+            </Element>
+          )
+        })}
+
         <Arrow
           arrowType="prev"
           key="prev"
@@ -154,14 +169,14 @@ export default class Demo extends Component {
           animation={{ left: this.state.prevEnter ? 0 : -120 }}
         >
           <div className="arrow" />
-          <TweenOneGroup 
-            enter={{ opacity: 0, type: 'from' }} 
-            leave={{ opacity: 0 }} 
-            appear={false} 
+          <TweenOneGroup
+            enter={{ opacity: 0, type: 'from' }}
+            leave={{ opacity: 0 }}
+            appear={false}
             className="img-wrapper"
             component="ul"
           >
-            <li style={{ backgroundImage: `url(${this.imgArray[intArray[0]]})`}} key={intArray[0]} />
+            <li style={{ backgroundImage: `url(${this.imgArray[intArray[0]].img})`}} key={intArray[0]} />
           </TweenOneGroup>
         </Arrow>
         <Arrow
@@ -174,14 +189,14 @@ export default class Demo extends Component {
           animation={{ right: this.state.nextEnter ? 0 : -120 }}
         >
           <div className="arrow" />
-          <TweenOneGroup 
-            enter={{ opacity: 0, type: 'from' }} 
-            leave={{ opacity: 0 }} 
-            appear={false} 
-            className="img-wrapper" 
+          <TweenOneGroup
+            enter={{ opacity: 0, type: 'from' }}
+            leave={{ opacity: 0 }}
+            appear={false}
+            className="img-wrapper"
             component="ul"
           >
-            <li style={{ backgroundImage: `url(${this.imgArray[intArray[1]]})`}} key={intArray[1]} />
+            <li style={{ backgroundImage: `url(${this.imgArray[intArray[1]].img})`}} key={intArray[1]} />
           </TweenOneGroup>
         </Arrow>
         <Thumb

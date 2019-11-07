@@ -125,7 +125,7 @@ export default class GlobalHeaderRight extends Component {
     return (
       <div className={className}>
         <Tag color="geekblue" onClick={() => this.setState({ visible: true })}>
-          公司价值
+          公司文化墙
         </Tag>
         {/* <div className={styles.wrap}>
           <Tag color="geekblue">公司愿景</Tag>
@@ -142,7 +142,9 @@ export default class GlobalHeaderRight extends Component {
           height="auto"
           visible={this.state.visible}
         >
-          <ImageList />
+          <div style={{margin: '0 auto', width: 550}}>
+            <ImageList />
+          </div>
         </Drawer>
         <HeaderSearch
           className={`${styles.action} ${styles.search}`}

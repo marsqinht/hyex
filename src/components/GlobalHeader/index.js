@@ -30,6 +30,24 @@ const info = (
     </div>
   </div>
 );
+
+const content = (name) => {
+  return (
+    <div>
+      <span style={{color: '#ff4d4f'}}>温馨提示:</span>{' '}
+      <img
+        width={20}
+        height={20}
+        src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pq10s10tg305k05kq2r.gif"
+      />
+    诚祝{' '}
+      <Popover content={info} title="员工信息" placement="rightBottom">
+        <a href="javascript:;">李子煜</a>{' '}
+      </Popover>
+    生日快乐
+    </div>
+  )
+}
 export default class GlobalHeader extends PureComponent {
   componentWillUnmount() {
     this.triggerResizeEvent.cancel();
@@ -61,17 +79,19 @@ export default class GlobalHeader extends PureComponent {
         </span>
         <div style={{ background: '#fff', marginBottom: 12, padding: 10, display: 'inline-block',
     'line-height': 1 }}>
-                <span style={{color: '#ff4d4f'}}>温馨提示:</span>{' '}
-                <img
-                  width={20}
-                  height={20}
-                  src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pq10s10tg305k05kq2r.gif"
-                />
-                诚祝{' '}
-                <Popover content={info} title="员工信息" placement="rightBottom">
-                  <a href="javascript:;">李子煜</a>{' '}
-                </Popover>
-                生日快乐
+      <div>
+      <span style={{color: '#ff4d4f'}}>温馨提示:</span>{' '}
+      <img
+        width={20}
+        height={20}
+        src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pq10s10tg305k05kq2r.gif"
+      />
+    诚祝{' '}
+      <Popover content={info} title="员工信息" placement="rightBottom">
+        <a href="javascript:;">李子煜</a>{' '}
+      </Popover>
+    生日快乐
+    </div>
               </div>
         <RightContent {...this.props} />
       </div>

@@ -5,7 +5,7 @@ import styles from './Home.less';
 const Items = [
   {
     icon: 'iconmonitor',
-    name: 'HYPM项目平台'
+    name: 'HYPM平台'
   },
   {
     icon: 'icondingcan',

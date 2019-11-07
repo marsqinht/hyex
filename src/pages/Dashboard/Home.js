@@ -264,10 +264,13 @@ export default class Home extends Component {
           <Breadcrumb.Item>详情</Breadcrumb.Item>
         </Breadcrumb>
         <div className={styles.content}>
-        <HomeBanner className={styles.mb}/>
+          <div className={styles.mb}>
+            <HomeBanner />
+          </div>
           <Row gutter={16}>
             <Col span={18}>
-              <UsualProgram className={styles.mb}/>
+              {/* <div className={styles.mb}>
+              </div> */}
               {/* <div style={{ background: '#fff', marginBottom: 12, padding: 10 }}>
                 温馨提示:{' '}
                 <img
@@ -343,7 +346,7 @@ export default class Home extends Component {
                           height={200}
                           src="http://5b0988e595225.cdn.sohucs.com/images/20180604/cec8268873f54e70acf9bed4d75fdc18.jpeg"
                         />
-                       
+
                         <img
                           alt="example"
                           height={200}
@@ -361,7 +364,7 @@ export default class Home extends Component {
                         <List.Item actions={[<a>{item.time}</a>]}>
                           <List.Item.Meta
                             // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title={<a href="https://www.hyec.com">{item.title}</a>}
+                            title={<div className={styles.list} href="https://www.hyec.com">{item.title}</div>}
                           />
                         </List.Item>
                       )}
@@ -380,11 +383,13 @@ export default class Home extends Component {
                     }
                     bordered={false}
                     cover={
-                      <img
+                      <Carousel autoplay>
+                        <img
                         alt="example"
                         height={200}
                         src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
                       />
+                      </Carousel>
                     }
                     extra={<Icon style={{color: '#fff'}} type="more" />}
                   >
@@ -395,7 +400,7 @@ export default class Home extends Component {
                         <List.Item actions={[<a>{item.time}</a>]}>
                           <List.Item.Meta
                             // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title={<a href="https://www.hyec.com">{item.title}</a>}
+                            title={<div className={styles.list} href="https://www.hyec.com">{item.title}</div>}
                           />
                         </List.Item>
                       )}
@@ -412,11 +417,13 @@ export default class Home extends Component {
                     }
                     bordered={false}
                     cover={
-                      <img
+                      <Carousel autoplay>
+                        <img
                         alt="example"
                         height={200}
                         src="http://ww4.sinaimg.cn/large/006tNc79ly1g46zehotlmj310k0hcx2w.jpg"
                       />
+                      </Carousel>
                     }
                     extra={<Icon style={{color: '#fff'}} type="more" />}
                   >
@@ -427,14 +434,57 @@ export default class Home extends Component {
                         <List.Item actions={[<a>{item.time}</a>]}>
                           <List.Item.Meta
                             // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title={<a href="https://www.hyec.com">{item.title}</a>}
+                            title={<div className={styles.list} href="https://www.hyec.com">{item.title}</div>}
                           />
                         </List.Item>
                       )}
                     />
                   </Card>
+
                 </Col>
+
               </Row>
+              <Card
+                className="blue-bg"
+                title={
+                  <div>
+              新闻
+                  </div>
+            }
+                style={{ marginTop: 20 }}
+                bordered={false}
+              >
+                <div className={styles.wrap}>
+                  <div className={styles.carousel1}>
+                    <Carousel dotPosition="right" autoplay>
+                      <img
+                        alt="example"
+                        height={200}
+                        width={300}
+                        src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
+                      />
+                      <img
+                        alt="example"
+                        width={300}
+                        height={200}
+                        src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
+                      />
+                    </Carousel>
+                  </div>
+                  <List
+                    itemLayout="horizontal"
+                    dataSource={data}
+                    renderItem={item => (
+                      <List.Item actions={[<a>{item.time}</a>]}>
+                        <List.Item.Meta
+                            // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                          title={<div className={styles.list} href="https://www.hyec.com">{item.title}</div>}
+                        />
+                      </List.Item>
+                      )}
+                  />
+                </div>
+              </Card>
             </Col>
             <Col span={6}>
               <Card
@@ -447,19 +497,19 @@ export default class Home extends Component {
                 bordered={false}
               >
                 <Popover placement="leftTop" content={content} title="活动" trigger="hover">
-                  <p>公司开展“大手牵小手，阳光谊路走</p>
+                  <p className={styles.gaoceng}>公司开展“大手牵小手，阳光谊路走</p>
                 </Popover>
                 <Popover placement="leftTop" content={content} title="活动" trigger="hover">
-                  <p>公司召开庆“七一”党员、干部暨先进表彰大会</p>
+                  <p className={styles.gaoceng}>公司召开庆“七一”党员、干部暨先进表彰大会</p>
                 </Popover>
                 <Popover placement="leftTop" content={content} title="活动" trigger="hover">
-                  <p>公司召开党委、纪委换届选举启动</p>
+                  <p className={styles.gaoceng}>公司召开党委、纪委换届选举启动</p>
                 </Popover>
                 <Popover placement="leftTop" content={content} title="活动" trigger="hover">
-                  <p>公司党委下基层调研党建工作</p>
+                  <p className={styles.gaoceng}>公司党委下基层调研党建工作</p>
                 </Popover>
 
-                <p>公司进行华谊园区停车场车棚建设</p>
+                <p className={styles.gaoceng}>公司进行华谊园区停车场车棚建设</p>
               </Card>
               <Card
                 className="blue-bg"
@@ -484,143 +534,9 @@ export default class Home extends Component {
                   />
                 </div>
               </Card>
-              <ChartCard
-                bordered={false}
-                style={{ marginTop: 14 }}
-                title={
-                  <FormattedMessage id="app.analysis.total-sales" defaultMessage="Total Sales" />
-                }
-                action={
-                  <Tooltip
-                    title={
-                      <FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />
-                    }
-                  >
-                    <Icon type="info-circle-o" />
-                  </Tooltip>
-                }
-                total={() => <Yuan>126560</Yuan>}
-                footer={
-                  <Field
-                    label={
-                      <FormattedMessage id="app.analysis.day-sales" defaultMessage="Daily Sales" />
-                    }
-                    value={`￥${numeral(12423).format('0,0')}`}
-                  />
-                }
-                contentHeight={46}
-              >
-                <Trend flag="up" style={{ marginRight: 16 }}>
-                  <FormattedMessage id="app.analysis.week" defaultMessage="Weekly Changes" />
-                  <span className={styles.trendText}>12%</span>
-                </Trend>
-                <Trend flag="down">
-                  <FormattedMessage id="app.analysis.day" defaultMessage="Daily Changes" />
-                  <span className={styles.trendText}>11%</span>
-                </Trend>
-              </ChartCard>
-              <ChartCard
-                bordered={false}
-                style={{ marginTop: 14 }}
-                // loading={loading}
-                title="访问量"
-                action={
-                  <Tooltip
-                    title={
-                      <FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />
-                    }
-                  >
-                    <Icon type="info-circle-o" />
-                  </Tooltip>
-                }
-                total={numeral(8846).format('0,0')}
-                footer={
-                  <Field
-                    label={
-                      <FormattedMessage
-                        id="app.analysis.day-visits"
-                        defaultMessage="Daily Visits"
-                      />
-                    }
-                    value={numeral(1234).format('0,0')}
-                  />
-                }
-                contentHeight={46}
-              >
-                <MiniArea color="#975FE4" data={visitData} />
-              </ChartCard>
-              <ChartCard
-                bordered={false}
-                style={{ marginTop: 14 }}
-                title={<FormattedMessage id="app.analysis.payments" defaultMessage="Payments" />}
-                action={
-                  <Tooltip
-                    title={
-                      <FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />
-                    }
-                  >
-                    <Icon type="info-circle-o" />
-                  </Tooltip>
-                }
-                total={numeral(6560).format('0,0')}
-                footer={
-                  <Field
-                    label={
-                      <FormattedMessage
-                        id="app.analysis.conversion-rate"
-                        defaultMessage="Conversion Rate"
-                      />
-                    }
-                    value="60%"
-                  />
-                }
-                contentHeight={46}
-              >
-                <MiniBar data={visitData} />
-              </ChartCard>
-              <ChartCard
-                bordered={false}
-                style={{ marginTop: 14 }}
-                title={
-                  <FormattedMessage
-                    id="app.analysis.operational-effect"
-                    defaultMessage="Operational Effect"
-                  />
-                }
-                action={
-                  <Tooltip
-                    title={
-                      <FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />
-                    }
-                  >
-                    <Icon type="info-circle-o" />
-                  </Tooltip>
-                }
-                total="78%"
-                footer={
-                  <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
-                    <Trend flag="up" style={{ marginRight: 16 }}>
-                      <FormattedMessage id="app.analysis.week" defaultMessage="Weekly Changes" />
-                      <span className={styles.trendText}>12%</span>
-                    </Trend>
-                    <Trend flag="down">
-                      <FormattedMessage id="app.analysis.day" defaultMessage="Weekly Changes" />
-                      <span className={styles.trendText}>11%</span>
-                    </Trend>
-                  </div>
-                }
-                contentHeight={46}
-              >
-                <MiniProgress
-                  percent={78}
-                  strokeWidth={8}
-                  target={80}
-                  targetLabel={`${formatMessage({
-                    id: 'component.miniProgress.tooltipDefault',
-                  }).concat(': ')}80%`}
-                  color="#13C2C2"
-                />
-              </ChartCard>
+              <div className={styles.margin}>
+                <UsualProgram />
+              </div>
             </Col>
           </Row>
 
@@ -667,7 +583,9 @@ export default class Home extends Component {
                   )}
                 />
               </div>
+
             </Col>
+
           </Row>
           <div />
 
@@ -702,7 +620,7 @@ export default class Home extends Component {
               </div>
               <div style={{width: '25%'}}>
                 <a>联系电话</a>
-                <p className={styles.banci}> 
+                <p className={styles.banci}>
                   <Icon style={{fontSize: '60px'}} type="phone" theme="twoTone" twoToneColor="orange" />
                   <p style={{fontSize: '24px', color: 'orange', 'line-height': 1.2, 'marginTop': 14}}>6470588</p>
                   <p style={{color: 'orange'}}>公司门卫24小时值班电话</p>
