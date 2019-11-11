@@ -73,7 +73,7 @@ class BasicLayout extends React.Component {
     const { fixSiderbar, isMobile, collapsed, layout } = this.props;
     if (fixSiderbar && layout !== 'topmenu' && !isMobile) {
       return {
-        paddingLeft: collapsed ? '80px' : '256px',
+        paddingLeft: collapsed ? '80px' : '200px',
       };
     }
     return null;
@@ -115,7 +115,11 @@ class BasicLayout extends React.Component {
     const isTop = PropsLayout === 'topmenu';
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
     const layout = (
-      <Layout>
+      <Layout style={{
+        height: '100vh',
+        overflow: 'hidden'
+      }}
+      >
         {isTop && !isMobile ? null : (
           <SiderMenu
             logo="http://ww2.sinaimg.cn/large/006tNc79ly1g459noddngj306e06ewei.jpg"
@@ -124,12 +128,14 @@ class BasicLayout extends React.Component {
             menuData={menuData}
             isMobile={isMobile}
             {...this.props}
+            className="custom-aside"
           />
         )}
         <Layout
           style={{
             ...this.getLayoutStyle(),
             minHeight: '100vh',
+            overflow: 'scroll'
           }}
         >
           <Header
@@ -169,6 +175,7 @@ export default connect(({ global, setting, menu: menuModel }) => ({
   menuData: menuModel.menuData,
   breadcrumbNameMap: menuModel.breadcrumbNameMap,
   ...setting,
+  fixedHeader: true
 }))(props => (
   <Media query="(max-width: 599px)">
     {isMobile => <BasicLayout {...props} isMobile={isMobile} />}

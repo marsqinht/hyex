@@ -100,7 +100,7 @@ export default class Jijian extends Component {
 
   render() {
     return (
-      <div>
+      <Card>
         <Tabs defaultActiveKey="1" type="card">
           {tabs.map(tab => {
             return (
@@ -125,7 +125,7 @@ export default class Jijian extends Component {
             );
           })}
         </Tabs>
-      </div>
+      </Card>
     );
   }
 }

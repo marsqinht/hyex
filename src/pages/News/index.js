@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { List, Avatar, Icon, Button, Select, Modal, Tabs, Upload, message } from 'antd';
 import router from 'umi/router';
 import Detail from './detail';
+import { queryNews } from '../../services/new';
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -48,6 +49,13 @@ export default class News extends Component {
   state = {
     visible: false,
   };
+
+  componentDidMount() {
+    // queryNews({
+    //   page: 1,
+    //   size: 15
+    // })
+  }
 
   handleOk = () => {
     this.setState({
