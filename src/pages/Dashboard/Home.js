@@ -304,12 +304,10 @@ export default class Home extends Component {
                       <Carousel autoplay>
                         <img
                           alt="example"
-                          height={200}
                           src="http://5b0988e595225.cdn.sohucs.com/images/20180604/cec8268873f54e70acf9bed4d75fdc18.jpeg"
                         />
                         <img
                           alt="example"
-                          height={200}
                           src="http://ww1.sinaimg.cn/large/006tNc79ly1g46wd1wiqjj30y60fqwop.jpg"
                         />
                       </Carousel>
@@ -348,18 +346,15 @@ export default class Home extends Component {
                       <Carousel autoplay>
                         <img
                           alt="example"
-                          height={200}
                           src="http://ww3.sinaimg.cn/large/006tNc79ly1g46wi972fxj31020h4ttq.jpg"
                         />
                         <img
                           alt="example"
-                          height={200}
                           src="http://5b0988e595225.cdn.sohucs.com/images/20180604/cec8268873f54e70acf9bed4d75fdc18.jpeg"
                         />
 
                         <img
                           alt="example"
-                          height={200}
                           src="http://ww1.sinaimg.cn/large/006tNc79ly1g46wd1wiqjj30y60fqwop.jpg"
                         />
                       </Carousel>
@@ -401,7 +396,6 @@ export default class Home extends Component {
                       <Carousel autoplay>
                         <img
                           alt="example"
-                          height={200}
                           src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
                         />
                       </Carousel>
@@ -440,7 +434,6 @@ export default class Home extends Component {
                       <Carousel autoplay>
                         <img
                           alt="example"
-                          height={200}
                           src="http://ww4.sinaimg.cn/large/006tNc79ly1g46zehotlmj310k0hcx2w.jpg"
                         />
                       </Carousel>
@@ -484,14 +477,12 @@ export default class Home extends Component {
                     <Carousel dotPosition="right" autoplay>
                       <img
                         alt="example"
-                        height={200}
                         width={300}
                         src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
                       />
                       <img
                         alt="example"
                         width={300}
-                        height={200}
                         src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
                       />
                     </Carousel>
