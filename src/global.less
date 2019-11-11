@@ -12,16 +12,25 @@ body,
 .mb-20 {
   margin-bottom: 20px;
 }
-// .ant-layout {
-//   background-image: linear-gradient(#e6f7ff, transparent)!important;
-// }
+.ant-layout {
+  background-image: linear-gradient(#e6f7ff, transparent)!important;
+}
 .ant-menu-root {
   color: rgba(255, 255, 255, 0.65);
   /* background: #001529; */
-  background-image: linear-gradient(#001529, #5A6B7A)!important;
+  // background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g8svc3jvtnj30740jbabs.jpg)!important;
+  // background-size: 100%!important;
+  // background-repeat: no-repeat!important;
+  // background-position: center bottom;
+  background-image: linear-gradient(#001529, #042F67)!important;
 }
 .ant-layout-sider {
-  background: #5A6B7A!important;
+  background: #042F67 url(https://tva1.sinaimg.cn/large/006y8mN6ly1g8svc3jvtnj30740jbabs.jpg) center no-repeat!important;
+ // background: #001529  bottom no-repeat!important;
+//  background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g8svc3jvtnj30740jbabs.jpg)!important;
+//  background-size: 100%!important;
+//  background-repeat: no-repeat!important;
+ //  background: #5A6B7A!important;
 }
 .antd-pro-components-sider-menu-index-logo {
 
@@ -29,7 +38,7 @@ body,
 }
 .blue-bg {
   .ant-card-head {
-    background: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g8pjbw3d9lj31ds02umxi.jpg) right no-repeat;
+    background: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g8sttr231cj30so01ka9z.jpg) right no-repeat;
     background-size: 100% 100%;
     color: #fff;
     padding: 0 14px;
@@ -40,6 +49,12 @@ body,
   .ant-card-head-title {
     padding: 10px 0;
   }
+  .ant-card-body {
+    padding: 16px;
+  }
+  .ant-list-item {
+    padding: 8px 0;
+}
 }
 .ant-card:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -2872,14 +2887,14 @@ section.markdown {
   overflow: hidden;
 }
 .banner-user-elem .banner-user-text {
-  top: 20%;
+  top: 14%;
   color: #fff;
   left: 10%;
-  width: 400px;
+  max-width: 500px;
 }
 .banner-user-elem .banner-user-title {
   font-size: 32px;
-  top: 20%;
+  top: 14%;
   left: 10%;
   color: #fff;
 }

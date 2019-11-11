@@ -12,7 +12,8 @@ import {
   Tooltip,
   Popover,
   Drawer,
-  Descriptions,
+  Descriptions,Tag,
+  Button,
   Carousel
 } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
@@ -88,7 +89,7 @@ const info = (
 const data = [
   {
     title: '中共上海华谊工程有限公司第二次党员大会隆重召开',
-    time: '2019-06-06',
+    time: '2019-11-08',
   },
   {
     title: '华谊工程召开2018年度QHSE体系管理评审会',
@@ -250,6 +251,10 @@ export default class Home extends Component {
     });
   };
 
+  renderNew = time => {
+    return new Date().getTime() - new Date(time).getTime() < 259200000;
+  };
+
   render() {
     return (
       <div>
@@ -315,11 +320,16 @@ export default class Home extends Component {
                       itemLayout="horizontal"
                       dataSource={data}
                       renderItem={item => (
-                        <List.Item actions={[<a>{item.time}</a>]}>
-                          <List.Item.Meta
-                            // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title={<div className={styles.list} href="https://www.hyec.com">{item.title}</div>}
-                          />
+                        <List.Item>
+                          <div className={styles.newList}>
+                            <Tooltip placement="top" title={item.title}>
+
+                              <div className={styles.newsTitle}>{item.title}</div>
+                            </Tooltip>
+                            {this.renderNew(item.time) && (<div className={styles.newTag} />)}
+                            <Button className={styles.time} type="link">{item.time}</Button>
+
+                          </div>
                         </List.Item>
                       )}
                     />
@@ -361,11 +371,16 @@ export default class Home extends Component {
                       itemLayout="horizontal"
                       dataSource={data}
                       renderItem={item => (
-                        <List.Item actions={[<a>{item.time}</a>]}>
-                          <List.Item.Meta
-                            // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title={<div className={styles.list} href="https://www.hyec.com">{item.title}</div>}
-                          />
+                        <List.Item>
+                          <div className={styles.newList}>
+                            <Tooltip placement="top" title={item.title}>
+
+                              <div className={styles.newsTitle}>{item.title}</div>
+                            </Tooltip>
+                            {this.renderNew(item.time) && (<div className={styles.newTag} />)}
+                            <Button className={styles.time} type="link">{item.time}</Button>
+
+                          </div>
                         </List.Item>
                       )}
                     />
@@ -385,10 +400,10 @@ export default class Home extends Component {
                     cover={
                       <Carousel autoplay>
                         <img
-                        alt="example"
-                        height={200}
-                        src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
-                      />
+                          alt="example"
+                          height={200}
+                          src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
+                        />
                       </Carousel>
                     }
                     extra={<Icon style={{color: '#fff'}} type="more" />}
@@ -397,11 +412,16 @@ export default class Home extends Component {
                       itemLayout="horizontal"
                       dataSource={data}
                       renderItem={item => (
-                        <List.Item actions={[<a>{item.time}</a>]}>
-                          <List.Item.Meta
-                            // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title={<div className={styles.list} href="https://www.hyec.com">{item.title}</div>}
-                          />
+                        <List.Item>
+                          <div className={styles.newList}>
+                            <Tooltip placement="top" title={item.title}>
+
+                              <div className={styles.newsTitle}>{item.title}</div>
+                            </Tooltip>
+                            {this.renderNew(item.time) && (<div className={styles.newTag} />)}
+                            <Button className={styles.time} type="link">{item.time}</Button>
+
+                          </div>
                         </List.Item>
                       )}
                     />
@@ -419,10 +439,10 @@ export default class Home extends Component {
                     cover={
                       <Carousel autoplay>
                         <img
-                        alt="example"
-                        height={200}
-                        src="http://ww4.sinaimg.cn/large/006tNc79ly1g46zehotlmj310k0hcx2w.jpg"
-                      />
+                          alt="example"
+                          height={200}
+                          src="http://ww4.sinaimg.cn/large/006tNc79ly1g46zehotlmj310k0hcx2w.jpg"
+                        />
                       </Carousel>
                     }
                     extra={<Icon style={{color: '#fff'}} type="more" />}
@@ -431,11 +451,16 @@ export default class Home extends Component {
                       itemLayout="horizontal"
                       dataSource={data}
                       renderItem={item => (
-                        <List.Item actions={[<a>{item.time}</a>]}>
-                          <List.Item.Meta
-                            // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title={<div className={styles.list} href="https://www.hyec.com">{item.title}</div>}
-                          />
+                        <List.Item>
+                          <div className={styles.newList}>
+                            <Tooltip placement="top" title={item.title}>
+
+                              <div className={styles.newsTitle}>{item.title}</div>
+                            </Tooltip>
+                            {this.renderNew(item.time) && (<div className={styles.newTag} />)}
+                            <Button className={styles.time} type="link">{item.time}</Button>
+
+                          </div>
                         </List.Item>
                       )}
                     />
@@ -475,11 +500,14 @@ export default class Home extends Component {
                     itemLayout="horizontal"
                     dataSource={data}
                     renderItem={item => (
-                      <List.Item actions={[<a>{item.time}</a>]}>
-                        <List.Item.Meta
-                            // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                          title={<div className={styles.list} href="https://www.hyec.com">{item.title}</div>}
-                        />
+                      <List.Item>
+                        <div className={styles.newList}>
+                          <Tooltip placement="top" title={item.title}>
+
+                            <div className={styles.newsTitle}>{item.title}</div>
+                          </Tooltip>
+                          <Button className={styles.time} type="link">{item.time}</Button>
+                        </div>
                       </List.Item>
                       )}
                   />
