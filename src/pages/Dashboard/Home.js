@@ -20,6 +20,7 @@ import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import numeral from 'numeral';
 import moment from 'moment';
 import QueueAnim from 'rc-queue-anim';
+import router from 'umi/router';
 import Trend from '@/components/Trend';
 import Yuan from '@/utils/Yuan';
 
@@ -274,6 +275,10 @@ export default class Home extends Component {
     return new Date().getTime() - new Date(time).getTime() < 259200000;
   };
 
+  goDetail = (currentPage =1, index =1) => {
+    router.push(`/dashboard/detail/${currentPage}/${index}`);
+  };
+
   render() {
     const { newsList } = this.state;
     return (
@@ -341,7 +346,7 @@ export default class Home extends Component {
                       split={false}
                       renderItem={item => (
                         <List.Item>
-                          <div className={styles.newList}>
+                          <div className={styles.newList} onClick={()=>this.goDetail()}>
                             <Tooltip placement="top" title={item.NewsName}>
 
                               <div className={styles.newsTitle}>{item.NewsName}</div>
@@ -420,7 +425,7 @@ export default class Home extends Component {
                       <Carousel autoplay>
                         <img
                           alt="example"
-                          height={300}
+                          height={230}
                           src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
                         />
                       </Carousel>
@@ -461,7 +466,7 @@ export default class Home extends Component {
                       <Carousel autoplay>
                         <img
                           alt="example"
-                          height={300}
+                          height={230}
                           src="http://ww4.sinaimg.cn/large/006tNc79ly1g46zehotlmj310k0hcx2w.jpg"
                         />
                       </Carousel>
@@ -567,12 +572,16 @@ export default class Home extends Component {
                     flex: 1,
                   }}
                 >
-                  <Calendar fullscreen={false} onPanelChange={onPanelChange}  dateCellRender={(time) => {
+                  <Calendar
+                    fullscreen={false}
+                    onPanelChange={onPanelChange}
+                    dateCellRender={(time) => {
                     const day = moment(time).format('D');
                     if(day === '8' || day === '21' || day === '26') {
                       return  <div className="flex-center"><Tag color="red">会</Tag></div>
                     }
-                  }}/>
+                  }}
+                  />
                 </div>
               </div>
             </Col>

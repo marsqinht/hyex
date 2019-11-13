@@ -51,7 +51,7 @@ export default [
           //   component: './News/animate',
           // },
           {
-            path: '/dashboard/detail/:id',
+            path: '/dashboard/detail/:page/:index',
             name: 'newsDtetail',
             hideInMenu: true,
             component: './News/detail',

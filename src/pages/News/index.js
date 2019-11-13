@@ -3,6 +3,7 @@ import { List, Avatar, Icon, Button, Select, Modal, Tabs, Upload, message } from
 import router from 'umi/router';
 import moment from 'moment';
 
+
 // import Detail from './detail';
 
 import { queryNews } from '../../services/new';
@@ -52,7 +53,8 @@ export default class News extends Component {
   state = {
     visible: false,
     total: 0,
-    list: []
+    list: [],
+    currentPage: 1
   };
 
   componentDidMount() {
@@ -67,7 +69,8 @@ export default class News extends Component {
       if(success) {
         this.setState({
           list: data,
-          total
+          total,
+          currentPage: 1
         })
       }
     })
@@ -91,12 +94,12 @@ export default class News extends Component {
     });
   };
 
-  goDetail = () => {
-    router.push('/dashboard/detail/34');
+  goDetail = (currentPage, index) => {
+    router.push(`/dashboard/detail/${currentPage}/${index}`);
   };
 
   render() {
-    const { visible, list, total } = this.state;
+    const { visible, list, total, currentPage } = this.state;
     return (
       <div>
         <Modal
@@ -151,13 +154,16 @@ export default class News extends Component {
           style={{ backgroundColor: '#fff', padding: '0 20px 30px' }}
           pagination={{
             onChange: page => {
+              this.setState({
+                currentPage: page
+              })
               this.getNewsList(page);
             },
             total,
             pageSize: 15,
           }}
           dataSource={list}
-          renderItem={item => (
+          renderItem={(item,index) => (
             <List.Item
               key={item.NewsName}
               actions={[
@@ -169,7 +175,7 @@ export default class News extends Component {
             >
               <List.Item.Meta
                 title={
-                  <a href="javascript:;" onClick={this.goDetail}>
+                  <a href="javascript:;" onClick={()=> this.goDetail(currentPage, index)}>
                     {item.NewsName}
                   </a>
                 }
