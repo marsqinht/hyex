@@ -161,9 +161,9 @@ export default class News extends Component {
             <List.Item
               key={item.NewsName}
               actions={[
-                <IconText type="star-o" text="156" key="list-vertical-star-o" />,
                 <IconText type="like-o" text="156" key="list-vertical-like-o" />,
                 <IconText type="message" text="2" key="list-vertical-message" />,
+                item.NewsData.length && <Button type="link" href={item.NewsData.length && item.NewsData[0].ServerUrl} target="blank">附件: {item.NewsData.length && item.NewsData[0].FileName}</Button>,
                 <Button type="link">{moment(item.RegDate).format('YYYY-MM-DD')}</Button>,
               ]}
             >

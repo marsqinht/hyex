@@ -337,6 +337,8 @@ export default class Home extends Component {
                     <List
                       itemLayout="horizontal"
                       dataSource={newsList}
+                      bordered={false}
+                      split={false}
                       renderItem={item => (
                         <List.Item>
                           <div className={styles.newList}>
@@ -385,6 +387,8 @@ export default class Home extends Component {
                     <List
                       itemLayout="horizontal"
                       dataSource={data}
+                      bordered={false}
+                      split={false}
                       renderItem={item => (
                         <List.Item>
                           <div className={styles.newList}>
@@ -425,6 +429,8 @@ export default class Home extends Component {
                     <List
                       itemLayout="horizontal"
                       dataSource={data}
+                      bordered={false}
+                      split={false}
                       renderItem={item => (
                         <List.Item>
                           <div className={styles.newList}>
@@ -463,6 +469,8 @@ export default class Home extends Component {
                     <List
                       itemLayout="horizontal"
                       dataSource={data}
+                      bordered={false}
+                      split={false}
                       renderItem={item => (
                         <List.Item>
                           <div className={styles.newList}>
@@ -486,7 +494,7 @@ export default class Home extends Component {
             </Col>
             <Col span={6}>
               <Card
-                className="blue-bg"
+                className="blue-bg grandient-bg"
                 title={
                   <div>
                学习分享
@@ -510,7 +518,7 @@ export default class Home extends Component {
                 <p className={styles.gaoceng}>公司进行华谊园区停车场车棚建设</p>
               </Card>
               <Card
-                className="blue-bg"
+                className="blue-bg grandient-bg"
                 style={{ marginTop: 14, height: 320, overflow: 'hidden' }}
                 title={
                   <div>
@@ -604,7 +612,7 @@ export default class Home extends Component {
             <Cc />
           </Drawer>
           <Card
-            className="blue-bg"
+            className="blue-bg grandient-bg"
             title={
               <div>
               服务中心

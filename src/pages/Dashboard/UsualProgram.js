@@ -36,7 +36,7 @@ export default class Workplace extends PureComponent {
     return (
       <div>
         <Card
-          className="blue-bg "
+          className="blue-bg grandient-bg"
           title={
             <div>
              常用程序
