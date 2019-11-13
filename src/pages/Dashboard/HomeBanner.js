@@ -209,6 +209,7 @@ export default class Demo extends Component {
         onMouseLeave={this.onMouseLeave}
         prefixCls="custom-arrow-thumb"
         autoPlay
+        autoPlaySpeed={10000}
       >
         {this.imgArray.map((v,index) => {
           return (
