@@ -69,4 +69,12 @@ const request = extend({
   credentials: 'include', // 默认请求是否带上cookie
 });
 
+
+export const cRequest = extend({
+  prefix: '/hy',
+  timeout: 5000
+  // charset: 'gbk'
+  // parseResponse: false
+})
+
 export default request;

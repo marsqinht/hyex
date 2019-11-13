@@ -1,9 +1,9 @@
 import { stringify } from 'qs';
-import request from '@/utils/request';
+import request, { cRequest }from '@/utils/request';
 
 
 export async function queryNews(params) {
-  return request(`http://dev.p3china.com:16003/PowerService/News?${stringify(params)}`);
+  return cRequest(`/News?${stringify(params)}`);
 }
 
 export async function removeRule(params) {

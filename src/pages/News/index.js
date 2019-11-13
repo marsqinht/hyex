@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { List, Avatar, Icon, Button, Select, Modal, Tabs, Upload, message } from 'antd';
 import router from 'umi/router';
-import Detail from './detail';
+import moment from 'moment';
+
+// import Detail from './detail';
+
 import { queryNews } from '../../services/new';
 
 const { Option } = Select;
@@ -48,13 +51,26 @@ const IconText = ({ type, text }) => (
 export default class News extends Component {
   state = {
     visible: false,
+    total: 0,
+    list: []
   };
 
   componentDidMount() {
-    // queryNews({
-    //   page: 1,
-    //   size: 15
-    // })
+    this.getNewsList(1);
+  }
+
+  getNewsList = (page = 1) => {
+    queryNews({
+      page,
+      size: 15
+    }).then(({ success, data, total }) => {
+      if(success) {
+        this.setState({
+          list: data,
+          total
+        })
+      }
+    })
   }
 
   handleOk = () => {
@@ -80,11 +96,12 @@ export default class News extends Component {
   };
 
   render() {
+    const { visible, list, total } = this.state;
     return (
       <div>
         <Modal
           title="编辑HYEC新闻"
-          visible={this.state.visible}
+          visible={visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
@@ -134,33 +151,26 @@ export default class News extends Component {
           style={{ backgroundColor: '#fff', padding: '0 20px 30px' }}
           pagination={{
             onChange: page => {
-              console.log(page);
+              this.getNewsList(page);
             },
-            pageSize: 8,
+            total,
+            pageSize: 15,
           }}
-          dataSource={listData}
+          dataSource={list}
           renderItem={item => (
             <List.Item
-              key={item.title}
+              key={item.NewsName}
               actions={[
                 <IconText type="star-o" text="156" key="list-vertical-star-o" />,
                 <IconText type="like-o" text="156" key="list-vertical-like-o" />,
                 <IconText type="message" text="2" key="list-vertical-message" />,
-                <Button type="link">2019-08-14</Button>,
+                <Button type="link">{moment(item.RegDate).format('YYYY-MM-DD')}</Button>,
               ]}
-              extra={
-                <img
-                  width={272}
-                  alt="logo"
-                  src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                />
-              }
             >
               <List.Item.Meta
-                avatar={<Avatar src={item.avatar} />}
                 title={
                   <a href="javascript:;" onClick={this.goDetail}>
-                    {item.title}
+                    {item.NewsName}
                   </a>
                 }
                 description={item.description}

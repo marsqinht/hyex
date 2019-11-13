@@ -31,6 +31,8 @@ import ImageD from './image3D';
 import Cc from './Clendar';
 import BarCharts from './Charts';
 import HomeBanner from './HomeBanner';
+import { queryNews } from '../../services/new';
+
 
 const edata = [
   {
@@ -231,13 +233,30 @@ function onPanelChange(value, mode) {
 }
 
 export default class Home extends Component {
-  state = { visible: false, placement: 'top' };
+  state = { visible: false, placement: 'top', newsList: [] };
+
+  componentDidMount() {
+    this.getNewsList(1)
+  }
 
   showDrawer = () => {
     this.setState({
       visible: true,
     });
   };
+
+  getNewsList = (page = 1) => {
+    queryNews({
+      page,
+      size: 4
+    }).then(({ success, data, total }) => {
+      if(success) {
+        this.setState({
+          newsList: data
+        })
+      }
+    })
+  }
 
   onClose = () => {
     this.setState({
@@ -256,6 +275,7 @@ export default class Home extends Component {
   };
 
   render() {
+    const { newsList } = this.state;
     return (
       <div>
         <Breadcrumb>
@@ -316,16 +336,16 @@ export default class Home extends Component {
                   >
                     <List
                       itemLayout="horizontal"
-                      dataSource={data}
+                      dataSource={newsList}
                       renderItem={item => (
                         <List.Item>
                           <div className={styles.newList}>
-                            <Tooltip placement="top" title={item.title}>
+                            <Tooltip placement="top" title={item.NewsName}>
 
-                              <div className={styles.newsTitle}>{item.title}</div>
+                              <div className={styles.newsTitle}>{item.NewsName}</div>
                             </Tooltip>
-                            {this.renderNew(item.time) && (<div className={styles.newTag} />)}
-                            <Button className={styles.time} type="link">{item.time}</Button>
+                            {this.renderNew(moment(item.RegDate).format('YYYY-MM-DD')) && (<div className={styles.newTag} />)}
+                            <div style={{color: '#333'}}>{moment(item.RegDate).format('YYYY-MM-DD')}</div>
 
                           </div>
                         </List.Item>
@@ -373,7 +393,7 @@ export default class Home extends Component {
                               <div className={styles.newsTitle}>{item.title}</div>
                             </Tooltip>
                             {this.renderNew(item.time) && (<div className={styles.newTag} />)}
-                            <Button className={styles.time} type="link">{item.time}</Button>
+                            <div style={{color: '#333'}}>{item.time}</div>
 
                           </div>
                         </List.Item>
@@ -413,7 +433,7 @@ export default class Home extends Component {
                               <div className={styles.newsTitle}>{item.title}</div>
                             </Tooltip>
                             {this.renderNew(item.time) && (<div className={styles.newTag} />)}
-                            <Button className={styles.time} type="link">{item.time}</Button>
+                            <div style={{color: '#333'}}>{item.time}</div>
 
                           </div>
                         </List.Item>
@@ -451,7 +471,7 @@ export default class Home extends Component {
                               <div className={styles.newsTitle}>{item.title}</div>
                             </Tooltip>
                             {this.renderNew(item.time) && (<div className={styles.newTag} />)}
-                            <Button className={styles.time} type="link">{item.time}</Button>
+                            <div style={{color: '#333'}}>{item.time}</div>
 
                           </div>
                         </List.Item>
@@ -462,48 +482,7 @@ export default class Home extends Component {
                 </Col>
 
               </Row>
-              <Card
-                className="blue-bg"
-                title={
-                  <div>
-              新闻
-                  </div>
-            }
-                style={{ marginTop: 20 }}
-                bordered={false}
-              >
-                <div className={styles.wrap}>
-                  <div className={styles.carousel1}>
-                    <Carousel dotPosition="right" autoplay>
-                      <img
-                        alt="example"
-                        width={300}
-                        src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
-                      />
-                      <img
-                        alt="example"
-                        width={300}
-                        src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
-                      />
-                    </Carousel>
-                  </div>
-                  <List
-                    itemLayout="horizontal"
-                    dataSource={data}
-                    renderItem={item => (
-                      <List.Item>
-                        <div className={styles.newList}>
-                          <Tooltip placement="top" title={item.title}>
 
-                            <div className={styles.newsTitle}>{item.title}</div>
-                          </Tooltip>
-                          <Button className={styles.time} type="link">{item.time}</Button>
-                        </div>
-                      </List.Item>
-                      )}
-                  />
-                </div>
-              </Card>
             </Col>
             <Col span={6}>
               <Card
@@ -564,25 +543,31 @@ export default class Home extends Component {
             <Col span={14}>
               <div style={{ display: 'flex', height: '320px' }}>
                 <img
-                  style={{ width: '260px' }}
+                  style={{ width: '260px', border: '1px solid #1890ff', 'borderRight': 'none'}}
                   onClick={this.showDrawer}
                   src="http://ww3.sinaimg.cn/large/006tNc79ly1g47yu3i6w5j30la0pawsx.jpg"
                 />
                 <div
                   style={{
                     // width: '400px',
-                    border: '1px solid #d9d9d9',
+                    border: '1px solid #1890ff',
                     borderRadius: 4,
+                    borderLeft: 'none',
                     backgroundColor: '#fff',
                     flex: 1,
                   }}
                 >
-                  <Calendar fullscreen={false} onPanelChange={onPanelChange} />
+                  <Calendar fullscreen={false} onPanelChange={onPanelChange}  dateCellRender={(time) => {
+                    const day = moment(time).format('D');
+                    if(day === '8' || day === '21' || day === '26') {
+                      return  <div className="flex-center"><Tag color="red">会</Tag></div>
+                    }
+                  }}/>
                 </div>
               </div>
             </Col>
             <Col span={10}>
-              <div style={{ height: '100%' }}>
+              <div style={{ height: '100%', border: '1px solid #1890ff' }}>
                 <List
                   className="comment-list"
                   // header={`${data.length} replies`}
