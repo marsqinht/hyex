@@ -344,9 +344,9 @@ export default class Home extends Component {
                       dataSource={newsList}
                       bordered={false}
                       split={false}
-                      renderItem={item => (
+                      renderItem={(item,index) => (
                         <List.Item>
-                          <div className={styles.newList} onClick={()=>this.goDetail()}>
+                          <div className={styles.newList} onClick={()=>this.goDetail(1,index)}>
                             <Tooltip placement="top" title={item.NewsName}>
 
                               <div className={styles.newsTitle}>{item.NewsName}</div>
@@ -644,7 +644,7 @@ export default class Home extends Component {
               <div style={{width: '25%'}}>
                 <a>联系电话</a>
                 <p className={styles.banci}>
-                  <Icon style={{fontSize: '60px'}} type="phone" theme="twoTone" twoToneColor="orange" />
+                  <Icon style={{fontSize: '38px'}} type="phone" theme="twoTone" twoToneColor="orange" />
                   <p style={{fontSize: '24px', color: 'orange', 'line-height': 1.2, 'marginTop': 14}}>6470588</p>
                   <p style={{color: 'orange'}}>公司门卫24小时值班电话</p>
                 </p>
