@@ -323,7 +323,7 @@ export default class Home extends Component {
                         最新新闻
                       </div>
                     }
-                    className="blue-bg"
+                    className="blue-bg grandient-bg"
                     bordered={false}
                     cover={
                       <Carousel autoplay>
@@ -368,7 +368,7 @@ export default class Home extends Component {
                       </div>
                     }
                     bordered={false}
-                    className="blue-bg"
+                    className="blue-bg grandient-bg"
                     cover={
                       <Carousel autoplay>
                         <img

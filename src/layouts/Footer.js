@@ -4,8 +4,8 @@ import GlobalFooter from '@/components/GlobalFooter';
 
 const { Footer } = Layout;
 const FooterView = () => (
-  <Footer style={{ padding: 0 }}>
-    <GlobalFooter
+  <Footer style={{ padding: 0}}>
+    <GlobalFooter 
       links={[
         {
           key: '33',
@@ -25,6 +25,8 @@ const FooterView = () => (
           Copyright <Icon type="copyright" /> 2019 华谊工程
         </Fragment>
       }
+      style={{ background: `url(https://tva1.sinaimg.cn/large/006y8mN6ly1g8wf5ec91pj30kk06qa9t.jpg) center bottom no-repeat`,
+    'background-size': '100% 100%' }}
     />
   </Footer>
 );
