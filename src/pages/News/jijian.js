@@ -101,7 +101,7 @@ export default class Jijian extends Component {
   render() {
     return (
       <Card>
-        <Tabs defaultActiveKey="1" type="card">
+        <Tabs defaultActiveKey="1">
           {tabs.map(tab => {
             return (
               <TabPane tab={tab.name} key={tab.name} style={{ backgroundColor: '#fff' }}>

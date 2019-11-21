@@ -64,7 +64,7 @@ class Content extends Component {
     return (
       <div className={styles.wrap}>
         <div className={styles.left}>
-          <Card title="选择部室">
+          <Card title="选择部室" className="grandient-bg">
             <div style={{'min-height': 500}}>
               <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect}>
                 <TreeNode title="公司" key="0-0" icon={<Icon type="apartment" />}>
@@ -98,13 +98,13 @@ class Content extends Component {
               <TabPane tab="新建" key="1">
                 <Dragger {...props}>
                   <p className="ant-upload-drag-icon">
-                  <Icon type="inbox" />
-                </p>
+                    <Icon type="inbox" />
+                  </p>
                   <p className="ant-upload-text">点击或拖拽到这个区域上传文件</p>
                   <p className="ant-upload-hint">
                     Support for a single or bulk upload. Strictly prohibit from uploading company data
                     or other band files
-                </p>
+                  </p>
                 </Dragger>
               </TabPane>
               <TabPane tab="修改" key="2">
@@ -124,6 +124,8 @@ class Content extends Component {
           </Modal>
           <Card
             title={appartment}
+            bordered={false}
+            className="grandient-bg"
             extra={<div>
               <Select defaultValue="1" style={{ width: 120 , marginRight: 14}} size="small">
                 <Option value="1">年度过滤</Option>
@@ -161,7 +163,7 @@ export default class Fawen extends Component {
         <div className="mb-20">
           <Alert message="行政提醒: 最新更新日期 2019-11-03" type="info" />
         </div>
-        <Tabs type="card" className="mt-20" style={{background: '#fff'}}>
+        <Tabs className="mt-20" style={{background: '#fff'}}>
           <TabPane tab="计划与总结" key="1">
             <Content typeName="计划与总结" />
           </TabPane>

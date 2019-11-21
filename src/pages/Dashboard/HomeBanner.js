@@ -2,6 +2,8 @@ import { Component } from 'react';
 import BannerAnim from 'rc-banner-anim';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import 'rc-banner-anim/assets/index.css';
+import  { Button, Icon } from 'antd';
+import styles from './HomeBanner.less';
 
 const { Element, Arrow, Thumb } = BannerAnim;
 const {BgElement} = Element;
@@ -14,23 +16,26 @@ export default class Demo extends Component {
         title: '五年规划',
         content: <div>
           <p>
-            <b>战略定位：</b>&nbsp;化工领域的工程设计和项目管理服务商。</p>
-                                <p >
-                                  <b>功能定位：</b>一. 承担集团产业的工程化，包括推进集团工程管理的标准化、集团的技术资源协同集成。二. 工程设计业务市场化运作，业内外结合。</p>
-                                <p ></p>
-                                <p>
+            <b>战略定位：</b>&nbsp;化工领域的工程设计和项目管理服务商。
+          </p>
+          <p>
+            <b>功能定位：</b>一. 承担集团产业的工程化，包括推进集团工程管理的标准化、集团的技术资源协同集成。二. 工程设计业务市场化运作，业内外结合。
+          </p>
+          <p />
+          <p>
 
-                                    <b>发展规划原则:</b>
-                                    <div>
-                                        <div><b>工程服务特色化：</b>业务范围涵盖能源化工、氯碱化工、精细化工和环境保护四大业务板块，成为项目前期、技术许可、项目实施、开车服务和工厂运营等全过程的工程服务商；</div>
-                                        <div><b>技术工程产业化：</b>依托集团公司和外部技术开发资源，持续加大产业化开发投入，关注行业同类技术开发进展和竞争态势，形成独有或领先的产业化核心技术；</div>
-                                        <div><b>环保工程运营化：</b>借助合作方在运营方面的成功经验和品牌优势，在环保工程总承包的基础上，拓展环保工程运营服务并逐步建立竞争优势；</div>
-                                        <div><b>海外工程合作化：</b>坚持以“借船出海”的方式寻求突破点，逐步建立与具有海外成功经验的大型实体公司和国内外大型工程公司的长期合作关系，同时依托集团公司的海外投资，以公司擅长业务领域为起点逐步开拓、培育海外市场。</div>
-                                    </div>
-                                </p>
-                                <p>
-                                  <b>五年发展目标：</b>&nbsp;华谊工程立足于服务集团，面向市场，成为有特色、专业化的工程建设全过程服务商。到2023年实现营业收入8.7个亿，位列行业前50位。</p>
-                 </div>
+            <b>发展规划原则:</b>
+            <div>
+              <div><b>工程服务特色化：</b>业务范围涵盖能源化工、氯碱化工、精细化工和环境保护四大业务板块，成为项目前期、技术许可、项目实施、开车服务和工厂运营等全过程的工程服务商；</div>
+              <div><b>技术工程产业化：</b>依托集团公司和外部技术开发资源，持续加大产业化开发投入，关注行业同类技术开发进展和竞争态势，形成独有或领先的产业化核心技术；</div>
+              <div><b>环保工程运营化：</b>借助合作方在运营方面的成功经验和品牌优势，在环保工程总承包的基础上，拓展环保工程运营服务并逐步建立竞争优势；</div>
+              <div><b>海外工程合作化：</b>坚持以“借船出海”的方式寻求突破点，逐步建立与具有海外成功经验的大型实体公司和国内外大型工程公司的长期合作关系，同时依托集团公司的海外投资，以公司擅长业务领域为起点逐步开拓、培育海外市场。</div>
+            </div>
+          </p>
+          <p>
+            <b>五年发展目标：</b>&nbsp;华谊工程立足于服务集团，面向市场，成为有特色、专业化的工程建设全过程服务商。到2023年实现营业收入8.7个亿，位列行业前50位。
+          </p>
+        </div>
       },
       {
         img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8pzv8xbgbj31hc0u0b2a.jpg',
@@ -44,7 +49,7 @@ export default class Demo extends Component {
           将人才视为最宝贵财富，倡导正直务实的品质，鼓励承担责任和自我反省，提倡持续的学习和分享，为员工职业发展提供合理的机制和空间。<br />
           将打造生产型服务业差异化的竞争优势，力求为股东提供战略支撑、长期内在价值和持续投资回报。<br />
           将分包商视作为顾客提供全过程服务和争取合理利润的合作伙伴，倡导业内竞争性合作和共赢思维模式，以对社会负责任的可持续的方式推动社会经济和文明的进步。
-                 </div>
+        </div>
       },
       {
         img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8pzvct5vfj31hc0u0qv5.jpg',
@@ -63,7 +68,7 @@ export default class Demo extends Component {
             <b>高效:</b>&nbsp;快速响应顾客需求，提供使顾客满意的解决方案。<br />
                                    高效包含着及时完成、质量出色、费用合理等诸多方面，其评判的核心标准就是顾客满意。高效还意味着满足顾客个性化的项目进度要求，并以顾客的认可作为唯一评判标准。
           </p>
-        </div>
+                 </div>
       },
       {
         img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8pzyruyigj315o0nf79z.jpg',
@@ -82,7 +87,7 @@ export default class Demo extends Component {
             <b>贡献：</b>&nbsp;是指任何员工为公司直接或间接创造经济效益、并且持续超越其以往绩效的工作。<br />
             人才不仅具有出色的品质，很强的能力，还要在工作中创造价值和贡献。贡献不意味着学历、资历或想法，而是实实在在的付出。每个岗位都有基本的工作要求，只要员工能够在自己的岗位上做出持续超越其以往绩效的工作，就足以说明其是公司难得的人才。
           </p>
-        </div>
+                 </div>
       },
       {
         img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8ph55ngx0j318g0la7dn.jpg',
@@ -101,7 +106,7 @@ export default class Demo extends Component {
             <b>人财：</b>&nbsp;具有深厚的技术积累和丰富的工作经验，堪为表率，为公司不断创造巨大财富。<br />
                                    能够凭借自己的学识和经验为公司、部门、专业、项目提供合理、经济、创新、高效的解决方案，成长为业务的领军者、资深顾问和人才导师，企业文化的垂范者。
           </p>
-        </div>
+                 </div>
       },
       {
         img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8ph55ngx0j318g0la7dn.jpg',
@@ -119,7 +124,7 @@ export default class Demo extends Component {
             <b>感恩：</b>&nbsp;快乐工作、关心亲人，对生活抱有一颗感恩的心。<br />
            给予是恩，合作是缘。公司希望每一位员工都能首先想到感谢生养自己的父母和默默陪伴给予支持的家人；其次，常怀感恩之心，常念合作之缘，回报那些曾经支持、关怀、鼓励、帮助过公司及自己的顾客、股东、分包商、同事、同行和社会。
           </p>
-        </div>
+                 </div>
       }
     ];
     this.state = {
@@ -127,6 +132,7 @@ export default class Demo extends Component {
       prevEnter: false,
       nextEnter: false,
       thumbEnter: false,
+      isShouQi: false
     };
     [
       'onChange',
@@ -201,16 +207,20 @@ export default class Demo extends Component {
     const thumbChildren = this.imgArray.map((v, i) =>
       <span key={i}><i style={{ backgroundImage: `url(${v.img})` }} /></span>
         );
+    const { isShouQi } = this.state;
     return (
-      <BannerAnim
-        onChange={this.onChange}
-        onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
-        prefixCls="custom-arrow-thumb"
-        autoPlay
-        autoPlaySpeed={10000}
-      >
-        {this.imgArray.map((v,index) => {
+      <div> <Button style={{display: !isShouQi ? 'none': 'block'}} onClick={()=> this.setState({isShouQi:false})}>显示公司文化图<Icon type="down" /></Button>
+        <div className={styles.content} style={{display: isShouQi ? 'none': 'block', height: isShouQi ? 0: 'auto'}}>
+          <div className={styles.arrow} onClick={()=> this.setState({isShouQi:true})}><Icon type="up" />收起</div>
+          <BannerAnim
+            onChange={this.onChange}
+            onMouseEnter={this.onMouseEnter}
+            onMouseLeave={this.onMouseLeave}
+            prefixCls="custom-arrow-thumb"
+            autoPlay
+            autoPlaySpeed={10000}
+          >
+            {this.imgArray.map((v,index) => {
           return (
             <Element
               key={index}
@@ -238,55 +248,57 @@ export default class Demo extends Component {
           )
         })}
 
-        <Arrow
-          arrowType="prev"
-          key="prev"
-          prefixCls="user-arrow"
-          component={TweenOne}
-          onMouseEnter={this.prevEnter}
-          onMouseLeave={this.prevLeave}
-          animation={{ left: this.state.prevEnter ? 0 : -120 }}
-        >
-          <div className="arrow" />
-          <TweenOneGroup
-            enter={{ opacity: 0, type: 'from' }}
-            leave={{ opacity: 0 }}
-            appear={false}
-            className="img-wrapper"
-            component="ul"
-          >
-            <li style={{ backgroundImage: `url(${this.imgArray[intArray[0]].img})`}} key={intArray[0]} />
-          </TweenOneGroup>
-        </Arrow>
-        <Arrow
-          arrowType="next"
-          key="next"
-          prefixCls="user-arrow"
-          component={TweenOne}
-          onMouseEnter={this.nextEnter}
-          onMouseLeave={this.nextLeave}
-          animation={{ right: this.state.nextEnter ? 0 : -120 }}
-        >
-          <div className="arrow" />
-          <TweenOneGroup
-            enter={{ opacity: 0, type: 'from' }}
-            leave={{ opacity: 0 }}
-            appear={false}
-            className="img-wrapper"
-            component="ul"
-          >
-            <li style={{ backgroundImage: `url(${this.imgArray[intArray[1]].img})`}} key={intArray[1]} />
-          </TweenOneGroup>
-        </Arrow>
-        <Thumb
-          prefixCls="user-thumb"
-          key="thumb"
-          component={TweenOne}
-          animation={{ bottom: this.state.thumbEnter ? 0 : -70 }}
-        >
-          {thumbChildren}
-        </Thumb>
-      </BannerAnim>
+            <Arrow
+              arrowType="prev"
+              key="prev"
+              prefixCls="user-arrow"
+              component={TweenOne}
+              onMouseEnter={this.prevEnter}
+              onMouseLeave={this.prevLeave}
+              animation={{ left: this.state.prevEnter ? 0 : -120 }}
+            >
+              <div className="arrow" />
+              <TweenOneGroup
+                enter={{ opacity: 0, type: 'from' }}
+                leave={{ opacity: 0 }}
+                appear={false}
+                className="img-wrapper"
+                component="ul"
+              >
+                <li style={{ backgroundImage: `url(${this.imgArray[intArray[0]].img})`}} key={intArray[0]} />
+              </TweenOneGroup>
+            </Arrow>
+            <Arrow
+              arrowType="next"
+              key="next"
+              prefixCls="user-arrow"
+              component={TweenOne}
+              onMouseEnter={this.nextEnter}
+              onMouseLeave={this.nextLeave}
+              animation={{ right: this.state.nextEnter ? 0 : -120 }}
+            >
+              <div className="arrow" />
+              <TweenOneGroup
+                enter={{ opacity: 0, type: 'from' }}
+                leave={{ opacity: 0 }}
+                appear={false}
+                className="img-wrapper"
+                component="ul"
+              >
+                <li style={{ backgroundImage: `url(${this.imgArray[intArray[1]].img})`}} key={intArray[1]} />
+              </TweenOneGroup>
+            </Arrow>
+            <Thumb
+              prefixCls="user-thumb"
+              key="thumb"
+              component={TweenOne}
+              animation={{ bottom: this.state.thumbEnter ? 0 : -70 }}
+            >
+              {thumbChildren}
+            </Thumb>
+          </BannerAnim>
+        </div>
+      </div>
     );
   }
 }
