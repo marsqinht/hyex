@@ -1,6 +1,5 @@
-import { Component } from 'react';
-import { Alert, Tabs, Card, Tree , List, Typography, Icon, Select, Button, Modal, Upload } from 'antd';
-import Banner from './Banner';
+import React from 'react';
+import { Alert, Tabs, Card, Tree , List, Typography, Icon, Select, Button, Modal, Upload, message } from 'antd';
 import styles from './index.less'
 
 const { TabPane } = Tabs;
@@ -26,7 +25,7 @@ const props = {
 const data = [
   '关于丁更等同志职务任免的通知'
 ]
-class Content extends Component {
+class Content extends React.Component {
   state = {
     appartment: '商务部',
     visible: false
