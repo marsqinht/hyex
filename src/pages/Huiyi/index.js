@@ -1,5 +1,9 @@
 import React from 'react';
-import { Alert, Tabs, Table, Card } from 'antd';
+import { Alert, Tabs, Table, Card, Icon } from 'antd';
+
+const MyIcon = Icon.createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_1277028_jejs7t1j2ca.js', // 在 iconfont.cn 上生成
+});
 
 const { TabPane } = Tabs;
 const columns = [
@@ -132,22 +136,64 @@ export default class Huiyi extends React.Component {
         <div className="mt-20">
           <Card>
             <Tabs defaultActiveKey="1">
-              <TabPane tab="本周会议" key="1">
+              <TabPane
+                tab={
+                  <span>
+                    <MyIcon type="icon-changyongkucaozuo_8" />
+                    本周会议
+                  </span>}
+                key="1"
+              >
                 <Table columns={columns} dataSource={data} />
               </TabPane>
-              <TabPane tab="下周会议" key="2">
+              <TabPane
+                tab={
+                  <span>
+                    <MyIcon type="icon-yuanchengshenqing" />
+                    下周会议
+                  </span>}
+                key="2"
+              >
                 <Table columns={columns} dataSource={[]} />
               </TabPane>
-              <TabPane tab="待批会议" key="3">
+              <TabPane
+                tab={
+                  <span>
+                    <MyIcon type="icon-suoyoudaishenpijilu" />
+                    待批会议
+                  </span>}
+                key="3"
+              >
                 <Table columns={[]} dataSource={[]} />
               </TabPane>
-              <TabPane tab="会议申请" key="4">
+              <TabPane
+                tab={
+                  <span>
+                    <MyIcon type="icon-wodeshenpi" />
+                    会议申请
+                  </span>}
+                key="4"
+              >
                 <Table columns={[]} dataSource={[]} />
               </TabPane>
-              <TabPane tab="会议室安排" key="5">
+              <TabPane
+                tab={
+                  <span>
+                    <MyIcon type="icon-rukufenleitongji" />
+                    会议室安排
+                  </span>}
+                key="5"
+              >
                 <Table columns={[]} dataSource={[]} />
               </TabPane>
-              <TabPane tab="会议管理" key="5">
+              <TabPane
+                tab={
+                  <span>
+                    <MyIcon type="icon-gebuchuyuanxiguidanggongshi" />
+                    会议管理
+                  </span>}
+                key="5"
+              >
                 <Table columns={[]} dataSource={[]} />
               </TabPane>
             </Tabs>

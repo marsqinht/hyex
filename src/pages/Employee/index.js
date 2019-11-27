@@ -8,6 +8,9 @@ const { Option } = Select;
 const { Search } = Input;
 const { Panel } = Collapse;
 
+const MyIcon = Icon.createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_1277028_jejs7t1j2ca.js', // 在 iconfont.cn 上生成
+});
 const columns = [
   {
     title: '序号',
@@ -207,12 +210,19 @@ class Employee extends React.Component {
         />
         <Card style={{marginTop: 20, height: '100%'}}>
           <Tabs defaultActiveKey="1">
-            <TabPane tab="员工信息" key="1">
+            <TabPane
+              tab={
+                <span>
+                  <MyIcon type="icon-yonghuguanli" style={{fontSize: '16px'}} />
+                    员工信息
+                </span>}
+              key="1"
+            >
               <div className={styles.content}>
                 <Card>
-                  <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect}>
-                    <TreeNode title="公司" key="0-0" icon={<Icon type="apartment" />}>
-                      <TreeNode title="公司高管" key="0-0-0" icon={<Icon type="apartment" />} />
+                  <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
+                    <TreeNode title="公司" key="0-0" icon={<MyIcon type="icon-zuzhijigouguanli" style={{fontSize: '16px'}} />}>
+                      <TreeNode title="公司高管" key="0-0-0"/>
                       <TreeNode title="副总工程师" key="0-0-1" />
                       <TreeNode title="设计事业部" key="0-0-2" />
                       <TreeNode title="综合管理部" key="0-0-3" />
@@ -266,7 +276,11 @@ class Employee extends React.Component {
 
                     <div className="mt-20">
                       <Tabs defaultActiveKey="1" type="card">
-                        <TabPane tab="基本信息" key="1">
+                        <TabPane tab={
+                <span>
+                  <MyIcon type="icon-zhengjixiangguanrenyuanxinxi" style={{fontSize: '16px'}} />
+                    基本信息
+                </span>} key="1">
                           <div className={styles.info}>
                             <div style={{flex: 1}}>
                               <Descriptions bordered title="基本信息" size="small">
@@ -283,10 +297,18 @@ class Employee extends React.Component {
                             </div>
                           </div>
                         </TabPane>
-                        <TabPane tab="工作履历" key="2">
+                        <TabPane tab={
+                <span>
+                  <MyIcon type="icon-yuanchengjieyuetongji" style={{fontSize: '16px'}} />
+                    工作履历
+                </span>} key="2">
                           <Table columns={columns} dataSource={data} size="middle" pagination={false} />
                         </TabPane>
-                        <TabPane tab="专业经历" key="3">
+                        <TabPane tab={
+                <span>
+                  <MyIcon type="icon-wodegongzuoqingkuang" style={{fontSize: '16px'}} />
+                    专业经历
+                </span>} key="3">
                           <Radio.Group value={1}>
                             <Radio value={1}>中文</Radio>
                             <Radio value={2}>英文</Radio>

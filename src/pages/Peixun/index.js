@@ -1,6 +1,9 @@
 import React from 'react';
-import { Alert, Tabs, Table, Card } from 'antd';
+import { Alert, Tabs, Table, Card, Icon } from 'antd';
 
+const MyIcon = Icon.createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_1277028_jejs7t1j2ca.js', // 在 iconfont.cn 上生成
+});
 const { TabPane } = Tabs;
 const columns = [
   {
@@ -139,7 +142,14 @@ export default class Huiyi extends React.Component {
         <div className="mt-20">
           <Card>
             <Tabs defaultActiveKey="1">
-              <TabPane tab="培训信息" key="1">
+              <TabPane
+                tab={
+                  <span>
+                    <MyIcon type="icon-pingfenxiangguanli" style={{fontSize: '16px'}} />
+                    培训信息
+                  </span>}
+                key="1"
+              >
                 <Table columns={columns} dataSource={[]} />
               </TabPane>
             </Tabs>

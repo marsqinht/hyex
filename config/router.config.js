@@ -138,6 +138,24 @@ export default [
         ],
       },
       {
+        path: '/zhiliang',
+        name: '质量管理',
+        icon: 'insurance',
+        component: './Zhiliang',
+      },
+      {
+        path: '/jishu',
+        name: '技术管理',
+        icon: 'tool',
+        component: './Jishu',
+      },
+      {
+        path: '/HSE',
+        name: 'HSE管理',
+        icon: 'smile',
+        component: './Hse',
+      },
+      {
         path: '/dd',
         name: '规范与标准',
         icon: 'highlight',
@@ -176,24 +194,7 @@ export default [
           },
         ],
       },
-      {
-        path: '/dashboard/monrtihjgdffhstor',
-        name: '质量管理',
-        icon: 'insurance',
-        component: './Dashboard/Analysis',
-      },
-      {
-        path: '/dashboard/monhgzbvcbvvitor',
-        name: '技术管理',
-        icon: 'tool',
-        component: './Dashboard/Analysis',
-      },
-      {
-        path: '/dashboard/monibcxtytor',
-        name: 'HSE管理',
-        icon: 'smile',
-        component: './Dashboard/Analysis',
-      },
+
       {
         path: '/dashboard/monitjgnbvor',
         name: '知识经验KM',

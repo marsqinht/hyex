@@ -7,7 +7,9 @@ const { TabPane } = Tabs;
 const { Option } = Select;
 const { Search } = Input;
 const { Panel } = Collapse;
-
+const MyIcon = Icon.createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_1277028_jejs7t1j2ca.js', // 在 iconfont.cn 上生成
+});
 const columns = [
   {
     title: '途径',
@@ -20,7 +22,7 @@ const columns = [
   {
     title: '地图',
     dataIndex: 'zhiwu',
-    render: () => <Icon type="pushpin" theme="twoTone" />
+    render: () => <a href="https://map.baidu.com/search/%E4%B8%8A%E6%B5%B7%E5%8D%8E%E8%B0%8A%E5%B7%A5%E7%A8%8B%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8(%E6%BE%84%E6%B1%9F%E8%B7%AF)/@13520951.125,3622132,19z?querytype=s&da_src=shareurl&wd=%E4%B8%8A%E6%B5%B7%E5%8D%8E%E8%B0%8A%E5%B7%A5%E7%A8%8B%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8(%E6%BE%84%E6%B1%9F%E8%B7%AF)&c=179&src=0&wd2=%E4%B8%8A%E6%B5%B7%E5%B8%82%E9%97%B5%E8%A1%8C%E5%8C%BA&pn=0&sug=1&l=12&b=(13296964.03,3476097.39;13456004.03,3559617.39)&from=webmap&biz_forward=%7B%22scaler%22:2,%22styles%22:%22pl%22%7D&sug_forward=41b1c74ff685cb0cf33cbae6&device_ratio=2" target="_blank"><Icon type="pushpin" theme="twoTone" /></a>
   },
   {
     title: '人数',
@@ -208,27 +210,34 @@ class Employee extends React.Component {
         />
         <Card style={{marginTop: 20, height: '100%'}}>
           <Tabs defaultActiveKey="1">
-            <TabPane tab="班车信息" key="1">
+            <TabPane
+tab={
+                <span>
+                  <MyIcon type="icon-andanganleixingtongji" style={{fontSize: '16px'}} />
+                    班车信息
+                </span>}
+key="1"
+            >
               <div className={styles.content}>
                 <Card>
-                  <Tree showLine defaultExpandedKeys={['0-0-0', '0-1-0', '0-2-0']} onSelect={this.onSelect}>
-                    <TreeNode title="一号莘庄线" key="0-0" icon={<Icon type="apartment" />}>
-                      <TreeNode title="班车线路图" key="0-0-0" icon={<Icon type="apartment" />} />
+                  <Tree showLine defaultExpandedKeys={['0-0-0', '0-1-0', '0-2-0']} onSelect={this.onSelect} showIcon>
+                    <TreeNode title="一号莘庄线" key="0-0">
+                      <TreeNode title="班车线路图" key="0-0-0" icon={<Icon type="car" theme="twoTone" />} />
                     </TreeNode>
-                    <TreeNode title="二号浦东线" key="0-1" icon={<Icon type="apartment" />}>
-                      <TreeNode title="班车线路图" key="0-1-0" icon={<Icon type="apartment" />} />
+                    <TreeNode title="二号浦东线" key="0-1">
+                      <TreeNode title="班车线路图" key="0-1-0" icon={<Icon type="car" theme="twoTone" />} />
                     </TreeNode>
-                    <TreeNode title="三号万体游泳馆" key="0-2" icon={<Icon type="apartment" />}>
-                      <TreeNode title="班车线路图" key="0-2-0" icon={<Icon type="apartment" />} />
+                    <TreeNode title="三号万体游泳馆" key="0-2">
+                      <TreeNode title="班车线路图" key="0-2-0" icon={<Icon type="car" theme="twoTone" />} />
                     </TreeNode>
                   </Tree>
                 </Card>
                 <div className={styles.right}>
                   <Card>
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                      <Statistic title="车牌" value="DG7299" />
-                      <Statistic title="驾驶员" value="李俊: 13908907788" />
-                      <Statistic title="车长" value="彭建南: 15678909008" />
+                      <Statistic title="车牌" value="DG7299" valueStyle={{ color: 'rgb(245, 207, 92)' }} />
+                      <Statistic title="驾驶员" value="李俊: 13908907788" valueStyle={{ color: 'rgb(5, 144, 223)' }} />
+                      <Statistic title="车长" value="彭建南: 15678909008" valueStyle={{color: 'rgb(29, 204, 161)'}} />
                     </div>
                     <div className="mt-20">
                       <Table columns={columns} dataSource={data} size="middle" pagination={false} />
@@ -237,7 +246,14 @@ class Employee extends React.Component {
                 </div>
               </div>
             </TabPane>
-            <TabPane tab="晚间加班车" key="2" />
+            <TabPane
+tab={
+                <span>
+                  <MyIcon type="icon-xiangyingchaoshijiankong" style={{fontSize: '16px'}} />
+                    晚间加班车
+                </span>}
+key="2"
+            />
           </Tabs>
         </Card>
       </div>

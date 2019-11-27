@@ -6,6 +6,10 @@ const { TabPane } = Tabs;
 const { TreeNode } = Tree;
 const { Option } = Select;
 const { Dragger } = Upload;
+
+const MyIcon = Icon.createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_1277028_jejs7t1j2ca.js', // 在 iconfont.cn 上生成
+});
 const ccolumns = [
   {
     title: '序号',
@@ -167,9 +171,9 @@ class Content extends Component {
         <div className={styles.left}>
           <Card title="选择相关部门" className="grandient-bg">
             <div style={{'min-height': 500}}>
-              <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect}>
-                <TreeNode title="公司" key="0-0" icon={<Icon type="apartment" />}>
-                  <TreeNode title="商务部" key="0-0-0" icon={<Icon type="apartment" />} />
+              <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
+                <TreeNode title="公司" key="0-0" icon={<MyIcon type="icon-zuzhijigouguanli" style={{fontSize: '16px'}} />}>
+                  <TreeNode title="商务部" key="0-0-0" />
                   <TreeNode title="采购部" key="0-0-1" />
                   <TreeNode title="施工管理部" key="0-0-2" />
                   <TreeNode title="工艺系统室" key="0-0-3" />
@@ -235,7 +239,7 @@ class Content extends Component {
                   标题
                 </Option>
               </Select>
-                   </div>}
+            </div>}
           >
             <div className={styles.right}>
               <Table columns={ccolumns} dataSource={cdata} />
@@ -255,10 +259,24 @@ export default class Zizhi extends Component {
           <Alert message="资质提醒: 最新更新日期 2019-11-03" type="warning" />
         </div>
         <Tabs className="mt-20" style={{background: '#fff'}}>
-          <TabPane tab="任职资格" key="1">
+          <TabPane
+            tab={
+              <span>
+                <MyIcon type="icon-zhengshu" style={{fontSize: '16px'}} />
+                    任职资格
+              </span>}
+            key="1"
+          >
             <Content typeName="计划与总结" />
           </TabPane>
-          <TabPane tab="职称聘任" key="2">
+          <TabPane
+            tab={
+              <span>
+                <MyIcon type="icon-suoyouyishenpijilu" style={{fontSize: '16px'}} />
+                    职称聘任
+              </span>}
+            key="2"
+          >
             <Content typeName="管理例会" />
           </TabPane>
         </Tabs>,

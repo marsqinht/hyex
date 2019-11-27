@@ -1,7 +1,10 @@
 import{ Component }from 'react';
-import { Alert, Tabs, Card, Tree , List, Typography, Icon, Select, Button, Modal, Upload, message } from 'antd';
+import { Alert, Tabs, Card, Tree , List, Typography, Icon, Select, Button, Modal, Upload, message, Table, Tag } from 'antd';
 import styles from './index.less'
 
+const MyIcon = Icon.createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_1277028_jejs7t1j2ca.js', // 在 iconfont.cn 上生成
+});
 const { TabPane } = Tabs;
 const { TreeNode } = Tree;
 const { Option } = Select;
@@ -22,6 +25,119 @@ const props = {
     }
   },
 };
+const ccolumns = [
+  {
+    title: '日期',
+    dataIndex: 'date',
+  },
+  {
+    title: '星期',
+    dataIndex: 'day',
+  },
+  {
+    title: '开始时间',
+    dataIndex: 'startTime',
+  },
+  {
+    title: '会议用时',
+    dataIndex: 'lastTime',
+  },
+  {
+    title: '地点',
+    dataIndex: 'address',
+  },
+  {
+    title: '会议名称',
+    dataIndex: 'title',
+    render: text => <a>{text}</a>,
+  },
+  {
+    title: '会议主题',
+    dataIndex: 'theme',
+  },
+  {
+    title: '出席范围',
+    dataIndex: 'range',
+  },
+  {
+    title: '召集部门',
+    dataIndex: 'part',
+  },
+];
+const cdata = [
+  {
+    key: '1',
+    date: '2019-10-11',
+    day: '星期一',
+    startTime: '12:30',
+    name: 'John Brown',
+    lastTime: '4',
+    age: 32,
+    address: '14号楼303',
+    theme: '招聘启动会',
+    title: '2020招聘工作会议',
+    range: '按通知',
+    man: '毛经理',
+    part: '数字化中心'
+  },
+  {
+    key: '2',
+    date: '2019-10-11',
+    day: '星期一',
+    startTime: '12:30',
+    name: 'John Brown',
+    lastTime: '4',
+    age: 32,
+    address: '14号楼303',
+    theme: '招聘启动会',
+    title: '2020招聘工作会议',
+    range: '按通知',
+    man: '毛经理',
+    part: '数字化中心'
+  },{
+    key: '3',
+    date: '2019-10-11',
+    day: '星期三',
+    startTime: '12:30',
+    name: 'John Brown',
+    lastTime: '4',
+    age: 32,
+    address: '14号楼303',
+    theme: '招聘启动会',
+    title: '2020招聘工作会议',
+    range: '按通知',
+    man: '毛经理',
+    part: '数字化中心'
+  },{
+    key: '4',
+    date: '2019-10-11',
+    day: '星期五',
+    startTime: '12:30',
+    name: 'John Brown',
+    lastTime: '4',
+    age: 32,
+    address: '14号楼303',
+    title: '2020招聘工作会议',
+    theme: '招聘启动会',
+    range: '按通知',
+    man: '毛经理',
+    part: '数字化中心'
+  },{
+    key: '5',
+    date: '2019-10-11',
+    day: '星期一',
+    startTime: '12:30',
+    name: 'John Brown',
+    lastTime: '4',
+    age: 32,
+    address: '14号楼303',
+    theme: '招聘启动会',
+    title: '2020招聘工作会议',
+    range: '按通知',
+    man: '毛经理',
+    part: '数字化中心'
+  },
+];
 const data = [
   '关于丁更等同志职务任免的通知'
 ]
@@ -61,13 +177,13 @@ class Content extends Component {
     const { appartment } = this.state;
     const { typeName } = this.props;
     return (
-      <div className={styles.wrap}>
+      typeName === '计划与总结' ? <div className={styles.wrap}>
         <div className={styles.left}>
           <Card title="选择部室" className="grandient-bg">
             <div style={{'min-height': 500}}>
-              <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect}>
-                <TreeNode title="公司" key="0-0" icon={<Icon type="apartment" />}>
-                  <TreeNode title="商务部" key="0-0-0" icon={<Icon type="apartment" />} />
+              <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
+                <TreeNode title="公司" key="0-0" icon={<MyIcon type="icon-zuzhijigouguanli" style={{fontSize: '16px'}} />}>
+                  <TreeNode title="商务部" key="0-0-0" />
                   <TreeNode title="采购部" key="0-0-1" />
                   <TreeNode title="施工管理部" key="0-0-2" />
                   <TreeNode title="工艺系统室" key="0-0-3" />
@@ -138,7 +254,7 @@ class Content extends Component {
           >
             <div className={styles.right}>
               <List
-                header={<div>{typeName}</div>}
+                header={<div style={{fontWeight: 'bold'}}>{typeName}</div>}
                 bordered
                 dataSource={data}
                 renderItem={item => (
@@ -150,7 +266,21 @@ class Content extends Component {
             </div>
           </Card>
         </div>
-      </div>
+      </div> : <div>
+                               <div className={styles.panelwrap}>
+          <div className={styles.title}><Button type="link">{typeName}</Button><Tag color="red">2019</Tag></div>
+          <div><Select defaultValue="1" style={{ width: 120 , marginRight: 14}} size="small">
+                                   <Option value="1">年度过滤</Option>
+                                   <Option value="lucy">时间过滤</Option>
+                                   <Option value="disabled">
+                  标题
+            </Option>
+                                      </Select>
+                                   <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>编辑</Button>
+                                 </div>
+        </div>
+                               <Table columns={ccolumns} dataSource={cdata} />
+                                      </div>
     )
   }
 }
@@ -163,16 +293,44 @@ export default class Fawen extends Component {
           <Alert message="行政提醒: 最新更新日期 2019-11-03" type="info" />
         </div>
         <Tabs className="mt-20" style={{background: '#fff'}}>
-          <TabPane tab="计划与总结" key="1">
+          <TabPane
+            tab={
+              <span>
+                <MyIcon type="icon-ziduanduxiepeizhiguanli" style={{fontSize: '16px'}} />
+                    计划与总结
+              </span>}
+            key="1"
+          >
             <Content typeName="计划与总结" />
           </TabPane>
-          <TabPane tab="管理例会" key="2">
+          <TabPane
+            tab={
+              <span>
+                <MyIcon type="icon-daishenhe" style={{fontSize: '16px'}} />
+                    管理例会
+              </span>}
+            key="2"
+          >
             <Content typeName="管理例会" />
           </TabPane>
-          <TabPane tab="公司行政文件" key="3">
+          <TabPane
+            tab={
+              <span>
+                <MyIcon type="icon-daiqudangan" style={{fontSize: '16px'}} />
+                    公司行政文件
+              </span>}
+            key="3"
+          >
             <Content typeName="公司行政文件" />
           </TabPane>
-          <TabPane tab="公司党群文件" key="4">
+          <TabPane
+            tab={
+              <span>
+                <MyIcon type="icon-niandurukushuju" style={{fontSize: '16px'}} />
+                    公司党群文件
+              </span>}
+            key="4"
+          >
             <Content typeName="公司党群文件" />
           </TabPane>
         </Tabs>,
