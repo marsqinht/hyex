@@ -31,6 +31,31 @@ export default [
         icon: 'bank',
         routes: [
           {
+            path: '/dashboard/huyi',
+            name: '会议信息',
+            component: './Huiyi',
+          },
+          {
+            path: '/dashboard/yuanong',
+            name: '员工信息',
+            component: './Employee',
+          },
+          {
+            path: '/dashboard/zizhi',
+            name: '资质信息',
+            component: './Zizhi',
+          },
+          {
+            path: '/dashboard/hueixunyi',
+            name: '培训信息',
+            component: './Peixun',
+          },
+          {
+            path: '/dashboard/ananbvjglfddysis',
+            name: '车辆信息',
+            component: './Car',
+          },
+          {
             path: '/dashboard/analfddysis',
             name: 'HYEC新闻',
             component: './News',
@@ -90,31 +115,26 @@ export default [
               },
             ],
           },
-          {
-            path: '/dashboard/analhhfddysis',
-            name: '会务信息',
-            component: './Dashboard/Analysis',
-          },
-          {
-            path: '/dashboard/analklfddysis',
-            name: '培训信息',
-            component: './Dashboard/Analysis',
-          },
-          {
-            path: '/dashboard/analfrtddysis',
-            name: '员工信息',
-            component: './Dashboard/Analysis',
-          },
-          {
-            path: '/dashboard/analyhfddysis',
-            name: '资质信息',
-            component: './Dashboard/Analysis',
-          },
-          {
-            path: '/dashboard/ananbvjglfddysis',
-            name: '车辆信息',
-            component: './Dashboard/Analysis',
-          },
+          // {
+          //   path: '/dashboard/analhhfddysis',
+          //   name: '会务信息',
+          //   component: './Dashboard/Analysis',
+          // },
+          // {
+          //   path: '/dashboard/analklfddysis',
+          //   name: '培训信息',
+          //   component: './Dashboard/Analysis',
+          // },
+          // {
+          //   path: '/dashboard/analyhfddysis',
+          //   name: '资质信息',
+          //   component: './Dashboard/Analysis',
+          // },
+          // {
+          //   path: '/dashboard/ananbvjglfddysis',
+          //   name: '车辆信息',
+          //   component: './Dashboard/Analysis',
+          // },
         ],
       },
       {

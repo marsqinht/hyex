@@ -1,11 +1,113 @@
 import{ Component }from 'react';
-import { Alert, Tabs, Card, Tree , List, Typography, Icon, Select, Button, Modal, Upload, message } from 'antd';
+import { Alert, Tabs, Card, Tree , List, Typography, Icon, Select, Button, Modal, Upload, message, Table } from 'antd';
 import styles from './index.less'
 
 const { TabPane } = Tabs;
 const { TreeNode } = Tree;
 const { Option } = Select;
 const { Dragger } = Upload;
+const ccolumns = [
+  {
+    title: '序号',
+    dataIndex: 'key',
+  },
+  {
+    title: '部门',
+    dataIndex: 'part',
+  },
+  {
+    title: '姓名',
+    dataIndex: 'name',
+  },
+  {
+    title: '聘任职称',
+    dataIndex: 'zhicheng',
+  },
+  {
+    title: '聘任年度',
+    dataIndex: 'year',
+  },
+  {
+    title: '备注',
+    dataIndex: 'memo',
+    render: text => <a>{text}</a>,
+  },
+];
+const cdata = [
+  {
+    key: '1',
+    date: '2019-10-11',
+    day: '星期一',
+    zhicheng: '质量工程师',
+    name: '李子煜',
+    year: 2019,
+    age: 32,
+    address: '14号楼303',
+    part: '设计事业部',
+    title: '2020招聘工作会议',
+    range: '按通知',
+    man: '毛经理',
+    part: '数字化中心'
+  },
+  {
+    key: '2',
+    date: '2019-10-11',
+    day: '星期一',
+    zhicheng: '质量工程师',
+    name: '李子煜',
+    year: 2019,
+    age: 32,
+    address: '14号楼303',
+    part: '设计事业部',
+    title: '2020招聘工作会议',
+    range: '按通知',
+    memo: '低值高聘',
+    man: '毛经理',
+    part: '数字化中心'
+  },{
+    key: '3',
+    date: '2019-10-11',
+    day: '星期三',
+    zhicheng: '质量工程师',
+    name: '李子煜',
+    year: 2019,
+    age: 32,
+    address: '14号楼303',
+    part: '设计事业部',
+    title: '2020招聘工作会议',
+    range: '按通知',
+    man: '毛经理',
+    part: '数字化中心'
+  },{
+    key: '4',
+    date: '2019-10-11',
+    day: '星期五',
+    zhicheng: '质量工程师',
+    name: '李子煜',
+    year: 2019,
+    age: 32,
+    address: '14号楼303',
+    title: '2020招聘工作会议',
+    part: '设计事业部',
+    range: '按通知',
+    man: '毛经理',
+    part: '数字化中心'
+  },{
+    key: '5',
+    date: '2019-10-11',
+    day: '星期一',
+    zhicheng: '质量工程师',
+    name: '李子煜',
+    year: 2019,
+    age: 32,
+    address: '14号楼303',
+    part: '设计事业部',
+    title: '2020招聘工作会议',
+    range: '按通知',
+    man: '毛经理',
+    part: '数字化中心'
+  },
+];
 const props = {
   name: 'file',
   multiple: true,
@@ -63,7 +165,7 @@ class Content extends Component {
     return (
       <div className={styles.wrap}>
         <div className={styles.left}>
-          <Card title="选择部室" className="grandient-bg">
+          <Card title="选择相关部门" className="grandient-bg">
             <div style={{'min-height': 500}}>
               <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect}>
                 <TreeNode title="公司" key="0-0" icon={<Icon type="apartment" />}>
@@ -122,10 +224,10 @@ class Content extends Component {
             </Tabs>
           </Modal>
           <Card
-            title={appartment}
             bordered={false}
             className="grandient-bg"
             extra={<div>
+              <Button type="link">2019年度职称聘任</Button>
               <Select defaultValue="1" style={{ width: 120 , marginRight: 14}} size="small">
                 <Option value="1">年度过滤</Option>
                 <Option value="lucy">时间过滤</Option>
@@ -133,20 +235,10 @@ class Content extends Component {
                   标题
                 </Option>
               </Select>
-              <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>编辑</Button>
-            </div>}
+                   </div>}
           >
             <div className={styles.right}>
-              <List
-                header={<div>{typeName}</div>}
-                bordered
-                dataSource={data}
-                renderItem={item => (
-                  <List.Item>
-                    <Typography.Text mark>[NEW]</Typography.Text> {item}
-                  </List.Item>
-          )}
-              />
+              <Table columns={ccolumns} dataSource={cdata} />
             </div>
           </Card>
         </div>
@@ -155,25 +247,19 @@ class Content extends Component {
   }
 }
 
-export default class Fawen extends Component {
+export default class Zizhi extends Component {
   render() {
     return (
       <div>
         <div className="mb-20">
-          <Alert message="行政提醒: 最新更新日期 2019-11-03" type="info" />
+          <Alert message="资质提醒: 最新更新日期 2019-11-03" type="warning" />
         </div>
         <Tabs className="mt-20" style={{background: '#fff'}}>
-          <TabPane tab="计划与总结" key="1">
+          <TabPane tab="任职资格" key="1">
             <Content typeName="计划与总结" />
           </TabPane>
-          <TabPane tab="管理例会" key="2">
+          <TabPane tab="职称聘任" key="2">
             <Content typeName="管理例会" />
-          </TabPane>
-          <TabPane tab="公司行政文件" key="3">
-            <Content typeName="公司行政文件" />
-          </TabPane>
-          <TabPane tab="公司党群文件" key="4">
-            <Content typeName="公司党群文件" />
           </TabPane>
         </Tabs>,
       </div>

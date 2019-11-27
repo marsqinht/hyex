@@ -251,6 +251,7 @@ export default class Home extends Component {
       page,
       size: 4
     }).then(({ success, data, total }) => {
+      console.log(data)
       if(success) {
         this.setState({
           newsList: data
@@ -347,9 +348,9 @@ export default class Home extends Component {
                       renderItem={(item,index) => (
                         <List.Item>
                           <div className={styles.newList} onClick={()=>this.goDetail(1,index)}>
-                            <Tooltip placement="top" title={item.NewsName}>
+                            <Tooltip placement="top" title={item.Name}>
 
-                              <div className={styles.newsTitle}>{item.NewsName}</div>
+                              <div className={styles.newsTitle}>{item.Name}</div>
                             </Tooltip>
                             {this.renderNew(moment(item.RegDate).format('YYYY-MM-DD')) && (<div className={styles.newTag} />)}
                             <div style={{color: '#333'}}>{moment(item.RegDate).format('YYYY-MM-DD')}</div>

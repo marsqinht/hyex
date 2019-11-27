@@ -66,6 +66,7 @@ export default class News extends Component {
       page,
       size: 15
     }).then(({ success, data, total }) => {
+      console.log(data)
       if(success) {
         this.setState({
           list: data,
@@ -165,18 +166,18 @@ export default class News extends Component {
           dataSource={list}
           renderItem={(item,index) => (
             <List.Item
-              key={item.NewsName}
+              key={item.Name}
               actions={[
                 <IconText type="like-o" text="156" key="list-vertical-like-o" />,
                 <IconText type="message" text="2" key="list-vertical-message" />,
-                item.NewsData.length && <Button type="link" href={item.NewsData.length && item.NewsData[0].ServerUrl} target="blank">附件: {item.NewsData.length && item.NewsData[0].FileName}</Button>,
+                item.FileRow.length && <Button type="link" href={item.FileRow.length && item.FileRow[0].ServerUrl} target="blank">附件: {item.FileRow.length && item.FileRow[0].FileName}</Button>,
                 <Button type="link">{moment(item.RegDate).format('YYYY-MM-DD')}</Button>,
               ]}
             >
               <List.Item.Meta
                 title={
                   <a href="javascript:;" onClick={()=> this.goDetail(currentPage, index)}>
-                    {item.NewsName}
+                    {item.Name}
                   </a>
                 }
                 description={item.description}
