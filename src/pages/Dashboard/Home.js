@@ -300,6 +300,7 @@ export default class Home extends Component {
           </div>
           <Row gutter={16}>
             <Col span={18}>
+              <UsualProgram />
               {/* <div className={styles.mb}>
               </div> */}
               {/* <div style={{ background: '#fff', marginBottom: 12, padding: 10 }}>
@@ -549,7 +550,37 @@ export default class Home extends Component {
                 </div>
               </Card>
               <div className={styles.margin}>
-                <UsualProgram />
+                {/* <UsualProgram /> */}
+                <Card
+                  className="blue-bg grandient-bg"
+                  title={
+                    <div>
+              服务中心
+                    </div>
+            }
+                  style={{ marginTop: 20 }}
+                  bordered={false}
+                >
+                  <div className={styles.serv}>
+                    <div style={{width: '100%'}}>
+                      <a>华谊信息运维</a>
+                      <p>6# 号楼: <br />李建新(703897) <br />丁毅(703895) <br />孟爽(703893) <br />钟强(703889)<br /> 李磊(709195)</p>
+                    </div>
+                    <div style={{width: '100%'}}>
+                      <a>大楼设备维修</a>
+                      <p> <br />11# 号楼: <br />刘洪(703882)</p>
+                    </div>
+                    <div style={{width: '100%'}}>
+                      <a>联系电话</a>
+                      <br />
+                      <p className={styles.banci}>
+                        <Icon style={{fontSize: '38px'}} type="phone" theme="twoTone" twoToneColor="orange" />
+                        <p style={{fontSize: '24px', color: 'orange', 'line-height': 1.2, 'marginTop': 14}}>6470588</p>
+                        <p style={{color: 'orange'}}>公司门卫24小时值班电话</p>
+                      </p>
+                    </div>
+                  </div>
+                </Card>
               </div>
             </Col>
           </Row>
@@ -623,35 +654,6 @@ export default class Home extends Component {
           >
             <Cc />
           </Drawer>
-          <Card
-            className="blue-bg grandient-bg"
-            title={
-              <div>
-              服务中心
-              </div>
-            }
-            style={{ marginTop: 20 }}
-            bordered={false}
-          >
-            <div className={styles.serv}>
-              <div style={{width: '25%'}}>
-                <a>华谊信息运维</a>
-                <p>6# 号楼: <br />李建新(703897) 丁毅(703895) 孟爽(703893) <br />钟强(703889) 李磊(709195)</p>
-              </div>
-              <div style={{width: '25%'}}>
-                <a>大楼设备维修</a>
-                <p>11# 号楼: <br />刘洪(703882)</p>
-              </div>
-              <div style={{width: '25%'}}>
-                <a>联系电话</a>
-                <p className={styles.banci}>
-                  <Icon style={{fontSize: '38px'}} type="phone" theme="twoTone" twoToneColor="orange" />
-                  <p style={{fontSize: '24px', color: 'orange', 'line-height': 1.2, 'marginTop': 14}}>6470588</p>
-                  <p style={{color: 'orange'}}>公司门卫24小时值班电话</p>
-                </p>
-              </div>
-            </div>
-          </Card>
         </div>
       </div>
     );

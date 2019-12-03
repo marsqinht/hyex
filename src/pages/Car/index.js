@@ -211,12 +211,12 @@ class Employee extends React.Component {
         <Card style={{marginTop: 20, height: '100%'}}>
           <Tabs defaultActiveKey="1">
             <TabPane
-tab={
+              tab={
                 <span>
                   <MyIcon type="icon-andanganleixingtongji" style={{fontSize: '16px'}} />
                     班车信息
                 </span>}
-key="1"
+              key="1"
             >
               <div className={styles.content}>
                 <Card>
@@ -235,9 +235,9 @@ key="1"
                 <div className={styles.right}>
                   <Card>
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                      <Statistic title="车牌" value="DG7299" valueStyle={{ color: 'rgb(245, 207, 92)' }} />
-                      <Statistic title="驾驶员" value="李俊: 13908907788" valueStyle={{ color: 'rgb(5, 144, 223)' }} />
-                      <Statistic title="车长" value="彭建南: 15678909008" valueStyle={{color: 'rgb(29, 204, 161)'}} />
+                      <Statistic title={<div><Icon type="car" style={{ color: 'rgb(245, 207, 92)' }} /> 车辆</div>} value="DG7299" valueStyle={{ color: 'rgb(245, 207, 92)' }} />
+                      <Statistic title={<div><Icon type="idcard" style={{ color: 'rgb(5, 144, 223)' }} /> 驾驶员</div>} value="李俊: 13908907788" valueStyle={{ color: 'rgb(5, 144, 223)' }} />
+                      <Statistic title={<div><Icon type="user" style={{color: 'rgb(29, 204, 161)'}} /> 车长</div>} value="彭建南: 15678909008" valueStyle={{color: 'rgb(29, 204, 161)'}} />
                     </div>
                     <div className="mt-20">
                       <Table columns={columns} dataSource={data} size="middle" pagination={false} />
@@ -247,12 +247,12 @@ key="1"
               </div>
             </TabPane>
             <TabPane
-tab={
+              tab={
                 <span>
                   <MyIcon type="icon-xiangyingchaoshijiankong" style={{fontSize: '16px'}} />
                     晚间加班车
                 </span>}
-key="2"
+              key="2"
             />
           </Tabs>
         </Card>

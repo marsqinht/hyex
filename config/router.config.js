@@ -196,85 +196,85 @@ export default [
       },
 
       {
-        path: '/dashboard/monitjgnbvor',
+        path: 'http://www1.hyec.com',
+        target: '_blank', // 点击新窗口打开
         name: '知识经验KM',
         icon: 'cluster',
-        component: './Dashboard/Analysis',
       },
       {
-        path: '/dashboard/moningrshsretor',
+        path: 'http://www1.hyec.com',
+        target: '_blank', // 点击新窗口打开
         name: '人力资源HRS',
         icon: 'read',
-        component: './Dashboard/Analysis',
       },
       {
-        path: '/dashboard/monitrewrttor',
+        path: 'http://www1.hyec.com:8082',
+        target: '_blank', // 点击新窗口打开
         name: '薪资查询CBA',
         icon: 'money-collect',
-        component: './Dashboard/Analysis',
       },
       {
-        path: '/dashboard/monituyxor',
+        path: 'http://cba.hyec.com:8082',
+        target: '_blank', // 点击新窗口打开
         name: '人才发展TDS',
         icon: 'usergroup-add',
-        component: './Dashboard/Analysis',
       },
       {
-        path: '/dashboard/monitor',
+        path: 'http://tds.hyec.com/Login',
+        target: '_blank', //
         name: '办公资产AMS',
         icon: 'audit',
-        component: './Dashboard/Analysis',
       },
       {
-        path: '/dashboard/moniidcccctor',
+        path: 'http://www1.hyec.com:8087/AMS/it/user/login.asp',
+        target: '_blank', //
         name: '项目网站',
         icon: 'link',
-        component: './Dashboard/Analysis',
       },
       {
-        path: '/dashboard/ddddd',
+        path: '/other',
         name: '其它应用程序',
         icon: 'ellipsis',
         routes: [
+          // {
+          //   path: '/dashboard/fshcvcn',
+          //   name: '档案查询',
+          //   component: './Dashboard/Analysis',
+          // },
+          // {
+          //   path: '/dashboard/monitdssdfsdfor',
+          //   name: '商务平台',
+          //   component: './Dashboard/Analysis',
+          // },
+          // {
+          //   path: '/dashboard/monitordggffhjfg',
+          //   name: '邮件列表',
+          //   component: './Dashboard/Analysis',
+          // },
+          // {
+          //   path: '/dashboard/monitdgdsgor',
+          //   name: '电话簿',
+          //   component: './Dashboard/Analysis',
+          // },
+          // {
+          //   path: '/dashboard/monfadgdasgfitor',
+          //   name: '邮件签名模板',
+          //   component: './Dashboard/Analysis',
+          // },
+          // {
+          //   path: '/dashboard/monitgfsdsdfgccbvor',
+          //   name: '网上接待站',
+          //   component: './Dashboard/Analysis',
+          // },
+          // {
+          //   path: '/dashboard/monitobcbvcr',
+          //   name: 'HYEC外网维护',
+          //   component: './Dashboard/Analysis',
+          // },
           {
-            path: '/dashboard/fshcvcn',
-            name: '档案查询',
-            component: './Dashboard/Analysis',
-          },
-          {
-            path: '/dashboard/monitdssdfsdfor',
-            name: '商务平台',
-            component: './Dashboard/Analysis',
-          },
-          {
-            path: '/dashboard/monitordggffhjfg',
-            name: '邮件列表',
-            component: './Dashboard/Analysis',
-          },
-          {
-            path: '/dashboard/monitdgdsgor',
-            name: '电话簿',
-            component: './Dashboard/Analysis',
-          },
-          {
-            path: '/dashboard/monfadgdasgfitor',
-            name: '邮件签名模板',
-            component: './Dashboard/Analysis',
-          },
-          {
-            path: '/dashboard/monitgfsdsdfgccbvor',
-            name: '网上接待站',
-            component: './Dashboard/Analysis',
-          },
-          {
-            path: '/dashboard/monitobcbvcr',
-            name: 'HYEC外网维护',
-            component: './Dashboard/Analysis',
-          },
-          {
-            path: '/dashboard/monitbxzcbvbor',
+            path: '/other/link',
             name: '友情链接',
-            component: './Dashboard/Analysis',
+            component: './Other/Link',
           },
         ],
       },

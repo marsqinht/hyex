@@ -37,6 +37,7 @@ export default class Workplace extends PureComponent {
       <div>
         <Card
           className="blue-bg grandient-bg"
+          style={{marginBottom: '16px'}}
           title={
             <div>
              常用程序

@@ -171,24 +171,40 @@ class Content extends Component {
         <div className={styles.left}>
           <Card title="选择相关部门" className="grandient-bg">
             <div style={{'min-height': 500}}>
-              <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
-                <TreeNode title="公司" key="0-0" icon={<MyIcon type="icon-zuzhijigouguanli" style={{fontSize: '16px'}} />}>
-                  <TreeNode title="商务部" key="0-0-0" />
-                  <TreeNode title="采购部" key="0-0-1" />
-                  <TreeNode title="施工管理部" key="0-0-2" />
-                  <TreeNode title="工艺系统室" key="0-0-3" />
-                  <TreeNode title="管道室" key="0-0-4" />
-                  <TreeNode title="设备室" key="0-0-5" />
-                  <TreeNode title="电仪室" key="0-0-6" />
-                  <TreeNode title="公用工程室" key="0-0-7" />
-                  <TreeNode title="工程经济室" key="0-0-8" />
-                  <TreeNode title="前期咨询室" key="0-0-9" />
-                  <TreeNode title="建筑设计分院" key="0-0-10" />
-                  <TreeNode title="QHSE部" key="0-0-11" />
-                  <TreeNode title="人力资源与行政" key="0-0-12" />
-                  <TreeNode title="项目管理部" key="0-0-13" />
+            {typeName === '职称聘任' && <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
+                <TreeNode title="技术职称聘任一览表" key="0" icon={<MyIcon type="icon-zuzhijigouguanli" style={{fontSize: '16px'}} />}>
+                  <TreeNode title="华谊工程" key="0-0" icon={<MyIcon type="icon-zuzhijigouguanli" style={{fontSize: '16px'}} />}>
+                    <TreeNode title="公司高管" key="0-0-0" />
+                    <TreeNode title="设计事业部" key="0-0-1" />
+                    <TreeNode title="总承包事业部" key="0-0-2" />
+                    <TreeNode title="党群工作部" key="0-0-3" />
+                    <TreeNode title="精细化工事业部" key="0-0-4" />
+                    <TreeNode title="资产财务部" key="0-0-5" />
+                    <TreeNode title="QHSE部" key="0-0-6" />
+                    <TreeNode title="数字化中心" key="0-0-7" />
+                    <TreeNode title="技术公司" key="0-0-8" />
+                  </TreeNode>
                 </TreeNode>
-              </Tree>
+              </Tree>}
+              {typeName === '任职资格' && <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
+                  <TreeNode title="项目及技术岗位任职一览表" key="0-0" icon={<MyIcon type="icon-zuzhijigouguanli" style={{fontSize: '16px'}} />}>
+                    <TreeNode title="项目经理" key="0-0-0" />
+                    <TreeNode title="项目、专业审定" key="0-0-1" />
+                    <TreeNode title="设计经理" key="0-0-2" />
+                    <TreeNode title="专业工程师" key="0-0-3" />
+                    <TreeNode title="质量工程师" key="0-0-4" />
+                    <TreeNode title="IT工程师" key="0-0-5" />
+                    <TreeNode title="采购经理" key="0-0-6" />
+                    <TreeNode title="施工经理" key="0-0-7" />
+                    <TreeNode title="费用控制工程师" key="0-0-8" />
+                    <TreeNode title="进度控制工程师" key="0-0-9" />
+                    <TreeNode title="材料控制工程师" key="0-0-10" />
+                    <TreeNode title="开车经理" key="0-0-11" />
+                    <TreeNode title="HSE工程师" key="0-0-12" />
+                    <TreeNode title="设、校、审" key="0-0-13" />
+                    <TreeNode title="个别项目技术岗位任职表" key="0-0-14" />
+                  </TreeNode>
+              </Tree>}
             </div>
           </Card>
         </div>
@@ -267,7 +283,7 @@ export default class Zizhi extends Component {
               </span>}
             key="1"
           >
-            <Content typeName="计划与总结" />
+            <Content typeName="任职资格" />
           </TabPane>
           <TabPane
             tab={
@@ -277,7 +293,7 @@ export default class Zizhi extends Component {
               </span>}
             key="2"
           >
-            <Content typeName="管理例会" />
+            <Content typeName="职称聘任" />
           </TabPane>
         </Tabs>,
       </div>
