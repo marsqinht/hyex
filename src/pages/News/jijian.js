@@ -1,7 +1,9 @@
-import { Component } from 'react';
+import React from 'react';
 import { Tabs, Table, Select, Input, Card } from 'antd';
 import router from 'umi/router';
+import moment from 'moment';
 import styles from './jijian.less';
+import { queryPartyWork } from '../../services/party';
 
 const { TabPane } = Tabs;
 const { Option } = Select;
@@ -10,98 +12,76 @@ const { Search } = Input;
 const columns = [
   {
     title: '标题',
-    dataIndex: 'name',
-    render: text => <a onClick={() => router.push('/dashboard/detail/34')}>{text}</a>,
+    dataIndex: 'Name',
+    render: text => <a onClick={() => router.push('/dashboard/detail/1/0')}>{text}</a>,
   },
   {
     title: '发布时间',
     className: 'column-time',
-    dataIndex: 'time',
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: '中共上海华谊工程有限公司第二次党员大会隆重召',
-    time: '2019-09-10',
-    address: 'New York No. 1 Lake Park',
-    commet: 'dd',
-  },
-  {
-    key: '2',
-    name: '中共上海华谊工程有限公司第二次党员大会隆重召',
-    time: '2019-09-20',
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: '中共上海华谊工程有限公司第二次党员大会隆重召',
-    time: '2019-09-21',
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: '中共上海华谊工程有限公司第二次党员大会隆重召',
-    time: '2019-09-21',
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: '中共上海华谊工程有限公司第二次党员大会隆重召',
-    time: '2019-09-21',
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: '中共上海华谊工程有限公司第二次党员大会隆重召',
-    time: '2019-09-21',
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: '中共上海华谊工程有限公司第二次党员大会隆重召',
-    time: '2019-09-21',
-    address: 'Sidney No. 1 Lake Park',
+    render: time => <div>{moment(time).format('YYYY-MM-DD')}</div>,
+    dataIndex: 'RegDate',
   },
 ];
 
 const tabs = [
   {
     name: '工作动态',
-    content: (
-      <Card title="工作动态" bordered={false}>
-        <Table columns={columns} dataSource={data} />
-      </Card>
-    ),
   },
   {
     name: '廉政教育',
-    content: (
-      <Card title="廉政教育" bordered={false}>
-        <Table columns={columns} dataSource={data} />
-      </Card>
-    ),
   },
   {
     name: '政策法规',
-    content: (
-      <Card title="政策法规" bordered={false}>
-        <Table columns={columns} dataSource={data} />
-      </Card>
-    ),
   },
 ];
 
-export default class Jijian extends Component {
+export default class Jijian extends React.Component {
+  state = {
+    data: [],
+    type: '工作动态',
+    total: 0,
+  };
+
+  componentDidMount() {
+    this.fetchPartyWork();
+  }
+
+  fetchPartyWork = async (page = 1, type = '工作动态') => {
+    const { data, success, total } = await queryPartyWork({
+      page,
+      size: 10,
+      type,
+    });
+    if (success) {
+      this.setState({
+        data,
+        total,
+      });
+    }
+  };
+
+  onChange = page => {
+    const { type } = this.state;
+    this.fetchPartyWork(page, type);
+  };
+
   goDetail = () => {
-    router.push('/dashboard/detail/34');
+    router.push('/dashboard/detail/2/0');
   };
 
   render() {
+    const { data, total } = this.state;
+    const { onChange } = this;
     return (
       <Card>
-        <Tabs defaultActiveKey="1">
+        <Tabs
+          defaultActiveKey="工作动态"
+          onChange={name => {
+            console.log(name);
+            this.setState({ type: name });
+            this.fetchPartyWork(1, name);
+          }}
+        >
           {tabs.map(tab => {
             return (
               <TabPane tab={tab.name} key={tab.name} style={{ backgroundColor: '#fff' }}>
@@ -109,8 +89,6 @@ export default class Jijian extends Component {
                   <Select defaultValue="lucy" style={{ width: 120 }}>
                     <Option value="jack">标题</Option>
                     <Option value="lucy">内容</Option>
-                    <Option value="disabled">Disabled</Option>
-                    <Option value="Yiminghe">yiminghe</Option>
                   </Select>
                   <Search
                     placeholder="请输入关键字搜索"
@@ -120,7 +98,19 @@ export default class Jijian extends Component {
                     onSearch={value => console.log(value)}
                   />
                 </div>
-                <div style={{ padding: '0 20px 0' }}>{tab.content}</div>
+                <div style={{ padding: '0 20px 0' }}>
+                  <Card title={tab.name} bordered={false}>
+                    <Table
+                      columns={columns}
+                      dataSource={data}
+                      pagination={{
+                        pageSize: 10,
+                        total,
+                        onChange,
+                      }}
+                    />
+                  </Card>
+                </div>
               </TabPane>
             );
           })}

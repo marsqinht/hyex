@@ -1,6 +1,22 @@
-import{ Component }from 'react';
-import { Alert, Tabs, Card, Tree , List, Typography, Icon, Select, Button, Modal, Upload, message, Table, Tag } from 'antd';
-import styles from './index.less'
+import React from 'react';
+import {
+  Alert,
+  Tabs,
+  Card,
+  Tree,
+  List,
+  Typography,
+  Icon,
+  Select,
+  Button,
+  Modal,
+  Upload,
+  message,
+  Table,
+  Tag,
+} from 'antd';
+import styles from './index.less';
+import { queryApartmentTree } from '../../services/company';
 
 const MyIcon = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1277028_jejs7t1j2ca.js', // 在 iconfont.cn 上生成
@@ -78,7 +94,7 @@ const cdata = [
     title: '2020招聘工作会议',
     range: '按通知',
     man: '毛经理',
-    part: '数字化中心'
+    part: '数字化中心',
   },
   {
     key: '2',
@@ -93,8 +109,9 @@ const cdata = [
     title: '2020招聘工作会议',
     range: '按通知',
     man: '毛经理',
-    part: '数字化中心'
-  },{
+    part: '数字化中心',
+  },
+  {
     key: '3',
     date: '2019-10-11',
     day: '星期三',
@@ -107,8 +124,9 @@ const cdata = [
     title: '2020招聘工作会议',
     range: '按通知',
     man: '毛经理',
-    part: '数字化中心'
-  },{
+    part: '数字化中心',
+  },
+  {
     key: '4',
     date: '2019-10-11',
     day: '星期五',
@@ -121,8 +139,9 @@ const cdata = [
     theme: '招聘启动会',
     range: '按通知',
     man: '毛经理',
-    part: '数字化中心'
-  },{
+    part: '数字化中心',
+  },
+  {
     key: '5',
     date: '2019-10-11',
     day: '星期一',
@@ -135,17 +154,31 @@ const cdata = [
     title: '2020招聘工作会议',
     range: '按通知',
     man: '毛经理',
-    part: '数字化中心'
+    part: '数字化中心',
   },
 ];
-const data = [
-  '关于丁更等同志职务任免的通知'
-]
-class Content extends Component {
+// const data = ['关于丁更等同志职务任免的通知'];
+class Content extends React.Component {
   state = {
     appartment: '商务部',
-    visible: false
+    visible: false,
+    data: [],
+    tree: {
+      children: [],
+    },
+  };
+
+  componentDidMount() {
+    this.fetchTree();
   }
+
+  fetchTree = async () => {
+    const tree = await queryApartmentTree();
+    console.log(tree);
+    this.setState({
+      tree,
+    });
+  };
 
   handleOk = () => {
     this.setState({
@@ -165,25 +198,37 @@ class Content extends Component {
     });
   };
 
-
   onSelect = (selectedKeys, info) => {
     this.setState({
-      appartment: info.node.props.title
-    })
+      appartment: info.node.props.title,
+    });
     console.log('selected', selectedKeys, info);
   };
 
   render() {
-    const { appartment } = this.state;
+    const { appartment, visible, data, tree } = this.state;
     const { typeName } = this.props;
-    return (
-      typeName === '计划与总结' ? <div className={styles.wrap}>
+    return typeName === '计划与总结' ? (
+      <div className={styles.wrap}>
         <div className={styles.left}>
           <Card title="选择部室" className="grandient-bg">
-            <div style={{'min-height': 500}}>
-              <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
-                <TreeNode title="公司" key="0-0" icon={<MyIcon type="icon-zuzhijigouguanli" style={{fontSize: '16px'}} />}>
-                  <TreeNode title="商务部" key="0-0-0" />
+            <div style={{ 'min-height': 500 }}>
+              <Tree
+                showLine
+                defaultExpandedKeys={['0-0']}
+                onSelect={this.onSelect}
+                showIcon
+                icon={<MyIcon type="icon-jiaoseguanli" style={{ fontSize: '16px' }} />}
+              >
+                <TreeNode
+                  title={tree.Name}
+                  key="0-0"
+                  icon={<MyIcon type="icon-zuzhijigouguanli" style={{ fontSize: '16px' }} />}
+                >
+                  {tree.children.map(child => {
+                    return <TreeNode title={child.Name} key={`0-0-${child.Id}"`} />;
+                  })}
+                  {/* <TreeNode title="商务部" key="0-0-0" />
                   <TreeNode title="采购部" key="0-0-1" />
                   <TreeNode title="施工管理部" key="0-0-2" />
                   <TreeNode title="工艺系统室" key="0-0-3" />
@@ -196,19 +241,14 @@ class Content extends Component {
                   <TreeNode title="建筑设计分院" key="0-0-10" />
                   <TreeNode title="QHSE部" key="0-0-11" />
                   <TreeNode title="人力资源与行政" key="0-0-12" />
-                  <TreeNode title="项目管理部" key="0-0-13" />
+                  <TreeNode title="项目管理部" key="0-0-13" /> */}
                 </TreeNode>
               </Tree>
             </div>
           </Card>
         </div>
         <div className={styles.content}>
-          <Modal
-            title="编辑"
-            visible={this.state.visible}
-            onOk={this.handleOk}
-            onCancel={this.handleCancel}
-          >
+          <Modal title="编辑" visible={visible} onOk={this.handleOk} onCancel={this.handleCancel}>
             <Tabs defaultActiveKey="1">
               <TabPane tab="新建" key="1">
                 <Dragger {...props}>
@@ -217,8 +257,8 @@ class Content extends Component {
                   </p>
                   <p className="ant-upload-text">点击或拖拽到这个区域上传文件</p>
                   <p className="ant-upload-hint">
-                    Support for a single or bulk upload. Strictly prohibit from uploading company data
-                    or other band files
+                    Support for a single or bulk upload. Strictly prohibit from uploading company
+                    data or other band files
                   </p>
                 </Dragger>
               </TabPane>
@@ -241,64 +281,73 @@ class Content extends Component {
             title={appartment}
             bordered={false}
             className="grandient-bg"
-            extra={<div>
-              <Select defaultValue="1" style={{ width: 120 , marginRight: 14}} size="small">
-                <Option value="1">年度过滤</Option>
-                <Option value="lucy">时间过滤</Option>
-                <Option value="disabled">
-                  标题
-                </Option>
-              </Select>
-              <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>编辑</Button>
-            </div>}
+            extra={
+              <div>
+                <Select defaultValue="1" style={{ width: 120, marginRight: 14 }} size="small">
+                  <Option value="1">年度过滤</Option>
+                  <Option value="lucy">时间过滤</Option>
+                  <Option value="disabled">标题</Option>
+                </Select>
+                <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>
+                  编辑
+                </Button>
+              </div>
+            }
           >
             <div className={styles.right}>
               <List
-                header={<div style={{fontWeight: 'bold'}}>{typeName}</div>}
+                header={<div style={{ fontWeight: 'bold' }}>{typeName}</div>}
                 bordered
                 dataSource={data}
                 renderItem={item => (
                   <List.Item>
                     <Typography.Text mark>[NEW]</Typography.Text> {item}
                   </List.Item>
-          )}
+                )}
               />
             </div>
           </Card>
         </div>
-      </div> : <div>
-                               <div className={styles.panelwrap}>
-          <div className={styles.title}><Button type="link">{typeName}</Button><Tag color="red">2019</Tag></div>
-          <div><Select defaultValue="1" style={{ width: 120 , marginRight: 14}} size="small">
-                                   <Option value="1">年度过滤</Option>
-                                   <Option value="lucy">时间过滤</Option>
-                                   <Option value="disabled">
-                  标题
-            </Option>
-                                      </Select>
-                                   <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>编辑</Button>
-                                 </div>
+      </div>
+    ) : (
+      <div>
+        <div className={styles.panelwrap}>
+          <div className={styles.title}>
+            <Button type="link">{typeName}</Button>
+            <Tag color="red">2019</Tag>
+          </div>
+          <div>
+            <Select defaultValue="1" style={{ width: 120, marginRight: 14 }} size="small">
+              <Option value="1">年度过滤</Option>
+              <Option value="lucy">时间过滤</Option>
+              <Option value="disabled">标题</Option>
+            </Select>
+            <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>
+              编辑
+            </Button>
+          </div>
         </div>
-                               <Table columns={ccolumns} dataSource={cdata} />
-                                      </div>
-    )
+        <Table columns={ccolumns} dataSource={cdata} />
+      </div>
+    );
   }
 }
 
-export default class Fawen extends Component {
+export default class Fawen extends React.Component {
   render() {
     return (
       <div>
         <div className="mb-20">
           <Alert message="行政提醒: 最新更新日期 2019-11-03" type="info" />
         </div>
-        <Tabs className="mt-20" style={{background: '#fff'}}>
+        <Tabs className="mt-20" style={{ background: '#fff' }}>
           <TabPane
             tab={
               <span>
-                <MyIcon type="icon-ziduanduxiepeizhiguanli" style={{fontSize: '16px'}} />
-                    计划与总结
-              </span>}
+                <MyIcon type="icon-ziduanduxiepeizhiguanli" style={{ fontSize: '16px' }} />
+                计划与总结
+              </span>
+            }
             key="1"
           >
             <Content typeName="计划与总结" />
@@ -306,9 +355,10 @@ export default class Fawen extends Component {
           <TabPane
             tab={
               <span>
-                <MyIcon type="icon-daishenhe" style={{fontSize: '16px'}} />
-                    管理例会
-              </span>}
+                <MyIcon type="icon-daishenhe" style={{ fontSize: '16px' }} />
+                管理例会
+              </span>
+            }
             key="2"
           >
             <Content typeName="管理例会" />
@@ -316,9 +366,10 @@ export default class Fawen extends Component {
           <TabPane
             tab={
               <span>
-                <MyIcon type="icon-daiqudangan" style={{fontSize: '16px'}} />
-                    公司行政文件
-              </span>}
+                <MyIcon type="icon-daiqudangan" style={{ fontSize: '16px' }} />
+                公司行政文件
+              </span>
+            }
             key="3"
           >
             <Content typeName="公司行政文件" />
@@ -326,15 +377,17 @@ export default class Fawen extends Component {
           <TabPane
             tab={
               <span>
-                <MyIcon type="icon-niandurukushuju" style={{fontSize: '16px'}} />
-                    公司党群文件
-              </span>}
+                <MyIcon type="icon-niandurukushuju" style={{ fontSize: '16px' }} />
+                公司党群文件
+              </span>
+            }
             key="4"
           >
             <Content typeName="公司党群文件" />
           </TabPane>
-        </Tabs>,
+        </Tabs>
+        ,
       </div>
-    )
+    );
   }
 }

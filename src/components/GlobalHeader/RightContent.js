@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
-import { Spin, Tag, Menu, Icon, Avatar, Tooltip, message, Drawer, Button } from 'antd';
+import { Spin, Tag, Menu, Icon, Avatar, Tooltip, message, Drawer, Button, Popover } from 'antd';
 import moment from 'moment';
 import groupBy from 'lodash/groupBy';
 import NoticeIcon from '../NoticeIcon';
@@ -8,7 +8,7 @@ import HeaderSearch from '../HeaderSearch';
 import HeaderDropdown from '../HeaderDropdown';
 import SelectLang from '../SelectLang';
 import ValueImg from './value';
-import ImageList from "../../pages/Dashboard/imageList";
+import ImageList from '../../pages/Dashboard/imageList';
 
 import styles from './index.less';
 
@@ -127,6 +127,22 @@ export default class GlobalHeaderRight extends Component {
         <Tag color="geekblue" onClick={() => this.setState({ visible: true })}>
           公司文化墙
         </Tag>
+        <Popover
+          content={
+            <div style={{ width: 250 }}>
+              <img
+                width="100%"
+                src="https://tva1.sinaimg.cn/large/006tNbRwly1g9lhaf285kj30ho060762.jpg"
+              ></img>
+            </div>
+          }
+          trigger="hover"
+        >
+          <Tag color="#07C160">
+            <Icon type="wechat" />
+            <span style={{ color: '#fff', cursor: 'pointer' }}>关注微信</span>
+          </Tag>
+        </Popover>
         {/* <div className={styles.wrap}>
           <Tag color="geekblue">公司愿景</Tag>
           <Tag color="red">公司使命</Tag>
@@ -142,7 +158,7 @@ export default class GlobalHeaderRight extends Component {
           height="auto"
           visible={this.state.visible}
         >
-          <div style={{margin: '0 auto', width: 550}}>
+          <div style={{ margin: '0 auto', width: 550 }}>
             <ImageList />
           </div>
         </Drawer>

@@ -1,8 +1,10 @@
 import { Icon, Button, Table, Modal, Tabs, Upload, message } from 'antd';
-import { Component } from 'react';
+import React from 'react';
+import moment from 'moment';
 // import router from 'umi/router';
 // import Detail from './detail';
 import styles from './huayi.less';
+import { querySystem } from '../../services/party';
 
 // const { Option } = Select;
 const { TabPane } = Tabs;
@@ -11,69 +13,14 @@ const { Dragger } = Upload;
 const columns = [
   {
     title: '标题',
-    dataIndex: 'name',
+    dataIndex: 'Name',
     render: text => <a>{text}</a>,
   },
   {
     title: '更新时间',
     className: 'column-time',
-    dataIndex: 'time',
-  },
-  {
-    title: '评论',
-    dataIndex: 'commet',
-    render: text => <a>评论(2)</a>,
-  },
-  {
-    title: '浏览',
-    dataIndex: 'address',
-    render: text => <div>浏览(2)</div>,
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: '中共上海华谊工程有限公司第二次党员大会隆重召',
-    time: '2019-09-10',
-    address: 'New York No. 1 Lake Park',
-    commet: 'dd',
-  },
-  {
-    key: '2',
-    name: '中共上海华谊工程有限公司第二次党员大会隆重召',
-    time: '2019-09-20',
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: '中共上海华谊工程有限公司第二次党员大会隆重召',
-    time: '2019-09-21',
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: '中共上海华谊工程有限公司第二次党员大会隆重召',
-    time: '2019-09-21',
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: '中共上海华谊工程有限公司第二次党员大会隆重召',
-    time: '2019-09-21',
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: '中共上海华谊工程有限公司第二次党员大会隆重召',
-    time: '2019-09-21',
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: '中共上海华谊工程有限公司第二次党员大会隆重召',
-    time: '2019-09-21',
-    address: 'Sidney No. 1 Lake Park',
+    render: time => <div>{moment(time).format('YYYY-MM-DD')}</div>,
+    dataIndex: 'RegDate',
   },
 ];
 
@@ -94,9 +41,30 @@ const props = {
   },
 };
 
-export default class ZhiduHuibian extends Component {
+export default class ZhiduHuibian extends React.Component {
   state = {
     visible: false,
+    data: [],
+    total: 0,
+  };
+
+  componentDidMount() {
+    this.fetchApi(1);
+  }
+
+  fetchApi = async (page, type = '上级单位文件') => {
+    const { data, success, total } = await querySystem({
+      page,
+      size: 10,
+      type,
+    });
+    console.log(data);
+    if (success) {
+      this.setState({
+        data,
+        total,
+      });
+    }
   };
 
   handleOk = () => {
@@ -118,11 +86,12 @@ export default class ZhiduHuibian extends Component {
   };
 
   render() {
+    const { visible, data, total } = this.state;
     return (
       <div className={styles.wrap}>
         <Modal
           title="编辑制度汇编"
-          visible={this.state.visible}
+          visible={visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
@@ -159,20 +128,36 @@ export default class ZhiduHuibian extends Component {
             编辑
           </Button>
         </div>
-        <Tabs defaultActiveKey="1" type="card">
-          <TabPane tab="上级单位文件" key="1">
+        <Tabs
+          defaultActiveKey="上级单位文件"
+          type="card"
+          onChange={name => {
+            this.fetchApi(1, name);
+          }}
+        >
+          <TabPane tab="上级单位文件" key="上级单位文件">
             <Table
               columns={columns}
               dataSource={data}
               bordered
-              title={() => <div style={{ textAlign: 'center' }}>制度汇编</div>}
+              pagination={{
+                total,
+                pageSize: 10,
+                onChange: page => this.fetchApi(page, '上级单位文件'),
+              }}
+              title={() => <div style={{ textAlign: 'center' }}>上级单位文件</div>}
             />
           </TabPane>
-          <TabPane tab="公司制度" key="2">
+          <TabPane tab="公司制度" key="公司制度">
             <Table
               columns={columns}
               dataSource={data}
               bordered
+              pagination={{
+                total,
+                pageSize: 10,
+                onChange: page => this.fetchApi(page, '公司制度'),
+              }}
               title={() => <div style={{ textAlign: 'center' }}>公司制度</div>}
             />
           </TabPane>

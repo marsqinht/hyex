@@ -59,7 +59,7 @@ const data = [
     title: '2020招聘工作会议',
     range: '按通知',
     man: '毛经理',
-    part: '数字化中心'
+    part: '数字化中心',
   },
   {
     key: '2',
@@ -74,8 +74,9 @@ const data = [
     title: '2020招聘工作会议',
     range: '按通知',
     man: '毛经理',
-    part: '数字化中心'
-  },{
+    part: '数字化中心',
+  },
+  {
     key: '3',
     date: '2019-10-11',
     day: '星期三',
@@ -88,8 +89,9 @@ const data = [
     title: '2020招聘工作会议',
     range: '按通知',
     man: '毛经理',
-    part: '数字化中心'
-  },{
+    part: '数字化中心',
+  },
+  {
     key: '4',
     date: '2019-10-11',
     day: '星期五',
@@ -102,8 +104,9 @@ const data = [
     theme: '招聘启动会',
     range: '按通知',
     man: '毛经理',
-    part: '数字化中心'
-  },{
+    part: '数字化中心',
+  },
+  {
     key: '5',
     date: '2019-10-11',
     day: '星期一',
@@ -116,13 +119,13 @@ const data = [
     title: '2020招聘工作会议',
     range: '按通知',
     man: '毛经理',
-    part: '数字化中心'
+    part: '数字化中心',
   },
 ];
 export default class Huiyi extends React.Component {
   state = {
-    s: 1
-  }
+    s: 1,
+  };
 
   render() {
     return (
@@ -141,7 +144,8 @@ export default class Huiyi extends React.Component {
                   <span>
                     <MyIcon type="icon-changyongkucaozuo_8" />
                     本周会议
-                  </span>}
+                  </span>
+                }
                 key="1"
               >
                 <Table columns={columns} dataSource={data} />
@@ -151,7 +155,8 @@ export default class Huiyi extends React.Component {
                   <span>
                     <MyIcon type="icon-yuanchengshenqing" />
                     下周会议
-                  </span>}
+                  </span>
+                }
                 key="2"
               >
                 <Table columns={columns} dataSource={[]} />
@@ -161,7 +166,8 @@ export default class Huiyi extends React.Component {
                   <span>
                     <MyIcon type="icon-suoyoudaishenpijilu" />
                     待批会议
-                  </span>}
+                  </span>
+                }
                 key="3"
               >
                 <Table columns={[]} dataSource={[]} />
@@ -171,7 +177,8 @@ export default class Huiyi extends React.Component {
                   <span>
                     <MyIcon type="icon-wodeshenpi" />
                     会议申请
-                  </span>}
+                  </span>
+                }
                 key="4"
               >
                 <Table columns={[]} dataSource={[]} />
@@ -181,7 +188,8 @@ export default class Huiyi extends React.Component {
                   <span>
                     <MyIcon type="icon-rukufenleitongji" />
                     会议室安排
-                  </span>}
+                  </span>
+                }
                 key="5"
               >
                 <Table columns={[]} dataSource={[]} />
@@ -191,7 +199,8 @@ export default class Huiyi extends React.Component {
                   <span>
                     <MyIcon type="icon-gebuchuyuanxiguidanggongshi" />
                     会议管理
-                  </span>}
+                  </span>
+                }
                 key="5"
               >
                 <Table columns={[]} dataSource={[]} />
@@ -200,6 +209,6 @@ export default class Huiyi extends React.Component {
           </Card>
         </div>
       </div>
-    )
+    );
   }
 }

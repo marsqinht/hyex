@@ -157,13 +157,13 @@ export default [
       },
       {
         path: '/dd',
-        name: '规范与标准',
+        name: '标准与规范',
         icon: 'highlight',
         routes: [
           {
-            path: '/dashboard/monitobnbr',
             name: '公司工作手册',
-            component: './Dashboard/Analysis',
+            path: ' http://www1.hyec.com:8501/Index.aspx',
+            target: '_blank',
           },
           {
             path: '/dashboard/monitxvor',
@@ -196,37 +196,37 @@ export default [
       },
 
       {
-        path: 'http://www1.hyec.com',
+        path: 'http://www1.hyec.com:8085/ ',
         target: '_blank', // 点击新窗口打开
         name: '知识经验KM',
         icon: 'cluster',
       },
       {
-        path: 'http://www1.hyec.com',
+        path: 'http://www1.hyec.com:8082/',
         target: '_blank', // 点击新窗口打开
         name: '人力资源HRS',
         icon: 'read',
       },
       {
-        path: 'http://www1.hyec.com:8082',
+        path: 'http://cba.hyec.com/',
         target: '_blank', // 点击新窗口打开
         name: '薪资查询CBA',
         icon: 'money-collect',
       },
       {
-        path: 'http://cba.hyec.com:8082',
+        path: 'http://tds.hyec.com/Login',
         target: '_blank', // 点击新窗口打开
         name: '人才发展TDS',
         icon: 'usergroup-add',
       },
       {
-        path: 'http://tds.hyec.com/Login',
+        path: 'http://www1.hyec.com:8087/AMS/it/user/login.asp',
         target: '_blank', //
         name: '办公资产AMS',
         icon: 'audit',
       },
       {
-        path: 'http://www1.hyec.com:8087/AMS/it/user/login.asp',
+        path: 'http://10.43.1.100:8085/',
         target: '_blank', //
         name: '项目网站',
         icon: 'link',
