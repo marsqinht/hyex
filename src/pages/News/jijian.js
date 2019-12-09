@@ -46,11 +46,12 @@ export default class Jijian extends React.Component {
     this.fetchPartyWork();
   }
 
-  fetchPartyWork = async (page = 1, type = '工作动态') => {
+  fetchPartyWork = async (page = 1, type = '工作动态', Name = '') => {
     const { data, success, total } = await queryPartyWork({
       page,
       size: 10,
       type,
+      Name,
     });
     if (success) {
       this.setState({
@@ -70,7 +71,7 @@ export default class Jijian extends React.Component {
   };
 
   render() {
-    const { data, total } = this.state;
+    const { data, total, type } = this.state;
     const { onChange } = this;
     return (
       <Card>
@@ -95,7 +96,7 @@ export default class Jijian extends React.Component {
                     enterButton="Search"
                     size="mini"
                     style={{ width: 200, marginLeft: 20 }}
-                    onSearch={value => console.log(value)}
+                    onSearch={value => this.fetchPartyWork(1, type, value)}
                   />
                 </div>
                 <div style={{ padding: '0 20px 0' }}>

@@ -115,10 +115,11 @@ class BasicLayout extends React.Component {
     const isTop = PropsLayout === 'topmenu';
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
     const layout = (
-      <Layout style={{
-        height: '100vh',
-        overflow: 'hidden'
-      }}
+      <Layout
+        style={{
+          height: '100vh',
+          overflow: 'hidden',
+        }}
       >
         {isTop && !isMobile ? null : (
           <SiderMenu
@@ -135,7 +136,7 @@ class BasicLayout extends React.Component {
           style={{
             ...this.getLayoutStyle(),
             minHeight: '100vh',
-            overflow: 'scroll'
+            overflow: 'scroll',
           }}
         >
           <Header
@@ -175,7 +176,7 @@ export default connect(({ global, setting, menu: menuModel }) => ({
   menuData: menuModel.menuData,
   breadcrumbNameMap: menuModel.breadcrumbNameMap,
   ...setting,
-  fixedHeader: true
+  fixedHeader: true,
 }))(props => (
   <Media query="(max-width: 599px)">
     {isMobile => <BasicLayout {...props} isMobile={isMobile} />}

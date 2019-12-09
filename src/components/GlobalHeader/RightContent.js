@@ -129,11 +129,25 @@ export default class GlobalHeaderRight extends Component {
         </Tag>
         <Popover
           content={
-            <div style={{ width: 250 }}>
-              <img
-                width="100%"
-                src="https://tva1.sinaimg.cn/large/006tNbRwly1g9lhaf285kj30ho060762.jpg"
-              ></img>
+            <div style={{ width: 350 }}>
+              <div className="weixin">
+                <img
+                  width="120"
+                  src="https://tva1.sinaimg.cn/large/006tNbRwly1g9r7yg7ke8j30by0byt9j.jpg"
+                ></img>
+                <div>
+                  <div style={{ marginTop: 6 }}>
+                    <span style={{ color: 'blue' }}>步骤一: </span>打开手机的微信
+                  </div>
+                  <div>
+                    <span style={{ color: 'blue' }}>步骤一: </span>点微信右上角的"+"号, 选择"扫一扫"
+                  </div>
+                  <div>
+                    <span style={{ color: 'blue' }}>步骤一: </span>
+                    把扫描框对准二维码扫描后,选择关注确认
+                  </div>
+                </div>
+              </div>
             </div>
           }
           trigger="hover"

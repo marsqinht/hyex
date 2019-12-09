@@ -1,27 +1,27 @@
 export default [
   // user
-  {
-    path: '/user',
-    component: '../layouts/UserLayout',
-    routes: [
-      { path: '/user', redirect: '/user/login' },
-      { path: '/user/login', name: 'login', component: './User/Login' },
-      { path: '/user/register', name: 'register', component: './User/Register' },
-      {
-        path: '/user/register-result',
-        name: 'register.result',
-        component: './User/RegisterResult',
-      },
-      {
-        component: '404',
-      },
-    ],
-  },
+  // {
+  //   path: '/user',
+  //   component: '../layouts/UserLayout',
+  //   routes: [
+  //     { path: '/user', redirect: '/user/login' },
+  //     { path: '/user/login', name: 'login', component: './User/Login' },
+  //     { path: '/user/register', name: 'register', component: './User/Register' },
+  //     {
+  //       path: '/user/register-result',
+  //       name: 'register.result',
+  //       component: './User/RegisterResult',
+  //     },
+  //     {
+  //       component: '404',
+  //     },
+  //   ],
+  // },
   // app
   {
     path: '/',
     component: '../layouts/BasicLayout',
-    Routes: ['src/pages/Authorized'],
+    // Routes: ['src/pages/Authorized'],
     routes: [
       // dashboard
       { path: '/', component: './Dashboard/Home', authority: ['admin', 'user'] },
@@ -162,23 +162,22 @@ export default [
         routes: [
           {
             name: '公司工作手册',
-            path: ' http://www1.hyec.com:8501/Index.aspx',
+            path: 'http://www1.hyec.com:8501/Index.aspx',
             target: '_blank',
           },
           {
-            path: '/dashboard/monitxvor',
+            path: '/dd/standard',
             name: '常用文档模板',
-            component: './Dashboard/Analysis',
+            component: './Standard/index',
           },
           {
-            path: '/dashboard/monithtfghor',
+            path: '/dd/s',
             name: '技术标准',
-            component: './Dashboard/Analysis',
             routes: [
               {
-                path: '/dashboard/moniwretor',
+                path: '/dd/s/contents',
                 name: '现行标准',
-                component: './Dashboard/Analysis',
+                component: './Standard/contents',
               },
               {
                 path: '/dashboard/monitohgfdjtyrr',
@@ -196,7 +195,7 @@ export default [
       },
 
       {
-        path: 'http://www1.hyec.com:8085/ ',
+        path: 'http://www1.hyec.com:8085/',
         target: '_blank', // 点击新窗口打开
         name: '知识经验KM',
         icon: 'cluster',

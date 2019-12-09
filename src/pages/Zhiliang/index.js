@@ -151,12 +151,13 @@ export default class Huiyi extends React.Component {
     this.fetchApi();
   }
 
-  fetchApi = async (page = 1, type = 'notice', qctype) => {
+  fetchApi = async (page = 1, type = 'notice', qctype, Name = '') => {
     const { data, total, success } = await queryZhiliangManage({
       type,
       qctype,
       size: 15,
       page,
+      Name,
     });
     console.log(data);
     success &&
@@ -194,7 +195,7 @@ export default class Huiyi extends React.Component {
                       </Select>
                       <Search
                         placeholder="请输入关键字"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.fetchApi(1, 'notice', '', value)}
                         style={{ width: 200 }}
                       />
                     </div>
@@ -247,7 +248,7 @@ export default class Huiyi extends React.Component {
                       </Select>
                       <Search
                         placeholder="请输入关键字"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.fetchApi(1, 'meeting', '', value)}
                         style={{ width: 200 }}
                       />
                     </div>
@@ -300,7 +301,7 @@ export default class Huiyi extends React.Component {
                       </Select>
                       <Search
                         placeholder="请输入关键字"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.fetchApi(1, 'message', '', value)}
                         style={{ width: 200 }}
                       />
                     </div>
@@ -350,7 +351,7 @@ export default class Huiyi extends React.Component {
                       </Select>
                       <Search
                         placeholder="请输入关键字"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.fetchApi(1, 'analyse', '', value)}
                         style={{ width: 200 }}
                       />
                     </div>
@@ -403,7 +404,7 @@ export default class Huiyi extends React.Component {
                       </Select>
                       <Search
                         placeholder="请输入关键字"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.fetchApi(1, 'toexamine', '', value)}
                         style={{ width: 200 }}
                       />
                       />
@@ -457,7 +458,7 @@ export default class Huiyi extends React.Component {
                       </Select>
                       <Search
                         placeholder="请输入关键字"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.fetchApi(1, 'QCgroup', '', value)}
                         style={{ width: 200 }}
                       />
                       />

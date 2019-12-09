@@ -67,17 +67,19 @@ export default class Huiyi extends React.Component {
   state = {
     data: [],
     total: 0,
+    activeKey: '工作总结',
   };
 
   componentDidMount() {
     this.fetchApi();
   }
 
-  fetchApi = async (page = 1, type = '工作总结') => {
+  fetchApi = async (page = 1, type = '工作总结', Name = '') => {
     const { data, total, success } = await querySkillManage({
       type,
       size: 15,
       page,
+      Name,
     });
     console.log(data);
     success &&
@@ -88,12 +90,20 @@ export default class Huiyi extends React.Component {
   };
 
   render() {
-    const { data, total } = this.state;
+    const { data, total, activeKey } = this.state;
     return (
       <div>
         <div className="mt-20">
           <Card>
-            <Tabs defaultActiveKey="工作总结" onChange={key => this.fetchApi(1, key)}>
+            <Tabs
+              defaultActiveKey="工作总结"
+              onChange={key => {
+                this.setState({
+                  activeKey: key,
+                });
+                this.fetchApi(1, key);
+              }}
+            >
               <TabPane
                 tab={
                   <span>
@@ -116,7 +126,7 @@ export default class Huiyi extends React.Component {
                       </Select>
                       <Search
                         placeholder="请输入关键字"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.fetchApi(1, activeKey, value)}
                         style={{ width: 200 }}
                       />
                     </div>
