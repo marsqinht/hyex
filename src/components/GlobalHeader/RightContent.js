@@ -124,9 +124,6 @@ export default class GlobalHeaderRight extends Component {
     }
     return (
       <div className={className}>
-        <Tag color="geekblue" onClick={() => this.setState({ visible: true })}>
-          公司文化墙
-        </Tag>
         <Popover
           content={
             <div style={{ width: 350 }}>
@@ -134,7 +131,7 @@ export default class GlobalHeaderRight extends Component {
                 <img
                   width="120"
                   src="https://tva1.sinaimg.cn/large/006tNbRwly1g9r7yg7ke8j30by0byt9j.jpg"
-                ></img>
+                />
                 <div>
                   <div style={{ marginTop: 6 }}>
                     <span style={{ color: 'blue' }}>步骤一: </span>打开手机的微信
@@ -152,50 +149,11 @@ export default class GlobalHeaderRight extends Component {
           }
           trigger="hover"
         >
-          <Tag color="#07C160">
+          <Tag color="#07C160" style={{ cursor: 'pointer' }}>
             <Icon type="wechat" />
             <span style={{ color: '#fff', cursor: 'pointer' }}>关注微信</span>
           </Tag>
         </Popover>
-        {/* <div className={styles.wrap}>
-          <Tag color="geekblue">公司愿景</Tag>
-          <Tag color="red">公司使命</Tag>
-          <Tag color="volcano">五年规划</Tag>
-          <Tag color="orange">核心价值观</Tag>
-          <Tag color="orange">人才观</Tag>
-          <Tag color="orange">职业发展观</Tag>
-        </div> */}
-        <Drawer
-          placement={this.state.placement}
-          closable={false}
-          onClose={this.onClose}
-          height="auto"
-          visible={this.state.visible}
-        >
-          <div style={{ margin: '0 auto', width: 550 }}>
-            <ImageList />
-          </div>
-        </Drawer>
-        <HeaderSearch
-          className={`${styles.action} ${styles.search}`}
-          placeholder={formatMessage({ id: 'component.globalHeader.search' })}
-          dataSource={[
-            formatMessage({ id: 'component.globalHeader.search.example1' }),
-            formatMessage({ id: 'component.globalHeader.search.example2' }),
-            formatMessage({ id: 'component.globalHeader.search.example3' }),
-          ]}
-          onSearch={value => {
-            console.log('input', value); // eslint-disable-line
-          }}
-          onPressEnter={value => {
-            console.log('enter', value); // eslint-disable-line
-          }}
-        />
-        <Tooltip title={formatMessage({ id: 'component.globalHeader.help' })}>
-          <a target="_blank" rel="noopener noreferrer" className={styles.action}>
-            <Icon type="question-circle-o" />
-          </a>
-        </Tooltip>
         <NoticeIcon
           className={styles.action}
           count={currentUser.unreadCount}
@@ -257,7 +215,6 @@ export default class GlobalHeaderRight extends Component {
         ) : (
           <Spin size="small" style={{ marginLeft: 8, marginRight: 8 }} />
         )}
-        <SelectLang className={styles.action} />
       </div>
     );
   }

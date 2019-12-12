@@ -10,6 +10,7 @@ import {
   Input,
   List,
   Typography,
+  Radio,
   Pagination,
 } from 'antd';
 import moment from 'moment';
@@ -145,10 +146,18 @@ export default class Huiyi extends React.Component {
     s: 1,
     data: [],
     total: 0,
+    qcType: 'QC计划'
   };
 
   componentDidMount() {
     this.fetchApi();
+  }
+
+  onChange = (e) => {
+    this.setState({
+      qcType: e.target.value
+    })
+    this.fetchApi(1, 'QCgroup', e.target.value, '')
   }
 
   fetchApi = async (page = 1, type = 'notice', qctype, Name = '') => {
@@ -166,8 +175,9 @@ export default class Huiyi extends React.Component {
         total,
       });
   };
+
   render() {
-    const { data, total } = this.state;
+    const { data, total, qcType } = this.state;
     return (
       <div>
         <div className="mt-20">
@@ -407,7 +417,6 @@ export default class Huiyi extends React.Component {
                         onSearch={value => this.fetchApi(1, 'toexamine', '', value)}
                         style={{ width: 200 }}
                       />
-                      />
                     </div>
                   }
                 >
@@ -445,14 +454,20 @@ export default class Huiyi extends React.Component {
                 }
                 key="QCgroup"
               >
+                <Radio.Group
+                  value={qcType}
+                  onChange={this.onChange}
+                  style={{ marginBottom: 16 }}
+                >
+                  <Radio.Button value="QC计划">QC计划</Radio.Button>
+                  <Radio.Button value="QC成果">QC成果</Radio.Button>
+                  <Radio.Button value="QC总结">QC总结</Radio.Button>
+                </Radio.Group>
                 <Card
-                  title="QC小组"
+                  title={qcType}
                   bordered={false}
                   extra={
                     <div>
-                      <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
-                        <Option value="1">年度筛选</Option>
-                      </Select>
                       <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
                         <Option value="1">文档主题</Option>
                       </Select>
@@ -460,7 +475,6 @@ export default class Huiyi extends React.Component {
                         placeholder="请输入关键字"
                         onSearch={value => this.fetchApi(1, 'QCgroup', '', value)}
                         style={{ width: 200 }}
-                      />
                       />
                     </div>
                   }

@@ -5,7 +5,8 @@ import styles from './Home.less';
 const Items = [
   {
     icon: 'iconmonitor',
-    name: 'HYPM平台'
+    name: 'HYPM平台',
+    link: 'http://10.43.1.69/'
   },
   {
     icon: 'icondingcan',
@@ -50,7 +51,9 @@ export default class Workplace extends PureComponent {
           Items.map(v => {
             return <li className={styles.uli}>
               <div className={styles.icon}>
-                <IconFont type={v.icon} />
+                <a href={v.link || 'javascript:;'}>
+                  <IconFont type={v.icon} />
+                </a>
               </div>
               <p className={styles.name}>{v.name}</p>
             </li>

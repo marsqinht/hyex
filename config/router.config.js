@@ -180,9 +180,9 @@ export default [
                 component: './Standard/contents',
               },
               {
-                path: '/dashboard/monitohgfdjtyrr',
+                path: '/dd/s/fdonitohgfdjtyrr',
                 name: '标准信息',
-                component: './Dashboard/Analysis',
+                component: './Standard/contents',
               },
               {
                 path: '/dashboard/monihfghtor',

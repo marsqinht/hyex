@@ -48,32 +48,32 @@ const content = (name) => {
 
 const item = (name) => {
   return (
-      <div>
-        <div style={{display: 'flex'}}>
-        <span style={{color: '#ff4d4f'}}>温馨提示:</span>{' '}
-        <img
-          width={20}
-          height={20}
-          src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pq10s10tg305k05kq2r.gif"
-        />
+    <div>
+      <div style={{display: 'flex', width: 300}}>
+          <span style={{color: '#ff4d4f'}}>温馨提示:</span>{' '}
+          <img
+            width={20}
+            height={20}
+            src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pq10s10tg305k05kq2r.gif"
+          />
       诚祝{' '}
-        <Popover content={info} title="员工信息" placement="rightBottom">
-          <a href="javascript:;">{name}</a>{' '}
-        </Popover>
+          <Popover content={info} title="员工信息" placement="rightBottom">
+            <a href="javascript:;">{name}</a>{' '}
+          </Popover>
       生日快乐
-      </div>
-      </div>
+        </div>
+    </div>
   )
 }
 
 export default class Birth extends Component {
   render() {
     return (
-       <div style={{position: 'absolute', 'left': 66, top: 20}}>
+      <div style={{position: 'absolute', 'left': 66, top: 20, width: 300}}>
         <Carousel autoplay dotPosition="right" dots={false}>
-         {item('李子煜')}
-         {item('郑淑婷')}
-        </Carousel>
+           {item('李子煜')}
+           {item('郑淑婷')}
+         </Carousel>
       </div>
     )
   }
