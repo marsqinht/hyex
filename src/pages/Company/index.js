@@ -16,7 +16,7 @@ import {
   Tag,
 } from 'antd';
 import styles from './index.less';
-import { queryApartmentTree, queryCompayInfo} from '../../services/company';
+import { queryApartmentTree, queryCompayInfo } from '../../services/company';
 
 const MyIcon = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1277028_jejs7t1j2ca.js', // 在 iconfont.cn 上生成
@@ -183,16 +183,18 @@ class Content extends React.Component {
   };
 
   fetchData = async (page = 1, type = '计划与总结', dept = '') => {
+    const { typeName } = this.props;
     const res = await queryCompayInfo({
       size: 15,
       page,
-      type,
-      dept
-    })
+      type: typeName,
+      dept,
+    });
+    console.log(res.data);
     this.setState({
-      data: res.data
-    })
-  }
+      data: res.data,
+    });
+  };
 
   handleOk = () => {
     this.setState({
@@ -362,7 +364,7 @@ export default class Fawen extends React.Component {
                 计划与总结
               </span>
             }
-            key="1"
+            key="计划与总结"
           >
             <Content typeName="计划与总结" />
           </TabPane>
@@ -373,7 +375,7 @@ export default class Fawen extends React.Component {
                 管理例会
               </span>
             }
-            key="2"
+            key="管理例会"
           >
             <Content typeName="管理例会" />
           </TabPane>
@@ -384,7 +386,7 @@ export default class Fawen extends React.Component {
                 公司行政文件
               </span>
             }
-            key="3"
+            key="公司行政文件"
           >
             <Content typeName="公司行政文件" />
           </TabPane>
@@ -395,7 +397,7 @@ export default class Fawen extends React.Component {
                 公司党群文件
               </span>
             }
-            key="4"
+            key="公司党群文件"
           >
             <Content typeName="公司党群文件" />
           </TabPane>

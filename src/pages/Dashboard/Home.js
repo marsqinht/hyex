@@ -12,9 +12,10 @@ import {
   Tooltip,
   Popover,
   Drawer,
-  Descriptions,Tag,
+  Descriptions,
+  Tag,
   Button,
-  Carousel
+  Carousel,
 } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import numeral from 'numeral';
@@ -33,7 +34,6 @@ import Cc from './Clendar';
 import BarCharts from './Charts';
 import HomeBanner from './HomeBanner';
 import { queryNews } from '../../services/new';
-
 
 const edata = [
   {
@@ -112,58 +112,54 @@ const IconFont = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1251765_mco4fu4f3kr.js',
 });
 const colorMap = {
-  '调休': '#faad14',
-  '公出': '#1890ff',
-  '请假': '#f5222d'
-}
+  调休: '#faad14',
+  公出: '#1890ff',
+  请假: '#f5222d',
+};
 const holidayData = [
   {
-    name: '李翠',
+    name: '金海',
     type: '调休',
   },
   {
-    name: '秦奋',
+    name: '陈恩',
     type: '公出',
   },
   {
-    name: '李子煜',
+    name: '周亚兵',
     type: '公出',
   },
   {
-    name: '郑淑婷',
+    name: '徐荣高',
     type: '请假',
   },
   {
-    name: '秦奋',
+    name: '王森',
     type: '公出',
   },
   {
-    name: '李子煜',
+    name: '王丽艳',
     type: '公出',
   },
   {
-    name: '郑淑婷',
+    name: '赵群莉',
     type: '调休',
   },
   {
-    name: '李子煜',
+    name: '刘洪',
     type: '公出',
   },
   {
-    name: '郑淑婷',
+    name: '唐敏',
     type: '调休',
   },
   {
-    name: '秦奋',
+    name: '于双华',
     type: '公出',
   },
   {
-    name: '李子煜',
+    name: '吴威',
     type: '公出',
-  },
-  {
-    name: '郑淑婷',
-    type: '调休',
   },
 ];
 
@@ -237,7 +233,7 @@ export default class Home extends Component {
   state = { visible: false, placement: 'top', newsList: [] };
 
   componentDidMount() {
-    this.getNewsList(1)
+    this.getNewsList(1);
   }
 
   showDrawer = () => {
@@ -249,16 +245,16 @@ export default class Home extends Component {
   getNewsList = (page = 1) => {
     queryNews({
       page,
-      size: 4
+      size: 4,
     }).then(({ success, data, total }) => {
-      console.log(data)
-      if(success) {
+      console.log(data);
+      if (success) {
         this.setState({
-          newsList: data
-        })
+          newsList: data,
+        });
       }
-    })
-  }
+    });
+  };
 
   onClose = () => {
     this.setState({
@@ -276,7 +272,7 @@ export default class Home extends Component {
     return new Date().getTime() - new Date(time).getTime() < 259200000;
   };
 
-  goDetail = (currentPage =1, index =1) => {
+  goDetail = (currentPage = 1, index = 1) => {
     router.push(`/dashboard/detail/${currentPage}/${index}`);
   };
 
@@ -320,11 +316,7 @@ export default class Home extends Component {
                 <Col span={12}>
                   <Card
                     hoverable
-                    title={
-                      <div>
-                        最新新闻
-                      </div>
-                    }
+                    title={<div>最新新闻</div>}
                     className="blue-bg grandient-bg"
                     bordered={false}
                     cover={
@@ -339,23 +331,25 @@ export default class Home extends Component {
                         />
                       </Carousel>
                     }
-                    extra={<Icon style={{color: '#fff'}} type="more" />}
+                    extra={<Icon style={{ color: '#fff' }} type="more" />}
                   >
                     <List
                       itemLayout="horizontal"
                       dataSource={newsList}
                       bordered={false}
                       split={false}
-                      renderItem={(item,index) => (
+                      renderItem={(item, index) => (
                         <List.Item>
-                          <div className={styles.newList} onClick={()=>this.goDetail(1,index)}>
+                          <div className={styles.newList} onClick={() => this.goDetail(1, index)}>
                             <Tooltip placement="top" title={item.Name}>
-
                               <div className={styles.newsTitle}>{item.Name}</div>
                             </Tooltip>
-                            {this.renderNew(moment(item.RegDate).format('YYYY-MM-DD')) && (<div className={styles.newTag} />)}
-                            <div style={{color: '#333'}}>{moment(item.RegDate).format('YYYY-MM-DD')}</div>
-
+                            {this.renderNew(moment(item.RegDate).format('YYYY-MM-DD')) && (
+                              <div className={styles.newTag} />
+                            )}
+                            <div style={{ color: '#333' }}>
+                              {moment(item.RegDate).format('YYYY-MM-DD')}
+                            </div>
                           </div>
                         </List.Item>
                       )}
@@ -364,11 +358,7 @@ export default class Home extends Component {
                 </Col>
                 <Col span={12}>
                   <Card
-                    title={
-                      <div>
-                     QHSE信息
-                      </div>
-                    }
+                    title={<div>QHSE信息</div>}
                     bordered={false}
                     className="blue-bg grandient-bg"
                     cover={
@@ -387,9 +377,8 @@ export default class Home extends Component {
                           src="http://ww1.sinaimg.cn/large/006tNc79ly1g46wd1wiqjj30y60fqwop.jpg"
                         />
                       </Carousel>
-
                     }
-                    extra={<Icon style={{color: '#fff'}} type="more" />}
+                    extra={<Icon style={{ color: '#fff' }} type="more" />}
                   >
                     <List
                       itemLayout="horizontal"
@@ -400,12 +389,10 @@ export default class Home extends Component {
                         <List.Item>
                           <div className={styles.newList}>
                             <Tooltip placement="top" title={item.title}>
-
                               <div className={styles.newsTitle}>{item.title}</div>
                             </Tooltip>
-                            {this.renderNew(item.time) && (<div className={styles.newTag} />)}
-                            <div style={{color: '#333'}}>{item.time}</div>
-
+                            {this.renderNew(item.time) && <div className={styles.newTag} />}
+                            <div style={{ color: '#333' }}>{item.time}</div>
                           </div>
                         </List.Item>
                       )}
@@ -417,11 +404,7 @@ export default class Home extends Component {
                 <Col span={12}>
                   <Card
                     className="blue-bg"
-                    title={
-                      <div>
-                   知识经验
-                      </div>
-                    }
+                    title={<div>知识经验</div>}
                     bordered={false}
                     cover={
                       <Carousel autoplay>
@@ -432,7 +415,7 @@ export default class Home extends Component {
                         />
                       </Carousel>
                     }
-                    extra={<Icon style={{color: '#fff'}} type="more" />}
+                    extra={<Icon style={{ color: '#fff' }} type="more" />}
                   >
                     <List
                       itemLayout="horizontal"
@@ -443,12 +426,10 @@ export default class Home extends Component {
                         <List.Item>
                           <div className={styles.newList}>
                             <Tooltip placement="top" title={item.title}>
-
                               <div className={styles.newsTitle}>{item.title}</div>
                             </Tooltip>
-                            {this.renderNew(item.time) && (<div className={styles.newTag} />)}
-                            <div style={{color: '#333'}}>{item.time}</div>
-
+                            {this.renderNew(item.time) && <div className={styles.newTag} />}
+                            <div style={{ color: '#333' }}>{item.time}</div>
                           </div>
                         </List.Item>
                       )}
@@ -458,11 +439,7 @@ export default class Home extends Component {
                 <Col span={12}>
                   <Card
                     className="blue-bg"
-                    title={
-                      <div>
-                      近期培训
-                      </div>
-                    }
+                    title={<div>近期培训</div>}
                     bordered={false}
                     cover={
                       <Carousel autoplay>
@@ -473,7 +450,7 @@ export default class Home extends Component {
                         />
                       </Carousel>
                     }
-                    extra={<Icon style={{color: '#fff'}} type="more" />}
+                    extra={<Icon style={{ color: '#fff' }} type="more" />}
                   >
                     <List
                       itemLayout="horizontal"
@@ -484,33 +461,20 @@ export default class Home extends Component {
                         <List.Item>
                           <div className={styles.newList}>
                             <Tooltip placement="top" title={item.title}>
-
                               <div className={styles.newsTitle}>{item.title}</div>
                             </Tooltip>
-                            {this.renderNew(item.time) && (<div className={styles.newTag} />)}
-                            <div style={{color: '#333'}}>{item.time}</div>
-
+                            {this.renderNew(item.time) && <div className={styles.newTag} />}
+                            <div style={{ color: '#333' }}>{item.time}</div>
                           </div>
                         </List.Item>
                       )}
                     />
                   </Card>
-
                 </Col>
-
               </Row>
-
             </Col>
             <Col span={6}>
-              <Card
-                className="blue-bg grandient-bg"
-                title={
-                  <div>
-               学习分享
-                  </div>
-                }
-                bordered={false}
-              >
+              <Card className="blue-bg grandient-bg" title={<div>学习分享</div>} bordered={false}>
                 <Popover placement="leftTop" content={content} title="活动" trigger="hover">
                   <p className={styles.gaoceng}>公司开展“大手牵小手，阳光谊路走</p>
                 </Popover>
@@ -529,11 +493,7 @@ export default class Home extends Component {
               <Card
                 className="blue-bg grandient-bg"
                 style={{ marginTop: 14, height: 320, overflow: 'hidden' }}
-                title={
-                  <div>
-                今日请假
-                  </div>
-                }
+                title={<div>今日请假</div>}
                 bordered={false}
               >
                 <div style={{ overflow: 'hidden' }}>
@@ -544,7 +504,11 @@ export default class Home extends Component {
                     split={false}
                     dataSource={holidayData}
                     renderItem={item => (
-                      <List.Item actions={[<a style={{color: colorMap[item.type]}}>{item.type}</a>]}>{item.name}</List.Item>
+                      <List.Item
+                        actions={[<a style={{ color: colorMap[item.type] }}>{item.type}</a>]}
+                      >
+                        {item.name}
+                      </List.Item>
                     )}
                   />
                 </div>
@@ -553,30 +517,52 @@ export default class Home extends Component {
                 {/* <UsualProgram /> */}
                 <Card
                   className="blue-bg grandient-bg"
-                  title={
-                    <div>
-              服务中心
-                    </div>
-            }
+                  title={<div>服务中心</div>}
                   style={{ marginTop: 20 }}
                   bordered={false}
                 >
                   <div className={styles.serv}>
-                    <div style={{width: '100%'}}>
+                    <div style={{ width: '100%' }}>
                       <a>华谊信息运维</a>
-                      <p>6# 号楼: <br />李建新(703897) <br />丁毅(703895) <br />孟爽(703893) <br />钟强(703889)<br /> 李磊(709195)</p>
+                      <p>
+                        6# 号楼: <br />
+                        李建新(703897) <br />
+                        丁毅(703895) <br />
+                        孟爽(703893) <br />
+                        钟强(703889)
+                        <br /> 李磊(709195)
+                      </p>
                     </div>
-                    <div style={{width: '100%'}}>
+                    <div style={{ width: '100%' }}>
                       <a>大楼设备维修</a>
-                      <p> <br />11# 号楼: <br />刘洪(703882)</p>
+                      <p>
+                        {' '}
+                        <br />
+                        11# 号楼: <br />
+                        刘洪(703882)
+                      </p>
                     </div>
-                    <div style={{width: '100%'}}>
+                    <div style={{ width: '100%' }}>
                       <a>联系电话</a>
                       <br />
                       <p className={styles.banci}>
-                        <Icon style={{fontSize: '38px'}} type="phone" theme="twoTone" twoToneColor="orange" />
-                        <p style={{fontSize: '24px', color: 'orange', 'line-height': 1.2, 'marginTop': 14}}>6470588</p>
-                        <p style={{color: 'orange'}}>公司门卫24小时值班电话</p>
+                        <Icon
+                          style={{ fontSize: '38px' }}
+                          type="phone"
+                          theme="twoTone"
+                          twoToneColor="orange"
+                        />
+                        <p
+                          style={{
+                            fontSize: '24px',
+                            color: 'orange',
+                            'line-height': 1.2,
+                            marginTop: 14,
+                          }}
+                        >
+                          6470588
+                        </p>
+                        <p style={{ color: 'orange' }}>公司门卫24小时值班电话</p>
                       </p>
                     </div>
                   </div>
@@ -590,7 +576,7 @@ export default class Home extends Component {
             <Col span={14}>
               <div style={{ display: 'flex', height: '320px' }}>
                 <img
-                  style={{ width: '260px', border: '1px solid #1890ff', 'borderRight': 'none'}}
+                  style={{ width: '260px', border: '1px solid #1890ff', borderRight: 'none' }}
                   onClick={this.showDrawer}
                   src="http://ww3.sinaimg.cn/large/006tNc79ly1g47yu3i6w5j30la0pawsx.jpg"
                 />
@@ -607,12 +593,16 @@ export default class Home extends Component {
                   <Calendar
                     fullscreen={false}
                     onPanelChange={onPanelChange}
-                    dateCellRender={(time) => {
-                    const day = moment(time).format('D');
-                    if(day === '8' || day === '21' || day === '26') {
-                      return  <div className="flex-center"><Tag color="red">会</Tag></div>
-                    }
-                  }}
+                    dateCellRender={time => {
+                      const day = moment(time).format('D');
+                      if (day === '8' || day === '21' || day === '26') {
+                        return (
+                          <div className="flex-center">
+                            <Tag color="red">会</Tag>
+                          </div>
+                        );
+                      }
+                    }}
                   />
                 </div>
               </div>
@@ -638,9 +628,7 @@ export default class Home extends Component {
                   )}
                 />
               </div>
-
             </Col>
-
           </Row>
           <div />
 

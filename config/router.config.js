@@ -182,12 +182,12 @@ export default [
               {
                 path: '/dd/s/fdonitohgfdjtyrr',
                 name: '标准信息',
-                component: './Standard/contents',
+                component: './Standard/infos',
               },
               {
-                path: '/dashboard/monihfghtor',
                 name: '有效软件目录',
-                component: './Dashboard/Analysis',
+                path: 'http://yun.dui88.com/aerosol/2019.pdf',
+                target: '_blank',
               },
             ],
           },

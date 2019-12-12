@@ -1,7 +1,23 @@
 import React from 'react';
-import { Card, Alert, Tabs, Tree, Icon, Form, Input, Button, Select, Collapse, Descriptions, Table, Radio } from 'antd';
+import {
+  Card,
+  Alert,
+  Tabs,
+  Tree,
+  Icon,
+  Form,
+  Input,
+  Button,
+  Select,
+  Collapse,
+  Descriptions,
+  Table,
+  Radio,
+} from 'antd';
+import moment from 'moment';
+
 import styles from './employee.less';
-import { queryDepartmentTree, queryHumanfo } from '../../services/employee';
+import { queryDepartmentTree, queryHumanfo, queryDetail } from '../../services/employee';
 
 const { TreeNode } = Tree;
 const { TabPane } = Tabs;
@@ -15,24 +31,26 @@ const MyIcon = Icon.createFromIconfontCN({
 const columns = [
   {
     title: '序号',
-    dataIndex: 'key'
+    dataIndex: 'key',
   },
   {
     title: '所在单位',
-    dataIndex: 'company',
+    dataIndex: 'unit',
   },
   {
     title: '担任职务',
-    dataIndex: 'zhiwu',
+    dataIndex: 'job',
   },
   {
     title: '开始时间',
-    dataIndex: 'start',
+    dataIndex: 'StartDate',
+    render: time => <div>{moment(time).format('YYYY-MM-DD')}</div>,
   },
   {
     title: '结束时间',
-    dataIndex: 'end',
-  }
+    dataIndex: 'EndDate',
+    render: time => <div>{moment(time).format('YYYY-MM-DD')}</div>,
+  },
 ];
 const data = [
   {
@@ -43,7 +61,7 @@ const data = [
     zhiwu: '副总经理',
     address: 'New York No. 1 Lake Park',
     start: '2019/09/12',
-    end: ''
+    end: '',
   },
   {
     key: '2',
@@ -53,7 +71,7 @@ const data = [
     company: '华谊工程有限公司',
     address: 'London No. 1 Lake Park',
     start: '2019/09/12',
-    end: '2019/09/12'
+    end: '2019/09/12',
   },
   {
     key: '4',
@@ -63,7 +81,7 @@ const data = [
     company: '华谊工程有限公司',
     address: 'Sidney No. 1 Lake Park',
     start: '2019/09/12',
-    end: '2019/09/12'
+    end: '2019/09/12',
   },
   {
     key: '5',
@@ -73,7 +91,7 @@ const data = [
     company: '华谊工程有限公司',
     address: 'London No. 1 Lake Park',
     start: '2019/09/12',
-    end: '2019/09/12'
+    end: '2019/09/12',
   },
   {
     key: '6',
@@ -83,55 +101,54 @@ const data = [
     company: '华谊工程有限公司',
     address: 'London No. 1 Lake Park',
     start: '2019/09/12',
-    end: '2019/09/12'
-  }
+    end: '2019/09/12',
+  },
 ];
 
 const ccolumns = [
   {
     title: '序号',
-    dataIndex: 'key'
+    dataIndex: 'key',
   },
   {
     title: '角色',
-    dataIndex: 'role',
+    dataIndex: 'Role',
   },
   {
     title: '起止日期',
-    dataIndex: 'time',
+    dataIndex: 'Date',
   },
   {
     title: '工程项目内容',
-    dataIndex: 'content',
-  }
+    dataIndex: 'Content',
+  },
 ];
 const cdata = [
   {
     key: '1',
     role: '项目经理',
     time: '2009.10-2012.2',
-    content: 'DSM Zeland Project'
+    content: 'DSM Zeland Project',
   },
   {
     key: '2',
     role: '项目副经理,专业负责人,设计',
     time: '2009.10-',
-    content: '江苏恒神纤维材料有限公司'
+    content: '江苏恒神纤维材料有限公司',
   },
   {
     key: '3',
     role: '项目经理',
     time: '2009.10-2012.2',
-    content: 'DSM Zeland Project'
+    content: 'DSM Zeland Project',
   },
   {
     key: '4',
     role: '项目副经理,专业负责人,设计',
     time: '2009.10-',
-    content: '江苏恒神纤维材料有限公司'
+    content: '江苏恒神纤维材料有限公司',
   },
 ];
-
 
 const Edata = [
   {
@@ -143,7 +160,7 @@ const Edata = [
         line: '23244354',
         fenji: '711085',
         zhiwei: '质量工程师',
-        mail: 'liziyu@hyec.com'
+        mail: 'liziyu@hyec.com',
       },
       {
         name: '李大锤',
@@ -151,7 +168,7 @@ const Edata = [
         line: '23244354',
         fenji: '711085',
         zhiwei: '质量工程师',
-        mail: 'liziyu@hyec.com'
+        mail: 'liziyu@hyec.com',
       },
       {
         name: '王森',
@@ -160,9 +177,9 @@ const Edata = [
         fenji: '711085',
         zhiwei: '质量工程师',
         selected: true,
-        mail: 'liziyu@hyec.com'
-      }
-    ]
+        mail: 'liziyu@hyec.com',
+      },
+    ],
   },
   {
     part: 'No.235',
@@ -173,7 +190,7 @@ const Edata = [
         line: '23244354',
         fenji: '711085',
         zhiwei: '质量工程师',
-        mail: 'liziyu@hyec.com'
+        mail: 'liziyu@hyec.com',
       },
       {
         name: '李大锤',
@@ -181,7 +198,7 @@ const Edata = [
         line: '23244354',
         fenji: '711085',
         zhiwei: '质量工程师',
-        mail: 'liziyu@hyec.com'
+        mail: 'liziyu@hyec.com',
       },
       {
         name: '王森',
@@ -189,72 +206,113 @@ const Edata = [
         line: '23244354',
         fenji: '711085',
         zhiwei: '质量工程师',
-        mail: 'liziyu@hyec.com'
-      }
-    ]
-  }
-]
+        mail: 'liziyu@hyec.com',
+      },
+    ],
+  },
+];
 @Form.create()
 class Employee extends React.Component {
-  
   state = {
     tree: {
       name: '',
-      children: []
-    }
-  }
+      children: [],
+    },
+    userList: [],
+    detailInfo: {
+      MajorRow: [],
+      WorkRow: [],
+    },
+  };
 
   componentDidMount() {
     this.getTree();
-    this.getUser();
+    this.getUser('8D210EC0-191F-4603-971B-3A85537C7EA0');
+    this.getDetail();
   }
 
   async getTree() {
     const res = await queryDepartmentTree();
 
     this.setState({
-      tree: res
-    })
+      tree: res,
+    });
   }
 
-  async getUser () {
+  getUser = async (id, name = '') => {
     const res = await queryHumanfo({
-      id: 'E5DEAABB-8DE8-4E6A-B8F7-E0D4DE849052'
-    })
+      id,
+      name,
+    });
     console.log(res);
-  }
+    this.setState({
+      userList: res.data,
+    });
+    if (res.data.length) {
+      this.getDetail(data[0].Id);
+    }
+  };
 
-  onSelect = () => {
-
-  }
+  getDetail = async (id = 'F9C5A047-6488-4C45-865C-2AA2773A68E8') => {
+    let { data, success } = await queryDetail({ id });
+    console.log(data);
+    if (success) {
+      if (data.length && data[0]) {
+        data[0].MajorRow = data[0].MajorRow.map((v, index) => {
+          return {
+            ...v,
+            key: index + 1,
+          };
+        });
+        data[0].WorkRow = data[0].WorkRow.map((v, index) => {
+          return {
+            ...v,
+            key: index + 1,
+          };
+        });
+      }
+      this.setState({
+        detailInfo: data.length && data[0],
+      });
+    }
+  };
+  onSelect = key => {
+    console.log(key);
+    this.getUser(key && key[0]);
+  };
 
   render() {
-    const { tree } = this.state;
+    const { tree, userList, detailInfo } = this.state;
     return (
       <div>
-        <Alert
-          message="友情提示"
-          description="最近更新日期 2019-11-11"
-          type="info"
-          showIcon
-        />
-        <Card style={{marginTop: 20, height: '100%'}}>
+        <Alert message="友情提示" description="最近更新日期 2019-11-11" type="info" showIcon />
+        <Card style={{ marginTop: 20, height: '100%' }}>
           <Tabs defaultActiveKey="1">
             <TabPane
               tab={
                 <span>
-                  <MyIcon type="icon-yonghuguanli" style={{fontSize: '16px'}} />
-                    员工信息
-                </span>}
+                  <MyIcon type="icon-yonghuguanli" style={{ fontSize: '16px' }} />
+                  员工信息
+                </span>
+              }
               key="1"
             >
               <div className={styles.content}>
                 <Card>
-                  <Tree showLine defaultExpandedKeys={['0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
-                    <TreeNode title={tree.Name} key='0-0' icon={<MyIcon type="icon-zuzhijigouguanli" style={{fontSize: '16px'}} />}>
-                     
+                  <Tree
+                    showLine
+                    defaultExpandedKeys={['0-0']}
+                    onSelect={this.onSelect}
+                    showIcon
+                    icon={<MyIcon type="icon-jiaoseguanli" style={{ fontSize: '16px' }} />}
+                  >
+                    <TreeNode
+                      title={tree.Name}
+                      key="0-0"
+                      icon={<MyIcon type="icon-zuzhijigouguanli" style={{ fontSize: '16px' }} />}
+                    >
                       {tree.children.map((child, index) => {
-                        return  <TreeNode title={child.Name} key={child.Id} />
+                        return <TreeNode title={child.Name} key={child.Id} />;
                       })}
                       {/* <TreeNode title="副总工程师" key="0-0-1" />
                       <TreeNode title="设计事业部" key="0-0-2" />
@@ -274,36 +332,41 @@ class Employee extends React.Component {
                 <div className={styles.right}>
                   <Card>
                     <div>
-                      <Select defaultValue="lucy" style={{ width: 120 }}>
+                      <Select defaultValue="jack" style={{ width: 120 }}>
                         <Option value="jack">按中文名</Option>
-                        <Option value="lucy">按部门</Option>
+                        {/* <Option value="lucy">按部门</Option> */}
                       </Select>
                       <Search
                         placeholder="请输入关键字"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.getUser('', value)}
                         style={{ width: 200, marginLeft: '10px' }}
                       />
                     </div>
                     <div className="mt-20">
-
                       <Collapse defaultActiveKey={['0', '1']}>
-
-                        {
-                        Edata.map((v,index) => {
-                          return  (<Panel showArrow={false} header={<div><Icon type="idcard" theme="twoTone" /> {v.part}</div>} key={index}>
-                            <div className={styles.part}>
-                              {
-                                v.children.map(child => {
-                                  return  (<div className={styles.nameWrap}>
-                                    <div className={styles.name}>{child.name}</div>
-                                    <div className={styles.fenji}>{child.fenji}</div>
-                                           </div>)
-                                })
-                              }
+                        <Panel
+                          showArrow={false}
+                          header={
+                            <div>
+                              <Icon type="idcard" theme="twoTone" />{' '}
+                              {userList.length && userList[0].dept}
                             </div>
-                                   </Panel>)
-                        })
-                      }
+                          }
+                        >
+                          <div className={styles.part}>
+                            {userList.map(child => {
+                              return (
+                                <div
+                                  className={styles.nameWrap}
+                                  onClick={() => this.getDetail(child.Id)}
+                                >
+                                  <div className={styles.name}>{child.Name}</div>
+                                  <div className={styles.fenji}>{child.Phone}</div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </Panel>
                       </Collapse>
                     </div>
 
@@ -312,51 +375,87 @@ class Employee extends React.Component {
                         <TabPane
                           tab={
                             <span>
-                              <MyIcon type="icon-zhengjixiangguanrenyuanxinxi" style={{fontSize: '16px'}} />
-                    基本信息
-                            </span>}
+                              <MyIcon
+                                type="icon-zhengjixiangguanrenyuanxinxi"
+                                style={{ fontSize: '16px' }}
+                              />
+                              基本信息
+                            </span>
+                          }
                           key="1"
                         >
                           <div className={styles.info}>
-                            <div style={{flex: 1}}>
+                            <div style={{ flex: 1 }}>
                               <Descriptions bordered title="基本信息" size="small">
-                                <Descriptions.Item label="姓名" span={3}>王森</Descriptions.Item>
-                                <Descriptions.Item label="室号">12108</Descriptions.Item>
-                                <Descriptions.Item label="直线">353453</Descriptions.Item>
-                                <Descriptions.Item label="分机">5436546</Descriptions.Item>
+                                <Descriptions.Item label="姓名" span={3}>
+                                  {detailInfo.Name}
+                                </Descriptions.Item>
+                                <Descriptions.Item label="职位">
+                                  {detailInfo.PosiName}
+                                </Descriptions.Item>
+                                <Descriptions.Item label="直线">
+                                  {detailInfo.Phone}
+                                </Descriptions.Item>
+                                <Descriptions.Item label="分机">
+                                  {detailInfo.Phone}
+                                </Descriptions.Item>
                                 <Descriptions.Item label="手机">1938483939</Descriptions.Item>
-                                <Descriptions.Item label="邮箱">wangsen@hyec.com</Descriptions.Item>
+                                <Descriptions.Item label="邮箱">
+                                  {detailInfo.Email}
+                                </Descriptions.Item>
                               </Descriptions>
                             </div>
-                            <div style={{width: 85, marginLeft: '10px'}}>
-                              <img width={85} height={115} src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3126116862,100262216&fm=26&gp=0.jpg" />
+                            <div style={{ width: 85, marginLeft: '10px' }}>
+                              <img
+                                width={85}
+                                height={115}
+                                src={'data:image/jpg;base64,' + detailInfo.Picture}
+                              />
                             </div>
                           </div>
                         </TabPane>
                         <TabPane
                           tab={
                             <span>
-                              <MyIcon type="icon-yuanchengjieyuetongji" style={{fontSize: '16px'}} />
-                    工作履历
-                            </span>}
+                              <MyIcon
+                                type="icon-yuanchengjieyuetongji"
+                                style={{ fontSize: '16px' }}
+                              />
+                              工作履历
+                            </span>
+                          }
                           key="2"
                         >
-                          <Table columns={columns} dataSource={data} size="middle" pagination={false} />
+                          <Table
+                            columns={columns}
+                            dataSource={detailInfo.WorkRow}
+                            size="middle"
+                            pagination={false}
+                          />
                         </TabPane>
                         <TabPane
                           tab={
                             <span>
-                              <MyIcon type="icon-wodegongzuoqingkuang" style={{fontSize: '16px'}} />
-                    专业经历
-                            </span>}
+                              <MyIcon
+                                type="icon-wodegongzuoqingkuang"
+                                style={{ fontSize: '16px' }}
+                              />
+                              专业经历
+                            </span>
+                          }
                           key="3"
                         >
                           <Radio.Group value={1}>
                             <Radio value={1}>中文</Radio>
                             <Radio value={2}>英文</Radio>
                           </Radio.Group>
-                          <div style={{marginTop: 10}}>
-                            <Table columns={ccolumns} dataSource={cdata} size="middle" pagination={false} />
+                          <div style={{ marginTop: 10 }}>
+                            <Table
+                              columns={ccolumns}
+                              dataSource={detailInfo.MajorRow}
+                              size="middle"
+                              pagination={false}
+                            />
                           </div>
                         </TabPane>
                       </Tabs>
