@@ -16,7 +16,7 @@ import {
   Tag,
 } from 'antd';
 import styles from './index.less';
-import { queryApartmentTree } from '../../services/company';
+import { queryApartmentTree, queryCompayInfo} from '../../services/company';
 
 const MyIcon = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1277028_jejs7t1j2ca.js', // 在 iconfont.cn 上生成
@@ -163,6 +163,7 @@ class Content extends React.Component {
     appartment: '商务部',
     visible: false,
     data: [],
+    currentTab: '计划与总结',
     tree: {
       children: [],
     },
@@ -170,6 +171,7 @@ class Content extends React.Component {
 
   componentDidMount() {
     this.fetchTree();
+    this.fetchData();
   }
 
   fetchTree = async () => {
@@ -179,6 +181,18 @@ class Content extends React.Component {
       tree,
     });
   };
+
+  fetchData = async (page = 1, type = '计划与总结', dept = '') => {
+    const res = await queryCompayInfo({
+      size: 15,
+      page,
+      type,
+      dept
+    })
+    this.setState({
+      data: res.data
+    })
+  }
 
   handleOk = () => {
     this.setState({
@@ -301,7 +315,7 @@ class Content extends React.Component {
                 dataSource={data}
                 renderItem={item => (
                   <List.Item>
-                    <Typography.Text mark>[NEW]</Typography.Text> {item}
+                    <Typography.Text mark></Typography.Text> {item.Name}
                   </List.Item>
                 )}
               />
@@ -322,9 +336,9 @@ class Content extends React.Component {
               <Option value="lucy">时间过滤</Option>
               <Option value="disabled">标题</Option>
             </Select>
-            <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>
+            {/* <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>
               编辑
-            </Button>
+            </Button> */}
           </div>
         </div>
         <Table columns={ccolumns} dataSource={cdata} />

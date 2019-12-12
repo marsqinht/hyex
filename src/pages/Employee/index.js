@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Alert, Tabs, Tree, Icon, Form, Input, Button, Select, Collapse, Descriptions, Table, Radio } from 'antd';
 import styles from './employee.less';
+import { queryDepartmentTree, queryHumanfo } from '../../services/employee';
 
 const { TreeNode } = Tree;
 const { TabPane } = Tabs;
@@ -195,11 +196,40 @@ const Edata = [
 ]
 @Form.create()
 class Employee extends React.Component {
+  
+  state = {
+    tree: {
+      name: '',
+      children: []
+    }
+  }
+
+  componentDidMount() {
+    this.getTree();
+    this.getUser();
+  }
+
+  async getTree() {
+    const res = await queryDepartmentTree();
+
+    this.setState({
+      tree: res
+    })
+  }
+
+  async getUser () {
+    const res = await queryHumanfo({
+      id: 'E5DEAABB-8DE8-4E6A-B8F7-E0D4DE849052'
+    })
+    console.log(res);
+  }
+
   onSelect = () => {
 
   }
 
   render() {
+    const { tree } = this.state;
     return (
       <div>
         <Alert
@@ -220,10 +250,13 @@ class Employee extends React.Component {
             >
               <div className={styles.content}>
                 <Card>
-                  <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
-                    <TreeNode title="公司" key="0-0" icon={<MyIcon type="icon-zuzhijigouguanli" style={{fontSize: '16px'}} />}>
-                      <TreeNode title="公司高管" key="0-0-0"/>
-                      <TreeNode title="副总工程师" key="0-0-1" />
+                  <Tree showLine defaultExpandedKeys={['0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
+                    <TreeNode title={tree.Name} key='0-0' icon={<MyIcon type="icon-zuzhijigouguanli" style={{fontSize: '16px'}} />}>
+                     
+                      {tree.children.map((child, index) => {
+                        return  <TreeNode title={child.Name} key={child.Id} />
+                      })}
+                      {/* <TreeNode title="副总工程师" key="0-0-1" />
                       <TreeNode title="设计事业部" key="0-0-2" />
                       <TreeNode title="综合管理部" key="0-0-3" />
                       <TreeNode title="总承包事业部" key="0-0-4" />
@@ -234,7 +267,7 @@ class Employee extends React.Component {
                       <TreeNode title="数字化中心" key="0-0-9" />
                       <TreeNode title="建筑设计分院" key="0-0-10" />
                       <TreeNode title="技术公司" key="0-0-11" />
-                      <TreeNode title="华谊信息运维" key="0-0-12" />
+                      <TreeNode title="华谊信息运维" key="0-0-12" /> */}
                     </TreeNode>
                   </Tree>
                 </Card>
@@ -276,11 +309,14 @@ class Employee extends React.Component {
 
                     <div className="mt-20">
                       <Tabs defaultActiveKey="1" type="card">
-                        <TabPane tab={
-                <span>
-                  <MyIcon type="icon-zhengjixiangguanrenyuanxinxi" style={{fontSize: '16px'}} />
+                        <TabPane
+                          tab={
+                            <span>
+                              <MyIcon type="icon-zhengjixiangguanrenyuanxinxi" style={{fontSize: '16px'}} />
                     基本信息
-                </span>} key="1">
+                            </span>}
+                          key="1"
+                        >
                           <div className={styles.info}>
                             <div style={{flex: 1}}>
                               <Descriptions bordered title="基本信息" size="small">
@@ -297,18 +333,24 @@ class Employee extends React.Component {
                             </div>
                           </div>
                         </TabPane>
-                        <TabPane tab={
-                <span>
-                  <MyIcon type="icon-yuanchengjieyuetongji" style={{fontSize: '16px'}} />
+                        <TabPane
+                          tab={
+                            <span>
+                              <MyIcon type="icon-yuanchengjieyuetongji" style={{fontSize: '16px'}} />
                     工作履历
-                </span>} key="2">
+                            </span>}
+                          key="2"
+                        >
                           <Table columns={columns} dataSource={data} size="middle" pagination={false} />
                         </TabPane>
-                        <TabPane tab={
-                <span>
-                  <MyIcon type="icon-wodegongzuoqingkuang" style={{fontSize: '16px'}} />
+                        <TabPane
+                          tab={
+                            <span>
+                              <MyIcon type="icon-wodegongzuoqingkuang" style={{fontSize: '16px'}} />
                     专业经历
-                </span>} key="3">
+                            </span>}
+                          key="3"
+                        >
                           <Radio.Group value={1}>
                             <Radio value={1}>中文</Radio>
                             <Radio value={2}>英文</Radio>
