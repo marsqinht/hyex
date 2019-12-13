@@ -298,7 +298,7 @@ export default class Home extends Component {
   getNewsList = (page = 1) => {
     queryNews({
       page,
-      size: 4,
+      size: 5,
     }).then(({ success, data, total }) => {
       console.log(data);
       if (success) {
@@ -531,7 +531,7 @@ export default class Home extends Component {
                
                   {leaderShareData.map(v => {
                   return <a onClick={() => this.goDetail(v, '学习分享')}><p className={styles.gaoceng}>{v.Name}</p></a>
-                })}
+                }).filter((v,index) => index < 6)}
                 </div>
               </Card>
               <Card
