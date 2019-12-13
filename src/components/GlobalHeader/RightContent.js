@@ -132,6 +132,7 @@ export default class GlobalHeaderRight extends Component {
                 <div className="weixin">
                   <img
                     width="120"
+                    height="120"
                     src="https://tva1.sinaimg.cn/large/006tNbRwly1g9r7yg7ke8j30by0byt9j.jpg"
                   />
                   <div>

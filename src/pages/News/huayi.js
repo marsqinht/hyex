@@ -1,7 +1,7 @@
-import { Icon, Button, Table, Modal, Tabs, Upload, message } from 'antd';
+import { Icon, Button, Table, Modal, Tabs, Upload, message , Card, List, Pagination } from 'antd';
 import React from 'react';
 import moment from 'moment';
-// import router from 'umi/router';
+import router from 'umi/router';
 // import Detail from './detail';
 import styles from './huayi.less';
 import { queryParyConstruct } from '../../services/party';
@@ -112,6 +112,24 @@ export default class Huayi extends React.Component {
     }
   };
 
+  goDetail = (item, type) => {
+    const file = item.FileRow.length && item.FileRow[0].ServerUrl;
+    const { Name, RegHumName, RegDate } = item
+    if(!file) {
+      return;
+    }
+    router.push({
+      pathname: '/dashboard/commondetail',
+      query: {
+        title: Name,
+        people: RegHumName,
+        date: moment(RegDate).format('YYYY-MM-DD'),
+        file,
+        type
+      },
+    })
+  }
+
   handleOk = () => {
     this.setState({
       visible: false,
@@ -134,45 +152,34 @@ export default class Huayi extends React.Component {
     const { data, visible, total } = this.state;
     return (
       <div className={styles.wrap}>
-        <Modal
-          title="编辑党群通讯"
-          visible={visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+        <Card
+          title="华谊工程"
+          bordered={false}
         >
-          <Tabs defaultActiveKey="1">
-            <TabPane tab="新建" key="1">
-              <Dragger {...props}>
-                <p className="ant-upload-drag-icon">
-                  <Icon type="inbox" />
-                </p>
-                <p className="ant-upload-text">点击或拖拽到这个区域上传文件</p>
-                <p className="ant-upload-hint">
-                  Support for a single or bulk upload. Strictly prohibit from uploading company data
-                  or other band files
-                </p>
-              </Dragger>
-            </TabPane>
-            <TabPane tab="修改" key="2">
-              <Upload
-                defaultFileList={[
-                  {
-                    uid: '1',
-                    name: '华谊工程新闻.doc',
-                    status: 'done',
-                    response: 'Server Error 500', // custom error message to show
-                    url: 'http://www.baidu.com/xxx.png',
-                  },
-                ]}
-              />
-            </TabPane>
-          </Tabs>
-        </Modal>
-        <div className={styles.edit}>
-          <Button type="primary" onClick={this.openEdit}>
-            编辑
-          </Button>
-        </div>
+          <List
+            header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
+            bordered
+            dataSource={data}
+            renderItem={item => (
+              <List.Item>
+                <div className={styles.list}>
+                <a href="javascript:;" onClick={() => this.goDetail(item, '华谊工程')}><div>{item.Name}</div></a>
+                <div>
+                            {moment(item.RegDate).format('YYYY-MM-DD')}
+                          </div>
+              </div>
+              </List.Item>
+                    )}
+          />
+          <div className={styles.pe}>
+            <Pagination
+              defaultCurrent={1}
+              total={total}
+              pageSize={15}
+              onChange={page => this.fetchApi(page, 'toexamine')}
+            />
+          </div>
+        </Card>
         <Table
           columns={columns}
           dataSource={data}

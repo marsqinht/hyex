@@ -7,11 +7,11 @@ const { Meta } = Card;
 
 export default class Huayi extends Component {
   goHuayi = () => {
-    router.push('/dashboard/huayi');
+    router.push('/dashboard/party/huayi');
   };
 
   goZhidu = () => {
-    router.push('/dashboard/zhiduHuibian');
+    router.push('/dashboard/party/zhiduHuibian');
   };
 
   render() {
@@ -27,7 +27,7 @@ export default class Huayi extends Component {
               src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9v3ghr330j30ro0ss0ud.jpg"
             />
           }
-         />
+        />
         <Card
           hoverable
           style={{ width: 240 }}

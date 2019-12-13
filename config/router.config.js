@@ -174,8 +174,10 @@ export default [
               },
               {
                 name: '有效软件目录',
-                path: 'http://yun.dui88.com/aerosol/2019.pdf',
-                target: '_blank',
+                path: '/dd/s/contentdssss',
+                // path: 'http://yun.dui88.com/aerosol/2019.pdf',
+                // target: '_blank',
+                component: './Standard/soft',
               },
             ],
           },

@@ -89,45 +89,6 @@ export default class ZhiduHuibian extends React.Component {
     const { visible, data, total } = this.state;
     return (
       <div className={styles.wrap}>
-        <Modal
-          title="编辑制度汇编"
-          visible={visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-        >
-          <Tabs defaultActiveKey="1">
-            <TabPane tab="新建" key="1">
-              <Dragger {...props}>
-                <p className="ant-upload-drag-icon">
-                  <Icon type="inbox" />
-                </p>
-                <p className="ant-upload-text">点击或拖拽到这个区域上传文件</p>
-                <p className="ant-upload-hint">
-                  Support for a single or bulk upload. Strictly prohibit from uploading company data
-                  or other band files
-                </p>
-              </Dragger>
-            </TabPane>
-            <TabPane tab="修改" key="2">
-              <Upload
-                defaultFileList={[
-                  {
-                    uid: '1',
-                    name: '华谊工程新闻.doc',
-                    status: 'done',
-                    response: 'Server Error 500', // custom error message to show
-                    url: 'http://www.baidu.com/xxx.png',
-                  },
-                ]}
-              />
-            </TabPane>
-          </Tabs>
-        </Modal>
-        <div className={styles.edit}>
-          <Button type="primary" onClick={this.openEdit}>
-            编辑
-          </Button>
-        </div>
         <Tabs
           defaultActiveKey="上级单位文件"
           type="card"
