@@ -1,39 +1,68 @@
 export default [
-  // user
-  // {
-  //   path: '/user',
-  //   component: '../layouts/UserLayout',
-  //   routes: [
-  //     { path: '/user', redirect: '/user/login' },
-  //     { path: '/user/login', name: 'login', component: './User/Login' },
-  //     { path: '/user/register', name: 'register', component: './User/Register' },
-  //     {
-  //       path: '/user/register-result',
-  //       name: 'register.result',
-  //       component: './User/RegisterResult',
-  //     },
-  //     {
-  //       component: '404',
-  //     },
-  //   ],
-  // },
-  // app
   {
     path: '/',
     component: '../layouts/BasicLayout',
-    // Routes: ['src/pages/Authorized'],
     routes: [
       // dashboard
-      { path: '/', component: './Dashboard/Home', authority: ['admin', 'user'] },
+      { path: '/', component: './Dashboard/Home' },
       {
         path: '/dashboard',
         name: '公共事务',
         icon: 'bank',
         routes: [
           {
+            path: '/dashboard/analfddysis',
+            name: 'HYEC新闻',
+            component: './News',
+          },
+          {
+            path: '/dashboard/party',
+            name: '党群工作',
+            icon: 'bank',
+            routes: [
+              {
+                path: '/dashboard/party/analssysis',
+                name: '党的建设',
+                component: './News/party',
+              },
+              // {
+              //   path: '/dashboard/sss',
+              //   name: 'ss',
+              //   component: './Dashboard/Analysis',
+              // },
+              {
+                path: '/dashboard/party/huayi',
+                name: '华谊工程',
+                hideInMenu: true,
+                component: './News/huayi',
+              },
+              {
+                path: '/dashboard/party/zhiduHuibian',
+                name: '制度汇编',
+                hideInMenu: true,
+                component: './News/zhiduHuibian',
+              },
+              {
+                path: '/dashboard/party/analssyddsis',
+                name: '纪检监察',
+                component: './News/jijian',
+              },
+            ],
+          },
+          {
+            path: '/dashboard/dsfds',
+            name: '公司发文',
+            component: './Company',
+          },
+          {
             path: '/dashboard/huyi',
-            name: '会议信息',
+            name: '会务信息',
             component: './Huiyi',
+          },
+          {
+            path: '/dashboard/hueixunyi',
+            name: '培训信息',
+            component: './Peixun',
           },
           {
             path: '/dashboard/yuanong',
@@ -46,25 +75,11 @@ export default [
             component: './Zizhi',
           },
           {
-            path: '/dashboard/hueixunyi',
-            name: '培训信息',
-            component: './Peixun',
-          },
-          {
             path: '/dashboard/ananbvjglfddysis',
             name: '车辆信息',
             component: './Car',
           },
-          {
-            path: '/dashboard/analfddysis',
-            name: 'HYEC新闻',
-            component: './News',
-          },
-          {
-            path: '/dashboard/dsfds',
-            name: '公司发文',
-            component: './Company',
-          },
+         
           // {
           //   path: '/dashboard/dsfds',
           //   name: '公司发sss文',
@@ -82,39 +97,12 @@ export default [
             component: './News/detail',
           },
           {
-            path: '/dashboard',
-            name: '党群工作',
-            icon: 'bank',
-            routes: [
-              {
-                path: '/dashboard/analssysis',
-                name: '党的建设',
-                component: './News/party',
-              },
-              // {
-              //   path: '/dashboard/sss',
-              //   name: 'ss',
-              //   component: './Dashboard/Analysis',
-              // },
-              {
-                path: '/dashboard/huayi',
-                name: '华谊工程',
-                hideInMenu: true,
-                component: './News/huayi',
-              },
-              {
-                path: '/dashboard/zhiduHuibian',
-                name: '制度汇编',
-                hideInMenu: true,
-                component: './News/zhiduHuibian',
-              },
-              {
-                path: '/dashboard/analssyddsis',
-                name: '纪检监察',
-                component: './News/jijian',
-              },
-            ],
+            path: '/dashboard/commondetail',
+            name: '文件预览',
+            hideInMenu: true,
+            component: './News/commonDetail',
           },
+         
           // {
           //   path: '/dashboard/analhhfddysis',
           //   name: '会务信息',
@@ -232,68 +220,10 @@ export default [
       },
       {
         path: '/other',
-        name: '其它应用程序',
+        name: '友情链接',
         icon: 'ellipsis',
-        routes: [
-          // {
-          //   path: '/dashboard/fshcvcn',
-          //   name: '档案查询',
-          //   component: './Dashboard/Analysis',
-          // },
-          // {
-          //   path: '/dashboard/monitdssdfsdfor',
-          //   name: '商务平台',
-          //   component: './Dashboard/Analysis',
-          // },
-          // {
-          //   path: '/dashboard/monitordggffhjfg',
-          //   name: '邮件列表',
-          //   component: './Dashboard/Analysis',
-          // },
-          // {
-          //   path: '/dashboard/monitdgdsgor',
-          //   name: '电话簿',
-          //   component: './Dashboard/Analysis',
-          // },
-          // {
-          //   path: '/dashboard/monfadgdasgfitor',
-          //   name: '邮件签名模板',
-          //   component: './Dashboard/Analysis',
-          // },
-          // {
-          //   path: '/dashboard/monitgfsdsdfgccbvor',
-          //   name: '网上接待站',
-          //   component: './Dashboard/Analysis',
-          // },
-          // {
-          //   path: '/dashboard/monitobcbvcr',
-          //   name: 'HYEC外网维护',
-          //   component: './Dashboard/Analysis',
-          // },
-          {
-            path: '/other/link',
-            name: '友情链接',
-            component: './Other/Link',
-          },
-        ],
-      },
-      {
-        path: '/dashboard/monitxcvcxvcor',
-        name: '子公司',
-        icon: 'link',
-        routes: [
-          {
-            path: '/dashboard/monivxcvvcxxctor',
-            name: '上海市工业用水技术中心',
-            component: './Dashboard/Analysis',
-          },
-          {
-            path: '/dashboard/monifftor',
-            name: '上海华谊工程技术有限公司',
-            component: './Dashboard/Analysis',
-          },
-        ],
-      },
+        component: './Other/Link'
+      }
       // {
       //   path: '/dashboard',
       //   name: 'dashboard',

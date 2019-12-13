@@ -13,7 +13,7 @@ const columns = [
   {
     title: '标题',
     dataIndex: 'Name',
-    render: text => <a onClick={() => router.push('/dashboard/detail/1/0')}>{text}</a>,
+    render: text => <a>{text}</a>,
   },
   {
     title: '发布时间',
@@ -66,9 +66,30 @@ export default class Jijian extends React.Component {
     this.fetchPartyWork(page, type);
   };
 
-  goDetail = () => {
-    router.push('/dashboard/detail/2/0');
-  };
+  goDetail = (item, type = '') => {
+    const file = item.FileRow.length && item.FileRow[0].ServerUrl;
+    const { Name, RegHumName, RegDate } = item
+    if(!file) {
+      return;
+    }
+      const s = item.FileRow[0];
+      const ext = s.FileExt;
+      if(ext === '.pdf' || ext === '.doc' || ext === '.docx'){
+        router.push({
+          pathname: '/dashboard/commondetail',
+          query: {
+            title: Name,
+            people: RegHumName,
+            date: moment(RegDate).format('YYYY-MM-DD'),
+            file,
+            type
+          },
+        })
+      } else {
+        window.open(file);
+      }
+    
+  }
 
   render() {
     const { data, total, type } = this.state;
@@ -104,6 +125,13 @@ export default class Jijian extends React.Component {
                     <Table
                       columns={columns}
                       dataSource={data}
+                      onRow={record => {
+                        return {
+                          onClick: event => {
+                            this.goDetail(record)
+                          }, 
+                        };
+                      }}
                       pagination={{
                         pageSize: 10,
                         total,

@@ -15,8 +15,11 @@ import {
   Table,
   Tag,
 } from 'antd';
+import router from 'umi/router';
+import moment from 'moment';
 import styles from './index.less';
 import { queryApartmentTree, queryCompayInfo } from '../../services/company';
+import { renderYear } from '@/utils/utils';
 
 const MyIcon = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1277028_jejs7t1j2ca.js', // 在 iconfont.cn 上生成
@@ -41,122 +44,7 @@ const props = {
     }
   },
 };
-const ccolumns = [
-  {
-    title: '日期',
-    dataIndex: 'date',
-  },
-  {
-    title: '星期',
-    dataIndex: 'day',
-  },
-  {
-    title: '开始时间',
-    dataIndex: 'startTime',
-  },
-  {
-    title: '会议用时',
-    dataIndex: 'lastTime',
-  },
-  {
-    title: '地点',
-    dataIndex: 'address',
-  },
-  {
-    title: '会议名称',
-    dataIndex: 'title',
-    render: text => <a>{text}</a>,
-  },
-  {
-    title: '会议主题',
-    dataIndex: 'theme',
-  },
-  {
-    title: '出席范围',
-    dataIndex: 'range',
-  },
-  {
-    title: '召集部门',
-    dataIndex: 'part',
-  },
-];
-const cdata = [
-  {
-    key: '1',
-    date: '2019-10-11',
-    day: '星期一',
-    startTime: '12:30',
-    name: 'John Brown',
-    lastTime: '4',
-    age: 32,
-    address: '14号楼303',
-    theme: '招聘启动会',
-    title: '2020招聘工作会议',
-    range: '按通知',
-    man: '毛经理',
-    part: '数字化中心',
-  },
-  {
-    key: '2',
-    date: '2019-10-11',
-    day: '星期一',
-    startTime: '12:30',
-    name: 'John Brown',
-    lastTime: '4',
-    age: 32,
-    address: '14号楼303',
-    theme: '招聘启动会',
-    title: '2020招聘工作会议',
-    range: '按通知',
-    man: '毛经理',
-    part: '数字化中心',
-  },
-  {
-    key: '3',
-    date: '2019-10-11',
-    day: '星期三',
-    startTime: '12:30',
-    name: 'John Brown',
-    lastTime: '4',
-    age: 32,
-    address: '14号楼303',
-    theme: '招聘启动会',
-    title: '2020招聘工作会议',
-    range: '按通知',
-    man: '毛经理',
-    part: '数字化中心',
-  },
-  {
-    key: '4',
-    date: '2019-10-11',
-    day: '星期五',
-    startTime: '12:30',
-    name: 'John Brown',
-    lastTime: '4',
-    age: 32,
-    address: '14号楼303',
-    title: '2020招聘工作会议',
-    theme: '招聘启动会',
-    range: '按通知',
-    man: '毛经理',
-    part: '数字化中心',
-  },
-  {
-    key: '5',
-    date: '2019-10-11',
-    day: '星期一',
-    startTime: '12:30',
-    name: 'John Brown',
-    lastTime: '4',
-    age: 32,
-    address: '14号楼303',
-    theme: '招聘启动会',
-    title: '2020招聘工作会议',
-    range: '按通知',
-    man: '毛经理',
-    part: '数字化中心',
-  },
-];
+
 // const data = ['关于丁更等同志职务任免的通知'];
 class Content extends React.Component {
   state = {
@@ -164,9 +52,10 @@ class Content extends React.Component {
     visible: false,
     data: [],
     currentTab: '计划与总结',
+    selectYear: '',
     tree: {
       children: [],
-    },
+    }
   };
 
   componentDidMount() {
@@ -182,13 +71,14 @@ class Content extends React.Component {
     });
   };
 
-  fetchData = async (page = 1, type = '计划与总结', dept = '') => {
+  fetchData = async (page = 1,  year = '', dept = '') => {
     const { typeName } = this.props;
     const res = await queryCompayInfo({
       size: 15,
       page,
       type: typeName,
       dept,
+      year
     });
     console.log(res.data);
     this.setState({
@@ -214,6 +104,31 @@ class Content extends React.Component {
     });
   };
 
+  goDetail = (item, type = '') => {
+    const file = item.FileRow.length && item.FileRow[0].ServerUrl;
+    const { Name, RegHumName, RegDate } = item
+    if(!file) {
+      return;
+    }
+      const s = item.FileRow[0];
+      const ext = s.FileExt;
+      if(ext === '.pdf' || ext === '.doc' || ext === '.docx'){
+        router.push({
+          pathname: '/dashboard/commondetail',
+          query: {
+            title: Name,
+            people: RegHumName,
+            date: moment(RegDate).format('YYYY-MM-DD'),
+            file,
+            type
+          },
+        })
+      } else {
+        window.open(file);
+      }
+    
+  }
+
   onSelect = (selectedKeys, info) => {
     this.setState({
       appartment: info.node.props.title,
@@ -222,7 +137,7 @@ class Content extends React.Component {
   };
 
   render() {
-    const { appartment, visible, data, tree } = this.state;
+    const { appartment, visible, data, tree, selectYear } = this.state;
     const { typeName } = this.props;
     return typeName === '计划与总结' ? (
       <div className={styles.wrap}>
@@ -244,20 +159,6 @@ class Content extends React.Component {
                   {tree.children.map(child => {
                     return <TreeNode title={child.Name} key={`0-0-${child.Id}"`} />;
                   })}
-                  {/* <TreeNode title="商务部" key="0-0-0" />
-                  <TreeNode title="采购部" key="0-0-1" />
-                  <TreeNode title="施工管理部" key="0-0-2" />
-                  <TreeNode title="工艺系统室" key="0-0-3" />
-                  <TreeNode title="管道室" key="0-0-4" />
-                  <TreeNode title="设备室" key="0-0-5" />
-                  <TreeNode title="电仪室" key="0-0-6" />
-                  <TreeNode title="公用工程室" key="0-0-7" />
-                  <TreeNode title="工程经济室" key="0-0-8" />
-                  <TreeNode title="前期咨询室" key="0-0-9" />
-                  <TreeNode title="建筑设计分院" key="0-0-10" />
-                  <TreeNode title="QHSE部" key="0-0-11" />
-                  <TreeNode title="人力资源与行政" key="0-0-12" />
-                  <TreeNode title="项目管理部" key="0-0-13" /> */}
                 </TreeNode>
               </Tree>
             </div>
@@ -299,14 +200,13 @@ class Content extends React.Component {
             className="grandient-bg"
             extra={
               <div>
-                <Select defaultValue="1" style={{ width: 120, marginRight: 14 }} size="small">
-                  <Option value="1">年度过滤</Option>
-                  <Option value="lucy">时间过滤</Option>
-                  <Option value="disabled">标题</Option>
+                <Select defaultValue="" style={{ width: 120, marginRight: 14 }} size="small">
+                  <Option value="">年度过滤</Option>
+                  {renderYear().map(v => <Option value={v}>{v}</Option>)}
                 </Select>
-                <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>
+                {/* <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>
                   编辑
-                </Button>
+                </Button> */}
               </div>
             }
           >
@@ -317,7 +217,7 @@ class Content extends React.Component {
                 dataSource={data}
                 renderItem={item => (
                   <List.Item>
-                    <Typography.Text mark></Typography.Text> {item.Name}
+                    <Typography.Text mark></Typography.Text> <a onClick={() => this.goDetail(item)}>{item.Name}</a>
                   </List.Item>
                 )}
               />
@@ -330,20 +230,43 @@ class Content extends React.Component {
         <div className={styles.panelwrap}>
           <div className={styles.title}>
             <Button type="link">{typeName}</Button>
-            <Tag color="red">2019</Tag>
+            <Tag color="red">{selectYear || moment().year()}</Tag>
           </div>
           <div>
-            <Select defaultValue="1" style={{ width: 120, marginRight: 14 }} size="small">
-              <Option value="1">年度过滤</Option>
-              <Option value="lucy">时间过滤</Option>
-              <Option value="disabled">标题</Option>
+            <Select
+              defaultValue=""
+              style={{ width: 120, marginRight: 14 }}
+              size="small"
+              onChange={(key) => {
+              this.setState({
+                selectYear: key
+              })
+              this.fetchData(1, key)
+              }}
+            >
+              <Option value="">年度过滤</Option>
+              {renderYear().map(v => <Option value={v}>{v}</Option>)}
             </Select>
             {/* <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>
               编辑
             </Button> */}
           </div>
         </div>
-        <Table columns={ccolumns} dataSource={cdata} />
+        <List
+          header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
+          bordered
+          dataSource={data}
+          renderItem={item => (
+            <List.Item>
+              <div className={styles.list}>
+              <a onClick={() => this.goDetail(item, typeName)}> <div>{item.Name}</div></a>
+                <div>
+                  {moment(item.RegDate).format('YYYY-MM-DD')}
+                </div>
+              </div>
+            </List.Item>
+        )}
+        />
       </div>
     );
   }

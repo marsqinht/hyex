@@ -7,6 +7,17 @@ export function fixedZero(val) {
   return val * 1 < 10 ? `0${val}` : val;
 }
 
+export function renderYear () {
+  let currentYear = moment().year();
+  const arr = [];
+  for (let i = 0; i < 10; i++) {
+    arr.push(currentYear)
+    currentYear--;
+    
+  }
+  return arr;
+   
+}
 export function getTimeDistance(type) {
   const now = new Date();
   const oneDay = 1000 * 60 * 60 * 24;

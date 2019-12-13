@@ -4,3 +4,18 @@ import request, { cRequest } from '@/utils/request';
 export async function queryBirthday() {
   return cRequest(`/Birthday`);
 }
+
+export async function queryLoginManage() {
+  return cRequest('/LoginManage')
+}
+
+export async function queryLeave() {
+  return cRequest('/Leave')
+}
+export async function queryLeaderShare() {
+  return cRequest('/LeaderShare')
+}
+
+export async function queryCurrentList() {
+  return cRequest('/CurrentList');
+}

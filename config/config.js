@@ -73,6 +73,7 @@ export default {
   devtool: ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION ? 'source-map' : false,
   // 路由配置
   routes: pageRoutes,
+  history: 'hash',
   // Theme for antd
   // https://www.hyec.com/docs/react/customize-theme-cn
   theme: {
@@ -116,5 +117,7 @@ export default {
     basePath: '/',
   },
 
+  base: '/PowerService/',
+  publicPath: '/PowerService/',
   chainWebpack: webpackPlugin,
 };

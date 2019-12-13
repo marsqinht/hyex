@@ -254,7 +254,7 @@ class Employee extends React.Component {
   };
 
   getDetail = async (id = 'F9C5A047-6488-4C45-865C-2AA2773A68E8') => {
-    let { data, success } = await queryDetail({ id });
+    const { data, success } = await queryDetail({ id });
     console.log(data);
     if (success) {
       if (data.length && data[0]) {
@@ -276,6 +276,7 @@ class Employee extends React.Component {
       });
     }
   };
+
   onSelect = key => {
     console.log(key);
     this.getUser(key && key[0]);
@@ -399,7 +400,7 @@ class Employee extends React.Component {
                                 <Descriptions.Item label="分机">
                                   {detailInfo.Phone}
                                 </Descriptions.Item>
-                                <Descriptions.Item label="手机">1938483939</Descriptions.Item>
+                                <Descriptions.Item label="手机">{detailInfo.Mobile}</Descriptions.Item>
                                 <Descriptions.Item label="邮箱">
                                   {detailInfo.Email}
                                 </Descriptions.Item>
@@ -409,7 +410,7 @@ class Employee extends React.Component {
                               <img
                                 width={85}
                                 height={115}
-                                src={'data:image/jpg;base64,' + detailInfo.Picture}
+                                src={`data:image/jpg;base64,${  detailInfo.Picture}`}
                               />
                             </div>
                           </div>
@@ -445,10 +446,10 @@ class Employee extends React.Component {
                           }
                           key="3"
                         >
-                          <Radio.Group value={1}>
+                          {/* <Radio.Group value={1}>
                             <Radio value={1}>中文</Radio>
                             <Radio value={2}>英文</Radio>
-                          </Radio.Group>
+                          </Radio.Group> */}
                           <div style={{ marginTop: 10 }}>
                             <Table
                               columns={ccolumns}

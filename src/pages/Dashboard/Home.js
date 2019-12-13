@@ -33,7 +33,9 @@ import ImageD from './image3D';
 import Cc from './Clendar';
 import BarCharts from './Charts';
 import HomeBanner from './HomeBanner';
-import { queryNews } from '../../services/new';
+import { queryNews
+ } from '../../services/new';
+ import { queryLoginManage, queryLeave, queryLeaderShare } from '../../services/home';
 
 const edata = [
   {
@@ -57,6 +59,32 @@ const edata = [
     ),
   },
 ];
+
+const leaveInfo = item => {
+  return (
+    <div>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <img src={`data:image/jpg;base64,${  item.Picture}`} width={50} height={70} />
+        <div style={{ marginLeft: 14 }}>
+          姓名: {item.Name}
+          <br />
+          部门: {item.dept}
+          <br />
+          室号: {item.RegHumName}
+          <br />
+          分机: {item.Phone}
+          <br />
+          手机: {item.Mobile}
+          <br />
+        </div>
+      </div>
+      <div style={{ marginTop: 6 }}>
+        <div>职位: {item.PosiName}</div>
+        <div>Email: {item.Email}</div>
+      </div>
+    </div>
+  );
+};
 
 const content = (
   <div>
@@ -89,7 +117,7 @@ const info = (
     </div>
   </div>
 );
-const data = [
+const adata = [
   {
     title: '中共上海华谊工程有限公司第二次党员大会隆重召开',
     time: '2019-11-11',
@@ -230,10 +258,13 @@ function onPanelChange(value, mode) {
 }
 
 export default class Home extends Component {
-  state = { visible: false, placement: 'top', newsList: [] };
+  state = { visible: false, placement: 'top', newsList: [], loginManageData: [], leaveData: [], leaderShareData: []};
 
   componentDidMount() {
     this.getNewsList(1);
+    this.initLoginManage();
+    this.initLeave();
+    this.initLeaderShare();
   }
 
   showDrawer = () => {
@@ -241,6 +272,28 @@ export default class Home extends Component {
       visible: true,
     });
   };
+
+  initLoginManage = async () => {
+    const { data } = await queryLoginManage();
+    this.setState({
+      loginManageData: data
+    })
+  }
+
+  initLeave = async () => {
+    const { data } = await queryLeave();
+    console.log(data);
+    this.setState({
+      leaveData: data
+    })
+  }
+
+  initLeaderShare = async () => {
+    const { data } = await queryLeaderShare();
+    this.setState({
+      leaderShareData: data
+    })
+  }
 
   getNewsList = (page = 1) => {
     queryNews({
@@ -268,50 +321,43 @@ export default class Home extends Component {
     });
   };
 
+  goDetail = (item, type) => {
+    const file = item.FileRow.length && item.FileRow[0].ServerUrl;
+    const { Name, RegHumName, RegDate } = item
+    if(!file) {
+      return;
+    }
+    router.push({
+      pathname: '/dashboard/commondetail',
+      query: {
+        title: Name,
+        people: RegHumName,
+        date: moment(RegDate).format('YYYY-MM-DD'),
+        file,
+        type
+      },
+    })
+  }
+
   renderNew = time => {
     return new Date().getTime() - new Date(time).getTime() < 259200000;
   };
 
-  goDetail = (currentPage = 1, index = 1) => {
-    router.push(`/dashboard/detail/${currentPage}/${index}`);
-  };
+  // goDetail = (currentPage = 1, index = 1) => {
+  //   router.push(`/dashboard/detail/${currentPage}/${index}`);
+  // };
 
   render() {
-    const { newsList } = this.state;
+    const { newsList, leaderShareData, leaveData, loginManageData } = this.state;
+    console.log(leaveData, 'leaveData')
     return (
       <div>
-        <Breadcrumb>
-          <Breadcrumb.Item href="">
-            <Icon type="home" />
-          </Breadcrumb.Item>
-          <Breadcrumb.Item href="">
-            <Icon type="user" />
-            <span>概况</span>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>详情</Breadcrumb.Item>
-        </Breadcrumb>
         <div className={styles.content}>
           <div className={styles.mb}>
             <HomeBanner />
           </div>
           <Row gutter={16}>
             <Col span={18}>
-              <UsualProgram />
-              {/* <div className={styles.mb}>
-              </div> */}
-              {/* <div style={{ background: '#fff', marginBottom: 12, padding: 10 }}>
-                温馨提示:{' '}
-                <img
-                  width={20}
-                  height={20}
-                  src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8hrb9tgguj305k05kwed.jpg"
-                />
-                诚祝{' '}
-                <Popover content={info} title="员工信息" placement="rightBottom">
-                  <a href="javascript:;">李子煜</a>{' '}
-                </Popover>
-                生日快乐
-              </div> */}
               <Row gutter={16}>
                 <Col span={12}>
                   <Card
@@ -338,9 +384,9 @@ export default class Home extends Component {
                       dataSource={newsList}
                       bordered={false}
                       split={false}
-                      renderItem={(item, index) => (
+                      renderItem={(item) => (
                         <List.Item>
-                          <div className={styles.newList} onClick={() => this.goDetail(1, index)}>
+                          <div className={styles.newList} onClick={() => this.goDetail(item, '新闻')}>
                             <Tooltip placement="top" title={item.Name}>
                               <div className={styles.newsTitle}>{item.Name}</div>
                             </Tooltip>
@@ -382,17 +428,21 @@ export default class Home extends Component {
                   >
                     <List
                       itemLayout="horizontal"
-                      dataSource={data}
+                      dataSource={loginManageData}
                       bordered={false}
                       split={false}
                       renderItem={item => (
                         <List.Item>
-                          <div className={styles.newList}>
-                            <Tooltip placement="top" title={item.title}>
-                              <div className={styles.newsTitle}>{item.title}</div>
+                          <div className={styles.newList} onClick={() => this.goDetail(item, 'QHSE信息')}>
+                            <Tooltip placement="top" title={item.Name}>
+                              <div className={styles.newsTitle}>{item.Name}</div>
                             </Tooltip>
-                            {this.renderNew(item.time) && <div className={styles.newTag} />}
-                            <div style={{ color: '#333' }}>{item.time}</div>
+                            {this.renderNew(moment(item.RegDate).format('YYYY-MM-DD')) && (
+                              <div className={styles.newTag} />
+                            )}
+                            <div style={{ color: '#333' }}>
+                              {moment(item.RegDate).format('YYYY-MM-DD')}
+                            </div>
                           </div>
                         </List.Item>
                       )}
@@ -419,7 +469,7 @@ export default class Home extends Component {
                   >
                     <List
                       itemLayout="horizontal"
-                      dataSource={data}
+                      dataSource={adata}
                       bordered={false}
                       split={false}
                       renderItem={item => (
@@ -454,7 +504,7 @@ export default class Home extends Component {
                   >
                     <List
                       itemLayout="horizontal"
-                      dataSource={data}
+                      dataSource={[]}
                       bordered={false}
                       split={false}
                       renderItem={item => (
@@ -474,21 +524,15 @@ export default class Home extends Component {
               </Row>
             </Col>
             <Col span={6}>
+              {/* <UsualProgram /> */}
               <Card className="blue-bg grandient-bg" title={<div>学习分享</div>} bordered={false}>
-                <Popover placement="leftTop" content={content} title="活动" trigger="hover">
-                  <p className={styles.gaoceng}>公司开展“大手牵小手，阳光谊路走</p>
-                </Popover>
-                <Popover placement="leftTop" content={content} title="活动" trigger="hover">
-                  <p className={styles.gaoceng}>公司召开庆“七一”党员、干部暨先进表彰大会</p>
-                </Popover>
-                <Popover placement="leftTop" content={content} title="活动" trigger="hover">
-                  <p className={styles.gaoceng}>公司召开党委、纪委换届选举启动</p>
-                </Popover>
-                <Popover placement="leftTop" content={content} title="活动" trigger="hover">
-                  <p className={styles.gaoceng}>公司党委下基层调研党建工作</p>
-                </Popover>
+                <div style={{height: 210}}>
 
-                <p className={styles.gaoceng}>公司进行华谊园区停车场车棚建设</p>
+               
+                  {leaderShareData.map(v => {
+                  return <a onClick={() => this.goDetail(v, '学习分享')}><p className={styles.gaoceng}>{v.Name}</p></a>
+                })}
+                </div>
               </Card>
               <Card
                 className="blue-bg grandient-bg"
@@ -496,18 +540,20 @@ export default class Home extends Component {
                 title={<div>今日请假</div>}
                 bordered={false}
               >
-                <div style={{ overflow: 'hidden' }}>
+                <div style={{ overflow: 'hidden', height: 300 }}>
                   <List
-                    className="mymove"
+                    className={leaveData.length > 8 ? 'mymove' : ''}
                     style={{ position: 'relative' }}
                     size="small"
                     split={false}
-                    dataSource={holidayData}
+                    dataSource={leaveData}
                     renderItem={item => (
                       <List.Item
-                        actions={[<a style={{ color: colorMap[item.type] }}>{item.type}</a>]}
+                        actions={[<a style={{ color: colorMap[item.LeaveType] }}>{item.LeaveType}</a>]}
                       >
-                        {item.name}
+                        <Popover content={leaveInfo(item)} title="员工信息" placement="left">
+                          {item.Name}
+                        </Popover>
                       </List.Item>
                     )}
                   />
@@ -525,21 +571,13 @@ export default class Home extends Component {
                     <div style={{ width: '100%' }}>
                       <a>华谊信息运维</a>
                       <p>
-                        6# 号楼: <br />
-                        李建新(703897) <br />
-                        丁毅(703895) <br />
-                        孟爽(703893) <br />
-                        钟强(703889)
-                        <br /> 李磊(709195)
+                        6# 号楼: <br /> 李建新(703897)  丁毅(703895)  <br /> 孟爽(703893) 钟强(703889) <br /> 李磊(709195)
                       </p>
                     </div>
                     <div style={{ width: '100%' }}>
                       <a>大楼设备维修</a>
                       <p>
-                        {' '}
-                        <br />
-                        11# 号楼: <br />
-                        刘洪(703882)
+                        11# 号楼: 刘洪(703882)
                       </p>
                     </div>
                     <div style={{ width: '100%' }}>
@@ -547,23 +585,25 @@ export default class Home extends Component {
                       <br />
                       <p className={styles.banci}>
                         <Icon
-                          style={{ fontSize: '38px' }}
+                          style={{ fontSize: '24px' }}
                           type="phone"
                           theme="twoTone"
                           twoToneColor="orange"
                         />
                         <p
                           style={{
-                            fontSize: '24px',
+                            fontSize: '20px',
                             color: 'orange',
                             'line-height': 1.2,
-                            marginTop: 14,
+                            marginTop: 12,
+                            marginLeft:10
                           }}
                         >
                           6470588
                         </p>
-                        <p style={{ color: 'orange' }}>公司门卫24小时值班电话</p>
+                        
                       </p>
+                      <p style={{ color: 'orange' }}>公司门卫24小时值班电话</p>
                     </div>
                   </div>
                 </Card>

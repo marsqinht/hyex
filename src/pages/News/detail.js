@@ -1,8 +1,9 @@
 import { Icon } from 'antd';
 import { Component } from 'react';
 import { Document, Page } from 'react-pdf';
-import { queryNews } from '../../services/new';
+// import 'react-pdf/dist/Page/AnnotationLayer.css';
 import moment from 'moment';
+import { queryNews } from '../../services/new';
 
 export default class Detail extends Component {
   state = {
@@ -14,13 +15,15 @@ export default class Detail extends Component {
   }
 
   // http://dev.p3china.com:16002/HYPO_OA_News/53c7cf02-1c49-4c09-b4f0-249756cb12ed/d9415fbd-4e3d-096d-23c1-ea7a0615399e.docx
-  onDocumentLoadSuccess = ({ numPages }) => {//numPages是总页数
+  onDocumentLoadSuccess = ({ numPages }) => {// numPages是总页数
     this.setState({ numPages });
   };
+
   componentDidMount() {
     const { page, index } = this.props.match.params;
     this.getNewsList(page, index);
   }
+
   renderPdf = () => {
     const { page, index } = this.props.match.params;
     if(+page === 1 && +index === 0) {
@@ -31,6 +34,7 @@ export default class Detail extends Component {
     }
     return false
   }
+
   getNewsList = (page = 1, index = 0) => {
     queryNews({
       page,
@@ -43,6 +47,7 @@ export default class Detail extends Component {
       }
     })
   }
+
   render() {
     const { pageNumber, numPages, pdfContent, newsData } = this.state;
     return (
@@ -64,12 +69,12 @@ export default class Detail extends Component {
           </div>
 
           <div className="news-detail">
-          {this.renderPdf() && <Document
-          file={this.renderPdf()}
-          onLoadSuccess={this.onDocumentLoadSuccess}
-        >
-          <Page pageNumber={pageNumber} />
-        </Document>}
+            {this.renderPdf() && <Document
+              file={this.renderPdf()}
+              onLoadSuccess={this.onDocumentLoadSuccess}
+            >
+              <Page pageNumber={pageNumber} />
+                                 </Document>}
           </div>
         </div>
       </div>

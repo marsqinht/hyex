@@ -24,12 +24,10 @@ export default class Huayi extends Component {
           cover={
             <img
               alt="example"
-              src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8gineojurj30n00dw0ss.jpg"
+              src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9v3ghr330j30ro0ss0ud.jpg"
             />
           }
-        >
-          <Meta title="华谊工程" description="www.instagram.com" />
-        </Card>
+         />
         <Card
           hoverable
           style={{ width: 240 }}
@@ -41,7 +39,7 @@ export default class Huayi extends Component {
             />
           }
         >
-          <Meta title="制度汇编" description="www.instagram.com" />
+          <Meta title="制度汇编" />
         </Card>
       </div>
     );

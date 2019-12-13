@@ -1,11 +1,12 @@
 import { Component } from 'react';
 import { Carousel, Popover } from 'antd';
 import { queryBirthday } from '../../services/home';
+
 const info = item => {
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <img src={'data:image/jpg;base64,' + item.Picture} width={50} height={50} />
+        <img src={`data:image/jpg;base64,${  item.Picture}`} width={50} height={70} />
         <div style={{ marginLeft: 14 }}>
           姓名: {item.Name}
           <br />
@@ -15,10 +16,12 @@ const info = item => {
           <br />
           分机: {item.Phone}
           <br />
+          手机: {item.Mobile}
+          <br />
         </div>
       </div>
       <div style={{ marginTop: 6 }}>
-        <div>职位: {item.RegHumName}</div>
+        <div>职位: {item.PosiName}</div>
         <div>Email: {item.Email}</div>
       </div>
     </div>
@@ -67,6 +70,7 @@ export default class Birth extends Component {
   state = {
     list: [],
   };
+
   componentDidMount() {
     this.fetchBirth();
   }
@@ -78,6 +82,7 @@ export default class Birth extends Component {
       list: data,
     });
   };
+
   render() {
     const { list } = this.state;
     return (

@@ -14,6 +14,7 @@ import {
   Pagination,
 } from 'antd';
 import moment from 'moment';
+import router from 'umi/router';
 import styles from './index.less';
 import { queryZhiliangManage } from '../../services/quantity';
 
@@ -160,6 +161,24 @@ export default class Huiyi extends React.Component {
     this.fetchApi(1, 'QCgroup', e.target.value, '')
   }
 
+  goDetail = (item, type) => {
+    const file = item.FileRow.length && item.FileRow[0].ServerUrl;
+    const { Name, RegHumName, RegDate } = item
+    if(!file) {
+      return;
+    }
+    router.push({
+      pathname: '/dashboard/commondetail',
+      query: {
+        title: Name,
+        people: RegHumName,
+        date: moment(RegDate).format('YYYY-MM-DD'),
+        file,
+        type
+      },
+    })
+  }
+
   fetchApi = async (page = 1, type = 'notice', qctype, Name = '') => {
     const { data, total, success } = await queryZhiliangManage({
       type,
@@ -218,8 +237,8 @@ export default class Huiyi extends React.Component {
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
-                          <div>{item.Name}</div>
-                          <div style={{ color: '#1890FF' }}>
+                          <a href="javascript:;" onClick={() => this.goDetail(item, '管理通知')}><div>{item.Name}</div></a>
+                          <div>
                             {moment(item.RegDate).format('YYYY-MM-DD')}
                           </div>
                         </div>
@@ -271,8 +290,8 @@ export default class Huiyi extends React.Component {
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
-                          <div>{item.Name}</div>
-                          <div style={{ color: '#1890FF' }}>
+                          <a href="javascript:;" onClick={() => this.goDetail(item, '年度筛选')}><div>{item.Name}</div></a>
+                          <div>
                             {moment(item.RegDate).format('YYYY-MM-DD')}
                           </div>
                         </div>
@@ -324,8 +343,8 @@ export default class Huiyi extends React.Component {
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
-                          <div>{item.Name}</div>
-                          <div style={{ color: '#1890FF' }}>
+                          <a href="javascript:;" onClick={() => this.goDetail(item, '质量管理')}><div>{item.Name}</div></a>
+                          <div>
                             {moment(item.RegDate).format('YYYY-MM-DD')}
                           </div>
                         </div>
@@ -374,8 +393,8 @@ export default class Huiyi extends React.Component {
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
-                          <div>{item.Name}</div>
-                          <div style={{ color: '#1890FF' }}>
+                          <a href="javascript:;" onClick={() => this.goDetail(item, '质量剖析')}><div>{item.Name}</div></a>
+                          <div>
                             {moment(item.RegDate).format('YYYY-MM-DD')}
                           </div>
                         </div>
@@ -427,8 +446,8 @@ export default class Huiyi extends React.Component {
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
-                          <div>{item.Name}</div>
-                          <div style={{ color: '#1890FF' }}>
+                          <a href="javascript:;" onClick={() => this.goDetail(item, '内外审核情况')}><div>{item.Name}</div></a>
+                          <div>
                             {moment(item.RegDate).format('YYYY-MM-DD')}
                           </div>
                         </div>
@@ -486,8 +505,8 @@ export default class Huiyi extends React.Component {
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
-                          <div>{item.Name}</div>
-                          <div style={{ color: '#1890FF' }}>
+                          <a href="javascript:;" onClick={() => this.goDetail(item, 'QC小组')}><div>{item.Name}</div></a>
+                          <div>
                             {moment(item.RegDate).format('YYYY-MM-DD')}
                           </div>
                         </div>

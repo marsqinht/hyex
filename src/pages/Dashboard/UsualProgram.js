@@ -1,5 +1,5 @@
 import { PureComponent } from 'react';
-import { Card, Icon } from 'antd';
+import { Card, Icon, Tooltip } from 'antd';
 import styles from './Home.less';
 
 const Items = [
@@ -19,10 +19,11 @@ const Items = [
     icon: 'icongroup',
     name: '员工信息'
   },
+  // {
+  //   icon: 'iconcalendar2',
+  //   name: '请假系统'
+  // }, 
   {
-    icon: 'iconcalendar2',
-    name: '请假系统'
-  }, {
     icon: 'iconfolder',
     name: '图纸入库系统'
   }
@@ -35,33 +36,23 @@ const IconFont = Icon.createFromIconfontCN({
 export default class Workplace extends PureComponent {
   render() {
     return (
-      <div>
-        <Card
-          className="blue-bg grandient-bg"
-          style={{marginBottom: '16px'}}
-          title={
-            <div>
-             常用程序
-            </div>
-        }
-          bordered={false}
-        >
-          <ul className={styles.uu}>
-            {
+      <ul className={styles.uu}>
+        {
           Items.map(v => {
             return <li className={styles.uli}>
+              <Tooltip placement="bottom" title={v.name}>
+      
               <div className={styles.icon}>
                 <a href={v.link || 'javascript:;'}>
                   <IconFont type={v.icon} />
                 </a>
               </div>
-              <p className={styles.name}>{v.name}</p>
-            </li>
+            </Tooltip>
+              {/* <p className={styles.name}>{v.name}</p> */}
+                   </li>
           })
         }
-          </ul>
-        </Card>
-      </div>
+      </ul>
     )
   }
 }

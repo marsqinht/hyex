@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { List, Avatar, Icon, Button, Select, Modal, Tabs, Upload, message } from 'antd';
 import router from 'umi/router';
 import moment from 'moment';
-
+import styles from './huayi.less';
 
 // import Detail from './detail';
 
@@ -77,6 +77,24 @@ export default class News extends Component {
     })
   }
 
+  goDetail = (item, type) => {
+    const file = item.FileRow.length && item.FileRow[0].ServerUrl;
+    const { Name, RegHumName, RegDate } = item
+    if(!file) {
+      return;
+    }
+    router.push({
+      pathname: '/dashboard/commondetail',
+      query: {
+        title: Name,
+        people: RegHumName,
+        date: moment(RegDate).format('YYYY-MM-DD'),
+        file,
+        type
+      },
+    })
+  }
+
   handleOk = () => {
     this.setState({
       visible: false,
@@ -95,9 +113,23 @@ export default class News extends Component {
     });
   };
 
-  goDetail = (currentPage, index) => {
-    router.push(`/dashboard/detail/${currentPage}/${index}`);
-  };
+  goDetail = (item, type) => {
+    const file = item.FileRow.length && item.FileRow[0].ServerUrl;
+    const { Name, RegHumName, RegDate } = item
+    if(!file) {
+      return;
+    }
+    router.push({
+      pathname: '/dashboard/commondetail',
+      query: {
+        title: Name,
+        people: RegHumName,
+        date: moment(RegDate).format('YYYY-MM-DD'),
+        file,
+        type
+      },
+    })
+  }
 
   render() {
     const { visible, list, total, currentPage } = this.state;
@@ -139,20 +171,22 @@ export default class News extends Component {
           ,
         </Modal>
         <div className="flex-right">
-          <Select defaultValue="lucy" style={{ width: 120, marginBottom: 10 }}>
-            <Option value="jack">2019</Option>
-            <Option value="lucy">2018</Option>
-            <Option value="Yiminghe">2017</Option>
+          <Select defaultValue="" style={{ width: 120, marginBottom: 10 }}>
+            <Option value="">年度筛选</Option>
+            <Option value="2019">2019</Option>
+            <Option value="2018">2018</Option>
+            <Option value="2017">2017</Option>
           </Select>
 
-          <Button type="link" icon="edit" onClick={this.openEdit}>
+          {/* <Button type="link" icon="edit" onClick={this.openEdit}>
             编辑
-          </Button>
+          </Button> */}
         </div>
         <List
-          itemLayout="vertical"
-          size="large"
-          style={{ backgroundColor: '#fff', padding: '0 20px 30px' }}
+          header={<div style={{ fontWeight: 'bold', fontSize: '18px' }}>HYEC新闻</div>}
+          style={{ backgroundColor: '#fff' }}
+          bordered
+          dataSource={list}
           pagination={{
             onChange: page => {
               this.setState({
@@ -163,16 +197,26 @@ export default class News extends Component {
             total,
             pageSize: 15,
           }}
+          renderItem={item => (
+            <List.Item>
+              <div className={styles.list}>
+                <a href="javascript:;" onClick={() => this.goDetail(item, '新闻')}><div>{item.Name}</div></a>
+                <div>
+                  {moment(item.RegDate).format('YYYY-MM-DD')}
+                </div>
+              </div>
+            </List.Item>
+                    )}
+        />
+        {/* <List
+          style={{ backgroundColor: '#fff', padding: '0 20px 30px' }}
+          header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
+          bordered
+          
           dataSource={list}
           renderItem={(item,index) => (
             <List.Item
               key={item.Name}
-              actions={[
-                <IconText type="like-o" text="156" key="list-vertical-like-o" />,
-                <IconText type="message" text="2" key="list-vertical-message" />,
-                item.FileRow.length && <Button type="link" href={item.FileRow.length && item.FileRow[0].ServerUrl} target="blank">附件: {item.FileRow.length && item.FileRow[0].FileName}</Button>,
-                <Button type="link">{moment(item.RegDate).format('YYYY-MM-DD')}</Button>,
-              ]}
             >
               <List.Item.Meta
                 title={
@@ -185,7 +229,7 @@ export default class News extends Component {
               {item.content}
             </List.Item>
           )}
-        />
+        /> */}
       </div>
     );
   }

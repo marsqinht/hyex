@@ -9,7 +9,7 @@ import HeaderDropdown from '../HeaderDropdown';
 import SelectLang from '../SelectLang';
 import ValueImg from './value';
 import ImageList from '../../pages/Dashboard/imageList';
-
+import Usual from '../../pages/Dashboard/UsualProgram';
 import styles from './index.less';
 
 export default class GlobalHeaderRight extends Component {
@@ -124,97 +124,41 @@ export default class GlobalHeaderRight extends Component {
     }
     return (
       <div className={className}>
-        <Popover
-          content={
-            <div style={{ width: 350 }}>
-              <div className="weixin">
-                <img
-                  width="120"
-                  src="https://tva1.sinaimg.cn/large/006tNbRwly1g9r7yg7ke8j30by0byt9j.jpg"
-                />
-                <div>
-                  <div style={{ marginTop: 6 }}>
-                    <span style={{ color: 'blue' }}>步骤一: </span>打开手机的微信
-                  </div>
+        <div style={{display: 'flex', height: '100%'}}>
+          <Usual />
+          <Popover
+            content={
+              <div style={{ width: 350 }}>
+                <div className="weixin">
+                  <img
+                    width="120"
+                    src="https://tva1.sinaimg.cn/large/006tNbRwly1g9r7yg7ke8j30by0byt9j.jpg"
+                  />
                   <div>
-                    <span style={{ color: 'blue' }}>步骤一: </span>点微信右上角的"+"号, 选择"扫一扫"
-                  </div>
-                  <div>
-                    <span style={{ color: 'blue' }}>步骤一: </span>
+                    <div style={{ marginTop: 6 }}>
+                      <span style={{ color: 'blue' }}>步骤一: </span>打开手机的微信
+                    </div>
+                    <div>
+                      <span style={{ color: 'blue' }}>步骤一: </span>点微信右上角的"+"号, 选择"扫一扫"
+                    </div>
+                    <div>
+                      <span style={{ color: 'blue' }}>步骤一: </span>
                     把扫描框对准二维码扫描后,选择关注确认
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
           }
-          trigger="hover"
-        >
-          <Tag color="#07C160" style={{ cursor: 'pointer' }}>
-            <Icon type="wechat" />
-            <span style={{ color: '#fff', cursor: 'pointer' }}>关注微信</span>
-          </Tag>
-        </Popover>
-        <NoticeIcon
-          className={styles.action}
-          count={currentUser.unreadCount}
-          onItemClick={(item, tabProps) => {
-            console.log(item, tabProps); // eslint-disable-line
-            this.changeReadState(item, tabProps);
-          }}
-          loading={fetchingNotices}
-          locale={{
-            emptyText: formatMessage({ id: 'component.noticeIcon.empty' }),
-            clear: formatMessage({ id: 'component.noticeIcon.clear' }),
-            viewMore: formatMessage({ id: 'component.noticeIcon.view-more' }),
-            notification: formatMessage({ id: 'component.globalHeader.notification' }),
-            message: formatMessage({ id: 'component.globalHeader.message' }),
-            event: formatMessage({ id: 'component.globalHeader.event' }),
-          }}
-          onClear={onNoticeClear}
-          onPopupVisibleChange={onNoticeVisibleChange}
-          onViewMore={() => message.info('Click on view more')}
-          clearClose
-        >
-          <NoticeIcon.Tab
-            count={unreadMsg.notification}
-            list={noticeData.notification}
-            title="notification"
-            emptyText={formatMessage({ id: 'component.globalHeader.notification.empty' })}
-            emptyImage="https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg"
-            showViewMore
-          />
-          <NoticeIcon.Tab
-            count={unreadMsg.message}
-            list={noticeData.message}
-            title="message"
-            emptyText={formatMessage({ id: 'component.globalHeader.message.empty' })}
-            emptyImage="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg"
-            showViewMore
-          />
-          <NoticeIcon.Tab
-            count={unreadMsg.event}
-            list={noticeData.event}
-            title="event"
-            emptyText={formatMessage({ id: 'component.globalHeader.event.empty' })}
-            emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
-            showViewMore
-          />
-        </NoticeIcon>
-        {currentUser.name ? (
-          <HeaderDropdown overlay={menu}>
-            <span className={`${styles.action} ${styles.account}`}>
-              <Avatar
-                size="small"
-                className={styles.avatar}
-                src={currentUser.avatar}
-                alt="avatar"
-              />
-              <span className={styles.name}>{currentUser.name}</span>
-            </span>
-          </HeaderDropdown>
-        ) : (
-          <Spin size="small" style={{ marginLeft: 8, marginRight: 8 }} />
-        )}
+            trigger="hover"
+          >
+            <div style={{height: '40px', 'paddingRight': '30px'}}>
+              <Tag color="#07C160" style={{ cursor: 'pointer' }}>
+                <Icon type="wechat" />
+                <span style={{ color: '#fff', cursor: 'pointer' }}>关注微信</span>
+              </Tag>
+            </div>
+          </Popover>
+        </div>
       </div>
     );
   }
