@@ -1,7 +1,7 @@
-import { Icon, Button, Table, Modal, Tabs, Upload, message } from 'antd';
+import { Icon, Button, Table, Modal, Tabs, Upload, message, Pagination,List , Card} from 'antd';
 import React from 'react';
 import moment from 'moment';
-// import router from 'umi/router';
+import router from 'umi/router';
 // import Detail from './detail';
 import styles from './huayi.less';
 import { querySystem } from '../../services/party';
@@ -67,6 +67,25 @@ export default class ZhiduHuibian extends React.Component {
     }
   };
 
+
+  goDetail = (item, type) => {
+    const file = item.FileRow.length && item.FileRow[0].ServerUrl;
+    const { Name, RegHumName, RegDate } = item
+    if(!file) {
+      return;
+    }
+    router.push({
+      pathname: '/dashboard/commondetail',
+      query: {
+        title: Name,
+        people: RegHumName,
+        date: moment(RegDate).format('YYYY-MM-DD'),
+        file,
+        type
+      },
+    })
+  }
+
   handleOk = () => {
     this.setState({
       visible: false,
@@ -91,13 +110,40 @@ export default class ZhiduHuibian extends React.Component {
       <div className={styles.wrap}>
         <Tabs
           defaultActiveKey="上级单位文件"
-          type="card"
           onChange={name => {
             this.fetchApi(1, name);
           }}
         >
           <TabPane tab="上级单位文件" key="上级单位文件">
-            <Table
+            <Card
+              title="上级单位文件"
+              bordered={false}
+            >
+              <List
+                header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
+                bordered
+                dataSource={data}
+                renderItem={item => (
+                  <List.Item>
+                    <div className={styles.list}>
+                      <a href="javascript:;" onClick={() => this.goDetail(item, '上级单位文件')}><div>{item.Name}</div></a>
+                      <div>
+                        {moment(item.RegDate).format('YYYY-MM-DD')}
+                      </div>
+                    </div>
+                  </List.Item>
+                    )}
+              />
+              <div className={styles.pe}>
+                <Pagination
+                  defaultCurrent={1}
+                  total={total}
+                  pageSize={15}
+                  onChange={page => this.fetchApi(page, '上级单位文件')}
+                />
+              </div>
+            </Card>
+            {/* <Table
               columns={columns}
               dataSource={data}
               bordered
@@ -107,20 +153,37 @@ export default class ZhiduHuibian extends React.Component {
                 onChange: page => this.fetchApi(page, '上级单位文件'),
               }}
               title={() => <div style={{ textAlign: 'center' }}>上级单位文件</div>}
-            />
+            /> */}
           </TabPane>
           <TabPane tab="公司制度" key="公司制度">
-            <Table
-              columns={columns}
-              dataSource={data}
-              bordered
-              pagination={{
-                total,
-                pageSize: 10,
-                onChange: page => this.fetchApi(page, '公司制度'),
-              }}
-              title={() => <div style={{ textAlign: 'center' }}>公司制度</div>}
-            />
+            <Card
+              title="公司制度"
+              bordered={false}
+            >
+              <List
+                header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
+                bordered
+                dataSource={data}
+                renderItem={item => (
+                  <List.Item>
+                    <div className={styles.list}>
+                      <a href="javascript:;" onClick={() => this.goDetail(item, '上级单位文件')}><div>{item.Name}</div></a>
+                      <div>
+                        {moment(item.RegDate).format('YYYY-MM-DD')}
+                      </div>
+                    </div>
+                  </List.Item>
+                    )}
+              />
+              <div className={styles.pe}>
+                <Pagination
+                  defaultCurrent={1}
+                  total={total}
+                  pageSize={15}
+                  onChange={page => this.fetchApi(page, '公司制度')}
+                />
+              </div>
+            </Card>
           </TabPane>
         </Tabs>
       </div>

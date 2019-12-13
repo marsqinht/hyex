@@ -107,7 +107,7 @@ export default class Jijian extends React.Component {
           {tabs.map(tab => {
             return (
               <TabPane tab={tab.name} key={tab.name} style={{ backgroundColor: '#fff' }}>
-                <div className={styles.search}>
+                {/* <div className={styles.search}>
                   <Select defaultValue="lucy" style={{ width: 120 }}>
                     <Option value="jack">标题</Option>
                     <Option value="lucy">内容</Option>
@@ -119,9 +119,28 @@ export default class Jijian extends React.Component {
                     style={{ width: 200, marginLeft: 20 }}
                     onSearch={value => this.fetchPartyWork(1, type, value)}
                   />
-                </div>
+                </div> */}
                 <div style={{ padding: '0 20px 0' }}>
-                  <Card title={tab.name} bordered={false}>
+                  <Card
+                    title={tab.name}
+                    bordered={false}
+                  
+                    extra={
+                      <div>
+                        <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
+                          <Option value="1">年度筛选</Option>
+                        </Select>
+                        <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
+                          <Option value="1">文档主题</Option>
+                        </Select>
+                        <Search
+                          placeholder="请输入关键字"
+                          onSearch={value => this.fetchPartyWork(1, type, value)}
+                          style={{ width: 200 }}
+                        />
+                      </div>
+                  }
+                  >
                     <Table
                       columns={columns}
                       dataSource={data}

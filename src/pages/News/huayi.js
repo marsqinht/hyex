@@ -163,11 +163,11 @@ export default class Huayi extends React.Component {
             renderItem={item => (
               <List.Item>
                 <div className={styles.list}>
-                <a href="javascript:;" onClick={() => this.goDetail(item, '华谊工程')}><div>{item.Name}</div></a>
-                <div>
-                            {moment(item.RegDate).format('YYYY-MM-DD')}
-                          </div>
-              </div>
+                  <a href="javascript:;" onClick={() => this.goDetail(item, '华谊工程')}><div>{item.Name}</div></a>
+                  <div>
+                  {moment(item.RegDate).format('YYYY-MM-DD')}
+                </div>
+                </div>
               </List.Item>
                     )}
           />
@@ -180,7 +180,7 @@ export default class Huayi extends React.Component {
             />
           </div>
         </Card>
-        <Table
+        {/* <Table
           columns={columns}
           dataSource={data}
           bordered={false}
@@ -190,7 +190,7 @@ export default class Huayi extends React.Component {
             onChange: page => this.fetchApi(page),
           }}
           title={() => <div style={{ textAlign: 'center' }}>华谊工程</div>}
-        />
+        /> */}
       </div>
     );
   }
