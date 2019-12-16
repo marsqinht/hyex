@@ -16,7 +16,6 @@ import {
   Carousel,
 } from 'antd';
 
-
 import moment from 'moment';
 import router from 'umi/router';
 import Link from 'umi/link';
@@ -25,11 +24,16 @@ import styles from './Home.less';
 import ImageD from './image3D';
 import Cc from './Clendar';
 import HomeBanner from './HomeBanner';
-import { queryNews
- } from '../../services/new';
- import { queryLoginManage, queryLeave, queryLeaderShare, queryMenu } from '../../services/home';
+import { queryNews } from '../../services/new';
+import {
+  queryLoginManage,
+  queryLeave,
+  queryLeaderShare,
+  queryMenu,
+  queryMeetingApply,
+} from '../../services/home';
 
- const edata = [
+const edata = [
   {
     author: '会议',
     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
@@ -55,7 +59,7 @@ const leaveInfo = item => {
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <img src={`data:image/jpg;base64,${  item.Picture}`} width={50} height={70} />
+        <img src={`data:image/jpg;base64,${item.Picture}`} width={50} height={70} />
         <div style={{ marginLeft: 14 }}>
           姓名: {item.Name}
           <br />
@@ -172,7 +176,14 @@ function onPanelChange(value, mode) {
 }
 
 export default class Home extends Component {
-  state = { visible: false, placement: 'top', newsList: [], loginManageData: [], leaveData: [], leaderShareData: []};
+  state = {
+    visible: false,
+    placement: 'top',
+    newsList: [],
+    loginManageData: [],
+    leaveData: [],
+    leaderShareData: [],
+  };
 
   componentDidMount() {
     this.getNewsList(1);
@@ -190,24 +201,24 @@ export default class Home extends Component {
   initLoginManage = async () => {
     const { data } = await queryLoginManage();
     this.setState({
-      loginManageData: data
-    })
-  }
+      loginManageData: data,
+    });
+  };
 
   initLeave = async () => {
     const { data } = await queryLeave();
     console.log(data);
     this.setState({
-      leaveData: data
-    })
-  }
+      leaveData: data,
+    });
+  };
 
   initLeaderShare = async () => {
     const { data } = await queryLeaderShare();
     this.setState({
-      leaderShareData: data
-    })
-  }
+      leaderShareData: data,
+    });
+  };
 
   getNewsList = (page = 1) => {
     queryNews({
@@ -221,6 +232,17 @@ export default class Home extends Component {
         });
       }
     });
+  };
+
+  fetchHuiyiList = async () => {
+    const { data, success } = await queryMeetingApply();
+    if (success && data.length) {
+      // console.log(data[0].NextWeekRow);
+      // this.setState({
+      //   currentWeekList: data[0].ThisWeekRow,
+      //   nextWeekList: data[0].NextWeekRow,
+      // });
+    }
   };
 
   onClose = () => {
@@ -237,8 +259,8 @@ export default class Home extends Component {
 
   goDetail = (item, type) => {
     const file = item.FileRow.length && item.FileRow[0].ServerUrl;
-    const { Name, RegHumName, RegDate } = item
-    if(!file) {
+    const { Name, RegHumName, RegDate } = item;
+    if (!file) {
       return;
     }
     router.push({
@@ -248,10 +270,10 @@ export default class Home extends Component {
         people: RegHumName,
         date: moment(RegDate).format('YYYY-MM-DD'),
         file,
-        type
+        type,
       },
-    })
-  }
+    });
+  };
 
   renderNew = time => {
     return new Date().getTime() - new Date(time).getTime() < 259200000;
@@ -283,24 +305,33 @@ export default class Home extends Component {
                       <Carousel autoplay>
                         <img
                           alt="example"
+                          height={200}
                           src="http://5b0988e595225.cdn.sohucs.com/images/20180604/cec8268873f54e70acf9bed4d75fdc18.jpeg"
                         />
                         <img
                           alt="example"
-                          src="http://ww1.sinaimg.cn/large/006tNc79ly1g46wd1wiqjj30y60fqwop.jpg"
+                          height={200}
+                          src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zc4b7o13j31400u0npe.jpg"
                         />
                       </Carousel>
                     }
-                    extra={<Link to="/dashboard/hyecnews"><Icon style={{ color: '#fff' }} type="more" /></Link>}
+                    extra={
+                      <Link to="/dashboard/hyecnews">
+                        <Icon style={{ color: '#fff' }} type="more" />
+                      </Link>
+                    }
                   >
                     <List
                       itemLayout="horizontal"
                       dataSource={newsList}
                       bordered={false}
                       split={false}
-                      renderItem={(item) => (
+                      renderItem={item => (
                         <List.Item>
-                          <div className={styles.newList} onClick={() => this.goDetail(item, '新闻')}>
+                          <div
+                            className={styles.newList}
+                            onClick={() => this.goDetail(item, '新闻')}
+                          >
                             <Tooltip placement="top" title={item.Name}>
                               <div className={styles.newsTitle}>{item.Name}</div>
                             </Tooltip>
@@ -325,9 +356,10 @@ export default class Home extends Component {
                       <Carousel autoplay>
                         <img
                           alt="example"
-                          src="http://ww3.sinaimg.cn/large/006tNc79ly1g46wi972fxj31020h4ttq.jpg"
+                          height={200}
+                          src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zc49t6j8j31400u04qq.jpg"
                         />
-                        <img
+                        {/* <img
                           alt="example"
                           src="http://5b0988e595225.cdn.sohucs.com/images/20180604/cec8268873f54e70acf9bed4d75fdc18.jpeg"
                         />
@@ -335,10 +367,14 @@ export default class Home extends Component {
                         <img
                           alt="example"
                           src="http://ww1.sinaimg.cn/large/006tNc79ly1g46wd1wiqjj30y60fqwop.jpg"
-                        />
+                        /> */}
                       </Carousel>
                     }
-                    extra={<Link to="/HSE"><Icon style={{ color: '#fff' }} type="more" /></Link>}
+                    extra={
+                      <Link to="/HSE">
+                        <Icon style={{ color: '#fff' }} type="more" />
+                      </Link>
+                    }
                   >
                     <List
                       itemLayout="horizontal"
@@ -347,7 +383,10 @@ export default class Home extends Component {
                       split={false}
                       renderItem={item => (
                         <List.Item>
-                          <div className={styles.newList} onClick={() => this.goDetail(item, 'QHSE信息')}>
+                          <div
+                            className={styles.newList}
+                            onClick={() => this.goDetail(item, 'QHSE信息')}
+                          >
                             <Tooltip placement="top" title={item.Name}>
                               <div className={styles.newsTitle}>{item.Name}</div>
                             </Tooltip>
@@ -375,7 +414,7 @@ export default class Home extends Component {
                         <img
                           alt="example"
                           height={230}
-                          src="http://ww2.sinaimg.cn/large/006tNc79ly1g46z9t63wmj310y0j64qp.jpg"
+                          src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zc4froi1j31900u0e89.jpg"
                         />
                       </Carousel>
                     }
@@ -410,7 +449,7 @@ export default class Home extends Component {
                         <img
                           alt="example"
                           height={230}
-                          src="http://ww4.sinaimg.cn/large/006tNc79ly1g46zehotlmj310k0hcx2w.jpg"
+                          src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zc3ui1c4j318b0u0nma.jpg"
                         />
                       </Carousel>
                     }
@@ -439,13 +478,26 @@ export default class Home extends Component {
             </Col>
             <Col span={6}>
               {/* <UsualProgram /> */}
-              <Card className="blue-bg grandient-bg" title={<div>学习分享</div>} bordered={false} extra={<Link to="/dashboard/leaderShare"><Icon style={{ color: '#fff' }} type="more" /></Link>}>
-                <div style={{height: 210}}>
-
-               
-                  {leaderShareData.map(v => {
-                  return <a onClick={() => this.goDetail(v, '学习分享')}><p className={styles.gaoceng}>{v.Name}</p></a>
-                }).filter((v,index) => index < 6)}
+              <Card
+                className="blue-bg grandient-bg"
+                title={<div>学习分享</div>}
+                bordered={false}
+                extra={
+                  <Link to="/dashboard/leaderShare">
+                    <Icon style={{ color: '#fff' }} type="more" />
+                  </Link>
+                }
+              >
+                <div style={{ height: 210 }}>
+                  {leaderShareData
+                    .map(v => {
+                      return (
+                        <a onClick={() => this.goDetail(v, '学习分享')}>
+                          <p className={styles.gaoceng}>{v.Name}</p>
+                        </a>
+                      );
+                    })
+                    .filter((v, index) => index < 6)}
                 </div>
               </Card>
               <Card
@@ -463,7 +515,9 @@ export default class Home extends Component {
                     dataSource={leaveData}
                     renderItem={item => (
                       <List.Item
-                        actions={[<a style={{ color: colorMap[item.LeaveType] }}>{item.LeaveType}</a>]}
+                        actions={[
+                          <a style={{ color: colorMap[item.LeaveType] }}>{item.LeaveType}</a>,
+                        ]}
                       >
                         <Popover content={leaveInfo(item)} title="员工信息" placement="left">
                           {item.Name}
@@ -485,14 +539,13 @@ export default class Home extends Component {
                     <div style={{ width: '100%' }}>
                       <a>华谊信息运维</a>
                       <p>
-                        6# 号楼: <br /> 李建新(703897)  丁毅(703895)  <br /> 孟爽(703893) 钟强(703889) <br /> 李磊(709195)
+                        6# 号楼: <br /> 李建新(703897) 丁毅(703895) <br /> 孟爽(703893) 钟强(703889){' '}
+                        <br /> 李磊(709195)
                       </p>
                     </div>
                     <div style={{ width: '100%' }}>
                       <a>大楼设备维修</a>
-                      <p>
-                        11# 号楼: 刘洪(703882)
-                      </p>
+                      <p>11# 号楼: 刘洪(703882)</p>
                     </div>
                     <div style={{ width: '100%' }}>
                       <a>联系电话</a>
@@ -510,12 +563,11 @@ export default class Home extends Component {
                             color: 'orange',
                             'line-height': 1.2,
                             marginTop: 12,
-                            marginLeft:10
+                            marginLeft: 10,
                           }}
                         >
                           6470588
                         </p>
-                        
                       </p>
                       <p style={{ color: 'orange' }}>公司门卫24小时值班电话</p>
                     </div>

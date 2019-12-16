@@ -12,6 +12,7 @@ import {
   Typography,
   Pagination,
 } from 'antd';
+import router from 'umi/router';
 import moment from 'moment';
 import styles from './infos.less';
 import { queryStandard } from '../../services/quantity';
@@ -88,6 +89,23 @@ export default class Huiyi extends React.Component {
         total,
       });
   };
+  goDetail = (item, type) => {
+    const file = item.FileRow.length && item.FileRow[0].ServerUrl;
+    const { Name, RegHumName, RegDate } = item;
+    if (!file) {
+      return;
+    }
+    router.push({
+      pathname: '/dashboard/commondetail',
+      query: {
+        title: Name,
+        people: RegHumName,
+        date: moment(RegDate).format('YYYY-MM-DD'),
+        file,
+        type,
+      },
+    });
+  };
 
   render() {
     const { data, total, activeKey } = this.state;
@@ -121,10 +139,13 @@ export default class Huiyi extends React.Component {
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
-                          <div>{item.Name}</div>
-                          <div style={{ color: '#1890FF' }}>
-                            {moment(item.RegDate).format('YYYY-MM-DD')}
-                          </div>
+                          <a
+                            href="javascript:;"
+                            onClick={() => this.goDetail(item, '国家部委公告')}
+                          >
+                            <div>{item.Name}</div>
+                          </a>
+                          <div>{moment(item.RegDate).format('YYYY-MM-DD')}</div>
                         </div>
                       </List.Item>
                     )}
@@ -156,10 +177,10 @@ export default class Huiyi extends React.Component {
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
-                          <div>{item.Name}</div>
-                          <div style={{ color: '#1890FF' }}>
-                            {moment(item.RegDate).format('YYYY-MM-DD')}
-                          </div>
+                          <a href="javascript:;" onClick={() => this.goDetail(item, '建设部公告')}>
+                            <div>{item.Name}</div>
+                          </a>
+                          <div>{moment(item.RegDate).format('YYYY-MM-DD')}</div>
                         </div>
                       </List.Item>
                     )}
@@ -191,10 +212,10 @@ export default class Huiyi extends React.Component {
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
-                          <div>{item.Name}</div>
-                          <div style={{ color: '#1890FF' }}>
-                            {moment(item.RegDate).format('YYYY-MM-DD')}
-                          </div>
+                          <a href="javascript:;" onClick={() => this.goDetail(item, '上海市公告')}>
+                            <div>{item.Name}</div>
+                          </a>
+                          <div>{moment(item.RegDate).format('YYYY-MM-DD')}</div>
                         </div>
                       </List.Item>
                     )}
@@ -205,41 +226,6 @@ export default class Huiyi extends React.Component {
                       total={total}
                       pageSize={15}
                       onChange={page => this.fetchApi(page, '上海市公告')}
-                    />
-                  </div>
-                </Card>
-              </TabPane>
-              <TabPane
-                tab={
-                  <span>
-                    <MyIcon type="icon-wodeshenpi" />
-                    标准信息查询
-                  </span>
-                }
-                key="标准信息查询"
-              >
-                <Card title="标准信息查询" bordered={false}>
-                  <List
-                    header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
-                    bordered
-                    dataSource={data}
-                    renderItem={item => (
-                      <List.Item>
-                        <div className={styles.list}>
-                          <div>{item.Name}</div>
-                          <div style={{ color: '#1890FF' }}>
-                            {moment(item.RegDate).format('YYYY-MM-DD')}
-                          </div>
-                        </div>
-                      </List.Item>
-                    )}
-                  />
-                  <div className={styles.pe}>
-                    <Pagination
-                      defaultCurrent={1}
-                      total={total}
-                      pageSize={15}
-                      onChange={page => this.fetchApi(page, '标准信息查询')}
                     />
                   </div>
                 </Card>

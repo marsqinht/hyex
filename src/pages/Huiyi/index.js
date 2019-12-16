@@ -12,7 +12,7 @@ const columns = [
   {
     title: '日期',
     dataIndex: 'RegDate',
-    render: (time) => <div>{ moment(time).format('YYYY-MM-DD')}</div>
+    render: time => <div>{moment(time).format('YYYY-MM-DD')}</div>,
   },
   {
     title: '星期',
@@ -21,7 +21,7 @@ const columns = [
   {
     title: '开始时间',
     dataIndex: 'BeginDate',
-    render: (time) => <div>{ moment(time).format('YYYY-MM-DD')}</div>
+    render: time => <div>{moment(time).format('YYYY-MM-DD')}</div>,
   },
   {
     title: '会议用时',
@@ -52,7 +52,7 @@ const columns = [
 export default class Huiyi extends React.Component {
   state = {
     currentWeekList: [],
-    nextWeekList: []
+    nextWeekList: [],
   };
 
   componentDidMount() {
@@ -61,15 +61,14 @@ export default class Huiyi extends React.Component {
 
   fetchList = async () => {
     const { data, success } = await queryMeetingApply();
-    if(success) {
-      this.setState(
-       {
-        currentWeekList: data.ThisWeekRow,
-        nextWeekList: data.NextWeekRow
-       }
-      )
+    if (success && data.length) {
+      console.log(data[0].NextWeekRow);
+      this.setState({
+        currentWeekList: data[0].ThisWeekRow,
+        nextWeekList: data[0].NextWeekRow,
+      });
     }
-  }
+  };
 
   render() {
     const { currentWeekList, nextWeekList } = this.state;
@@ -104,7 +103,7 @@ export default class Huiyi extends React.Component {
                 }
                 key="2"
               >
-                <Table columns={columns} dataSource={[nextWeekList]} />
+                <Table columns={columns} dataSource={nextWeekList} />
               </TabPane>
               {/* <TabPane
                 tab={

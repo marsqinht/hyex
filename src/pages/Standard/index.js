@@ -14,7 +14,9 @@ import {
   message,
   Table,
   Input,
+  Pagination,
 } from 'antd';
+import router from 'umi/router';
 import moment from 'moment';
 import { queryDocContents, queryDocs } from '../../services/standard';
 import styles from './index.less';
@@ -32,13 +34,13 @@ const ccolumns = [
   {
     title: '文档名称',
     dataIndex: 'Name',
-    render: (name) => <a>{name}</a>
+    render: name => <a>{name}</a>,
   },
   {
     title: '发布日期',
     dataIndex: 'RegDate',
-    render: (time) => <div>{moment(time).format('YYYY-MM-DD')}</div>
-  }
+    render: time => <div>{moment(time).format('YYYY-MM-DD')}</div>,
+  },
 ];
 const cdata = [
   {
@@ -145,11 +147,21 @@ class Content extends Component {
     appartment: '商务部',
     visible: false,
     contents: [],
-    list: []
+    list: [],
+    params: {
+      page: 1,
+      size: 15,
+      Name: '',
+      year: '',
+      id: '',
+    },
+    total: 0,
   };
 
   componentDidMount() {
+    const { params } = this.state;
     this.fetchContents();
+    this.fetchDocs(params);
   }
 
   handleOk = () => {
@@ -170,34 +182,61 @@ class Content extends Component {
     });
   };
 
-  fetchContents = async ()=> {
-    const data  = await queryDocContents();
-    if(data && data.length) {
+  fetchContents = async () => {
+    const data = await queryDocContents();
+    if (data && data.length) {
       this.setState({
-        contents: data
-      })
+        contents: data,
+      });
     }
-  }
+  };
 
-  fetchDocs = async () => {
-    const { data, success } = await queryDocs({});
-    if(success) {
+  fetchDocs = async params => {
+    const { data, success, total } = await queryDocs(params);
+    if (success) {
       this.setState({
-        list: data
-      })
+        list: data,
+        total,
+      });
     }
-    
-  }
+  };
 
   onSelect = (selectedKeys, info) => {
+    const key = selectedKeys.length && selectedKeys[0];
+    const { params } = this.state;
+    params.id = key;
     this.setState({
-      appartment: info.node.props.title,
+      params,
     });
-    console.log('selected', selectedKeys, info);
+    this.fetchDocs(params);
+  };
+
+  goDetail = (item, type = '常用文档模板') => {
+    const file = item && item.ServerUrl;
+    const { Name, RegHumName, RegDate } = item;
+    if (!file) {
+      return;
+    }
+    // const s = item.FileRow[0];
+    const ext = item.FileExt;
+    if (ext === '.pdf' || ext === '.doc' || ext === '.docx') {
+      router.push({
+        pathname: '/dashboard/commondetail',
+        query: {
+          title: Name,
+          people: RegHumName,
+          date: moment(RegDate).format('YYYY-MM-DD'),
+          file,
+          type,
+        },
+      });
+    } else {
+      window.open(file);
+    }
   };
 
   render() {
-    const { appartment, contents, list } = this.state;
+    const { appartment, contents, list, total, params } = this.state;
     const { typeName } = this.props;
     return (
       <div className={styles.wrap}>
@@ -214,17 +253,14 @@ class Content extends Component {
                   icon={<MyIcon type="icon-jiaoseguanli" style={{ fontSize: '16px' }} />}
                 >
                   {contents.map(v => {
-                    return <TreeNode
-                      title={v.Name}
-                      key={v.Id}
-                    >
-                      {v.children.length && v.children.map(child => {
-                        return <TreeNode
-                          title={child.Name}
-                          key={child.Id}
-                        />
-                      })}
-                           </TreeNode>
+                    return (
+                      <TreeNode title={v.Name} key={v.Id}>
+                        {v.children.length &&
+                          v.children.map(child => {
+                            return <TreeNode title={child.Name} key={child.Id} />;
+                          })}
+                      </TreeNode>
+                    );
                   })}
                 </Tree>
               )}
@@ -242,14 +278,40 @@ class Content extends Component {
                 </Select>
                 <Search
                   placeholder="请输入关键字"
-                  onSearch={value => console.log(value)}
+                  onSearch={name => {
+                    params.Name = name;
+                    this.fetchDocs(params);
+                  }}
                   style={{ width: 200 }}
                 />
               </div>
             }
           >
             <div className={styles.right}>
-              <Table columns={ccolumns} dataSource={list} />
+              <Table
+                columns={ccolumns}
+                dataSource={list}
+                onRow={record => {
+                  return {
+                    onClick: event => {
+                      this.goDetail(record);
+                    },
+                  };
+                }}
+                pagination={{
+                  total: total,
+                  pageSize: 15,
+                  defaultCurrent: 1,
+                  onChange: page => {
+                    console.log(3232);
+                    params.page = page;
+                    this.setState({
+                      params,
+                    });
+                    this.fetchDocs(params);
+                  },
+                }}
+              />
             </div>
           </Card>
         </div>

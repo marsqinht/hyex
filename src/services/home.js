@@ -6,14 +6,14 @@ export async function queryBirthday() {
 }
 
 export async function queryLoginManage() {
-  return cRequest('/LoginManage')
+  return cRequest('/LoginManage');
 }
 
 export async function queryLeave() {
-  return cRequest('/Leave')
+  return cRequest('/Leave');
 }
-export async function queryLeaderShare() {
-  return cRequest('/LeaderShare')
+export async function queryLeaderShare(params) {
+  return cRequest(`/LeaderShare?${stringify(params)}`);
 }
 
 export async function queryCurrentList() {
@@ -23,8 +23,8 @@ export async function queryCurrentList() {
 // 会议信息
 export async function queryMeetingApply() {
   return cRequest('/MeetingApply');
-} 
+}
 
 export async function queryMenu() {
   return cRequest('/Menu');
-} 
+}

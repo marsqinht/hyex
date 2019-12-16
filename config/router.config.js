@@ -79,7 +79,7 @@ export default [
             name: '车辆信息',
             component: './Car',
           },
-         
+
           // {
           //   path: '/dashboard/dsfds',
           //   name: '公司发sss文',
@@ -108,7 +108,7 @@ export default [
             hideInMenu: true,
             component: './News/commonDetail',
           },
-         
+
           // {
           //   path: '/dashboard/analhhfddysis',
           //   name: '会务信息',
@@ -174,7 +174,7 @@ export default [
                 component: './Standard/contents',
               },
               {
-                path: '/dd/s/fdonitohgfdjtyrr',
+                path: '/dd/s/standardinfos',
                 name: '标准信息',
                 component: './Standard/infos',
               },
@@ -230,8 +230,8 @@ export default [
         path: '/other',
         name: '友情链接',
         icon: 'ellipsis',
-        component: './Other/Link'
-      }
+        component: './Other/Link',
+      },
       // {
       //   path: '/dashboard',
       //   name: 'dashboard',

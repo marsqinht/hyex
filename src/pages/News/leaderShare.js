@@ -4,13 +4,14 @@ import moment from 'moment';
 import router from 'umi/router';
 import styles from './huayi.less';
 import { queryLeaderShare } from '../../services/home';
+import { renderYear } from '@/utils/utils';
 
 const { Option } = Select;
 export default class Share extends React.Component {
   state = {
     data: [],
-    total: 0
-  }
+    total: 0,
+  };
 
   componentDidMount() {
     this.fetchApi();
@@ -18,8 +19,8 @@ export default class Share extends React.Component {
 
   goDetail = (item, type) => {
     const file = item.FileRow.length && item.FileRow[0].ServerUrl;
-    const { Name, RegHumName, RegDate } = item
-    if(!file) {
+    const { Name, RegHumName, RegDate } = item;
+    if (!file) {
       return;
     }
     router.push({
@@ -29,58 +30,70 @@ export default class Share extends React.Component {
         people: RegHumName,
         date: moment(RegDate).format('YYYY-MM-DD'),
         file,
-        type
+        type,
       },
-    })
-  }
+    });
+  };
 
-  fetchApi = async () => {
-    const { data, total, success } = await queryLeaderShare();
-    if(success) {
+  fetchApi = async (year = '') => {
+    const { data, total, success } = await queryLeaderShare({
+      year,
+    });
+    if (success) {
       this.setState({
         data,
-        total
-      })
+        total,
+      });
     }
-    
-  }
+  };
 
   render() {
     const { data, total } = this.state;
-    return (<Card
-      title="高层学习分享"
-      bordered={false}
-      extra={
-        <div>
-          <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
-            <Option value="1">年度筛选</Option>
-          </Select>
-        </div>
-      }
-    >
-      <List
-        header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
-        bordered
-        dataSource={data}
-        renderItem={item => (
-          <List.Item>
-            <div className={styles.list}>
-              <a href="javascript:;" onClick={() => this.goDetail(item, '高层学习分享')}><div>{item.Name}</div></a>
-              <div>
-                {moment(item.RegDate).format('YYYY-MM-DD')}
+    return (
+      <Card
+        title="高层学习分享"
+        bordered={false}
+        extra={
+          <div>
+            <Select
+              defaultValue=""
+              style={{ width: 120, marginRight: 14 }}
+              onChange={key => {
+                this.fetchApi(key);
+              }}
+            >
+              <Option value="">年度筛选</Option>
+              {renderYear().map(v => (
+                <Option value={v}>{v}</Option>
+              ))}
+            </Select>
+          </div>
+        }
+      >
+        <List
+          header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
+          bordered
+          dataSource={data}
+          renderItem={item => (
+            <List.Item>
+              <div className={styles.list}>
+                <a href="javascript:;" onClick={() => this.goDetail(item, '高层学习分享')}>
+                  <div>{item.Name}</div>
+                </a>
+                <div>{moment(item.RegDate).format('YYYY-MM-DD')}</div>
               </div>
-            </div>
-          </List.Item>
-                    )}
-      />
-      <div className={styles.pe}>
-        <Pagination
-          defaultCurrent={1}
-          total={total}
-          pageSize={15}
-          onChange={page => this.fetchApi(page)}
+            </List.Item>
+          )}
         />
-      </div>
-    </Card>)
+        <div className={styles.pe}>
+          <Pagination
+            defaultCurrent={1}
+            total={total}
+            pageSize={15}
+            onChange={page => this.fetchApi(page)}
+          />
+        </div>
+      </Card>
+    );
   }
 }
