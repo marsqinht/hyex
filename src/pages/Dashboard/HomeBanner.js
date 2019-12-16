@@ -36,7 +36,7 @@ export default class Demo extends Component {
           <p>
             <b style={{color: bcolor}}>五年发展目标：</b>&nbsp;华谊工程立足于服务集团，面向市场，成为有特色、专业化的工程建设全过程服务商。到2023年实现营业收入8.7个亿，位列行业前50位。
           </p>
-                 </div>
+        </div>
       },
       {
         img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8pzv8xbgbj31hc0u0b2a.jpg',
@@ -50,7 +50,7 @@ export default class Demo extends Component {
           将人才视为最宝贵财富，倡导正直务实的品质，鼓励承担责任和自我反省，提倡持续的学习和分享，为员工职业发展提供合理的机制和空间。<br />
           将打造生产型服务业差异化的竞争优势，力求为股东提供战略支撑、长期内在价值和持续投资回报。<br />
           将分包商视作为顾客提供全过程服务和争取合理利润的合作伙伴，倡导业内竞争性合作和共赢思维模式，以对社会负责任的可持续的方式推动社会经济和文明的进步。
-        </div>
+                 </div>
       },
       {
         img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8pzvct5vfj31hc0u0qv5.jpg',
@@ -69,7 +69,7 @@ export default class Demo extends Component {
             <b style={{color: bcolor}}>高效:</b>&nbsp;快速响应顾客需求，提供使顾客满意的解决方案。<br />
                                    高效包含着及时完成、质量出色、费用合理等诸多方面，其评判的核心标准就是顾客满意。高效还意味着满足顾客个性化的项目进度要求，并以顾客的认可作为唯一评判标准。
           </p>
-                 </div>
+        </div>
       },
       {
         img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8pzyruyigj315o0nf79z.jpg',
@@ -88,7 +88,7 @@ export default class Demo extends Component {
             <b style={{color: bcolor}}>贡献：</b>&nbsp;是指任何员工为公司直接或间接创造经济效益、并且持续超越其以往绩效的工作。<br />
             人才不仅具有出色的品质，很强的能力，还要在工作中创造价值和贡献。贡献不意味着学历、资历或想法，而是实实在在的付出。每个岗位都有基本的工作要求，只要员工能够在自己的岗位上做出持续超越其以往绩效的工作，就足以说明其是公司难得的人才。
           </p>
-                 </div>
+        </div>
       },
       {
         img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8ph55ngx0j318g0la7dn.jpg',
@@ -107,7 +107,7 @@ export default class Demo extends Component {
             <b style={{color: bcolor}}>人财：</b>&nbsp;具有深厚的技术积累和丰富的工作经验，堪为表率，为公司不断创造巨大财富。<br />
                                    能够凭借自己的学识和经验为公司、部门、专业、项目提供合理、经济、创新、高效的解决方案，成长为业务的领军者、资深顾问和人才导师，企业文化的垂范者。
           </p>
-                 </div>
+        </div>
       },
       {
         img: 'https://tva1.sinaimg.cn/large/006y8mN6ly1g8ph55ngx0j318g0la7dn.jpg',
@@ -125,7 +125,7 @@ export default class Demo extends Component {
             <b style={{color: bcolor}}>感恩：</b>&nbsp;快乐工作、关心亲人，对生活抱有一颗感恩的心。<br />
            给予是恩，合作是缘。公司希望每一位员工都能首先想到感谢生养自己的父母和默默陪伴给予支持的家人；其次，常怀感恩之心，常念合作之缘，回报那些曾经支持、关怀、鼓励、帮助过公司及自己的顾客、股东、分包商、同事、同行和社会。
           </p>
-                 </div>
+        </div>
       }
     ];
     this.state = {
@@ -234,6 +234,7 @@ export default class Demo extends Component {
                 backgroundImage: `url(${v.img})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
+                filter: 'blur(10px)'
               }}
               />
               <TweenOne className="banner-user-title" animation={{ y: 30, opacity: 0, type: 'from' }}>

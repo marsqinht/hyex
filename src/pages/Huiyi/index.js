@@ -1,5 +1,7 @@
 import React from 'react';
+import moment from 'moment';
 import { Alert, Tabs, Table, Card, Icon } from 'antd';
+import { queryMeetingApply } from '../../services/home';
 
 const MyIcon = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1277028_jejs7t1j2ca.js', // 在 iconfont.cn 上生成
@@ -9,32 +11,34 @@ const { TabPane } = Tabs;
 const columns = [
   {
     title: '日期',
-    dataIndex: 'date',
+    dataIndex: 'RegDate',
+    render: (time) => <div>{ moment(time).format('YYYY-MM-DD')}</div>
   },
   {
     title: '星期',
-    dataIndex: 'day',
+    dataIndex: 'Week',
   },
   {
     title: '开始时间',
-    dataIndex: 'startTime',
+    dataIndex: 'BeginDate',
+    render: (time) => <div>{ moment(time).format('YYYY-MM-DD')}</div>
   },
   {
     title: '会议用时',
-    dataIndex: 'lastTime',
+    dataIndex: 'Hour',
   },
   {
     title: '地点',
-    dataIndex: 'address',
+    dataIndex: 'MeetingRoomNo',
   },
   {
     title: '会议名称',
-    dataIndex: 'title',
+    dataIndex: 'Title',
     render: text => <a>{text}</a>,
   },
   {
     title: '会议主题',
-    dataIndex: 'theme',
+    dataIndex: 'MeetingNanme',
   },
   {
     title: '出席范围',
@@ -42,92 +46,33 @@ const columns = [
   },
   {
     title: '召集部门',
-    dataIndex: 'part',
-  },
-];
-const data = [
-  {
-    key: '1',
-    date: '2019-10-11',
-    day: '星期一',
-    startTime: '12:30',
-    name: 'John Brown',
-    lastTime: '4',
-    age: 32,
-    address: '14号楼303',
-    theme: '招聘启动会',
-    title: '2020招聘工作会议',
-    range: '按通知',
-    man: '毛经理',
-    part: '数字化中心',
-  },
-  {
-    key: '2',
-    date: '2019-10-11',
-    day: '星期一',
-    startTime: '12:30',
-    name: 'John Brown',
-    lastTime: '4',
-    age: 32,
-    address: '14号楼303',
-    theme: '招聘启动会',
-    title: '2020招聘工作会议',
-    range: '按通知',
-    man: '毛经理',
-    part: '数字化中心',
-  },
-  {
-    key: '3',
-    date: '2019-10-11',
-    day: '星期三',
-    startTime: '12:30',
-    name: 'John Brown',
-    lastTime: '4',
-    age: 32,
-    address: '14号楼303',
-    theme: '招聘启动会',
-    title: '2020招聘工作会议',
-    range: '按通知',
-    man: '毛经理',
-    part: '数字化中心',
-  },
-  {
-    key: '4',
-    date: '2019-10-11',
-    day: '星期五',
-    startTime: '12:30',
-    name: 'John Brown',
-    lastTime: '4',
-    age: 32,
-    address: '14号楼303',
-    title: '2020招聘工作会议',
-    theme: '招聘启动会',
-    range: '按通知',
-    man: '毛经理',
-    part: '数字化中心',
-  },
-  {
-    key: '5',
-    date: '2019-10-11',
-    day: '星期一',
-    startTime: '12:30',
-    name: 'John Brown',
-    lastTime: '4',
-    age: 32,
-    address: '14号楼303',
-    theme: '招聘启动会',
-    title: '2020招聘工作会议',
-    range: '按通知',
-    man: '毛经理',
-    part: '数字化中心',
+    dataIndex: 'DeptName',
   },
 ];
 export default class Huiyi extends React.Component {
   state = {
-    s: 1,
+    currentWeekList: [],
+    nextWeekList: []
   };
 
+  componentDidMount() {
+    this.fetchList();
+  }
+
+  fetchList = async () => {
+    const { data, success } = await queryMeetingApply();
+    if(success) {
+      this.setState(
+       {
+        currentWeekList: data.ThisWeekRow,
+        nextWeekList: data.NextWeekRow
+       }
+      )
+    }
+  }
+
   render() {
+    const { currentWeekList, nextWeekList } = this.state;
     return (
       <div>
         <Alert
@@ -148,7 +93,7 @@ export default class Huiyi extends React.Component {
                 }
                 key="1"
               >
-                <Table columns={columns} dataSource={data} />
+                <Table columns={columns} dataSource={currentWeekList} />
               </TabPane>
               <TabPane
                 tab={
@@ -159,9 +104,9 @@ export default class Huiyi extends React.Component {
                 }
                 key="2"
               >
-                <Table columns={columns} dataSource={[]} />
+                <Table columns={columns} dataSource={[nextWeekList]} />
               </TabPane>
-              <TabPane
+              {/* <TabPane
                 tab={
                   <span>
                     <MyIcon type="icon-suoyoudaishenpijilu" />
@@ -204,7 +149,7 @@ export default class Huiyi extends React.Component {
                 key="5"
               >
                 <Table columns={[]} dataSource={[]} />
-              </TabPane>
+              </TabPane> */}
             </Tabs>
           </Card>
         </div>

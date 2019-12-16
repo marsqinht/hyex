@@ -15,6 +15,7 @@ import {
   Table,
   Input,
 } from 'antd';
+import { queryDocContents, queryDocs } from '../../services/standard';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
@@ -33,11 +34,11 @@ const ccolumns = [
   },
   {
     title: '文档名称',
-    dataIndex: 'name',
+    dataIndex: 'Name',
   },
   {
     title: '发布日期',
-    dataIndex: 'date',
+    dataIndex: 'RegDate',
   },
   {
     title: '文件级别',
@@ -143,12 +144,18 @@ const props = {
     }
   },
 };
-const data = ['关于丁更等同志职务任免的通知'];
+// const data = ['关于丁更等同志职务任免的通知'];
 class Content extends Component {
   state = {
     appartment: '商务部',
     visible: false,
+    contents: [],
+    list: []
   };
+
+  componentDidMount() {
+    this.fetchContents();
+  }
 
   handleOk = () => {
     this.setState({
@@ -168,6 +175,25 @@ class Content extends Component {
     });
   };
 
+  fetchContents = async ()=> {
+    const data  = await queryDocContents();
+    if(data && data.length) {
+      this.setState({
+        contents: data
+      })
+    }
+  }
+
+  fetchDocs = async () => {
+    const { data, success } = await queryDocs({});
+    if(success) {
+      this.setState({
+        list: data
+      })
+    }
+    
+  }
+
   onSelect = (selectedKeys, info) => {
     this.setState({
       appartment: info.node.props.title,
@@ -176,113 +202,41 @@ class Content extends Component {
   };
 
   render() {
-    const { appartment } = this.state;
+    const { appartment, contents, list } = this.state;
     const { typeName } = this.props;
     return (
       <div className={styles.wrap}>
         <div className={styles.left}>
           <Card title="HYEC标准文档" className="grandient-bg">
             <div style={{ 'min-height': 500 }}>
-              {typeName === '职称聘任' && (
-                <Tree
-                  showLine
-                  defaultExpandedKeys={['0-0-0']}
-                  onSelect={this.onSelect}
-                  showIcon
-                  icon={<MyIcon type="icon-jiaoseguanli" style={{ fontSize: '16px' }} />}
-                >
-                  <TreeNode
-                    title="技术职称聘任一览表"
-                    key="0"
-                    icon={<MyIcon type="icon-zuzhijigouguanli" style={{ fontSize: '16px' }} />}
-                  >
-                    <TreeNode
-                      title="华谊工程"
-                      key="0-0"
-                      icon={<MyIcon type="icon-zuzhijigouguanli" style={{ fontSize: '16px' }} />}
-                    >
-                      <TreeNode title="公司高管" key="0-0-0" />
-                      <TreeNode title="设计事业部" key="0-0-1" />
-                      <TreeNode title="总承包事业部" key="0-0-2" />
-                      <TreeNode title="党群工作部" key="0-0-3" />
-                      <TreeNode title="精细化工事业部" key="0-0-4" />
-                      <TreeNode title="资产财务部" key="0-0-5" />
-                      <TreeNode title="QHSE部" key="0-0-6" />
-                      <TreeNode title="数字化中心" key="0-0-7" />
-                      <TreeNode title="技术公司" key="0-0-8" />
-                    </TreeNode>
-                  </TreeNode>
-                </Tree>
-              )}
               {typeName === '任职资格' && (
                 <Tree
                   showLine
                   defaultExpandedKeys={['0-0-0']}
+                  defaultExpandAll
                   onSelect={this.onSelect}
                   showIcon
                   icon={<MyIcon type="icon-jiaoseguanli" style={{ fontSize: '16px' }} />}
                 >
-                  <TreeNode
-                    title="项目及技术岗位任职一览表"
-                    key="0-0"
-                    icon={<MyIcon type="icon-zuzhijigouguanli" style={{ fontSize: '16px' }} />}
-                  >
-                    <TreeNode title="项目经理" key="0-0-0" />
-                    <TreeNode title="项目、专业审定" key="0-0-1" />
-                    <TreeNode title="设计经理" key="0-0-2" />
-                    <TreeNode title="专业工程师" key="0-0-3" />
-                    <TreeNode title="质量工程师" key="0-0-4" />
-                    <TreeNode title="IT工程师" key="0-0-5" />
-                    <TreeNode title="采购经理" key="0-0-6" />
-                    <TreeNode title="施工经理" key="0-0-7" />
-                    <TreeNode title="费用控制工程师" key="0-0-8" />
-                    <TreeNode title="进度控制工程师" key="0-0-9" />
-                    <TreeNode title="材料控制工程师" key="0-0-10" />
-                    <TreeNode title="开车经理" key="0-0-11" />
-                    <TreeNode title="HSE工程师" key="0-0-12" />
-                    <TreeNode title="设、校、审" key="0-0-13" />
-                    <TreeNode title="个别项目技术岗位任职表" key="0-0-14" />
-                  </TreeNode>
+                  {contents.map(v => {
+                    return <TreeNode
+                      title={v.Name}
+                      key={v.Id}
+                    >
+                      {v.children.length && v.children.map(child => {
+                        return <TreeNode
+                          title={child.Name}
+                          key={child.Id}
+                        />
+                      })}
+                           </TreeNode>
+                  })}
                 </Tree>
               )}
             </div>
           </Card>
         </div>
         <div className={styles.content}>
-          <Modal
-            title="编辑"
-            visible={this.state.visible}
-            onOk={this.handleOk}
-            onCancel={this.handleCancel}
-          >
-            <Tabs defaultActiveKey="1">
-              <TabPane tab="新建" key="1">
-                <Dragger {...props}>
-                  <p className="ant-upload-drag-icon">
-                    <Icon type="inbox" />
-                  </p>
-                  <p className="ant-upload-text">点击或拖拽到这个区域上传文件</p>
-                  <p className="ant-upload-hint">
-                    Support for a single or bulk upload. Strictly prohibit from uploading company
-                    data or other band files
-                  </p>
-                </Dragger>
-              </TabPane>
-              <TabPane tab="修改" key="2">
-                <Upload
-                  defaultFileList={[
-                    {
-                      uid: '1',
-                      name: '华谊工程新闻.doc',
-                      status: 'done',
-                      response: 'Server Error 500', // custom error message to show
-                      url: 'http://www.baidu.com/xxx.png',
-                    },
-                  ]}
-                />
-              </TabPane>
-            </Tabs>
-          </Modal>
           <Card
             bordered={false}
             className="grandient-bg"
@@ -300,7 +254,7 @@ class Content extends Component {
             }
           >
             <div className={styles.right}>
-              <Table columns={ccolumns} dataSource={cdata} />
+              <Table columns={ccolumns} dataSource={list} />
             </div>
           </Card>
         </div>

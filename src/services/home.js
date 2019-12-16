@@ -19,3 +19,12 @@ export async function queryLeaderShare() {
 export async function queryCurrentList() {
   return cRequest('/CurrentList');
 }
+
+// 会议信息
+export async function queryMeetingApply() {
+  return cRequest('/MeetingApply');
+} 
+
+export async function queryMenu() {
+  return cRequest('/Menu');
+} 

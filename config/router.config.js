@@ -8,20 +8,20 @@ export default [
       {
         path: '/dashboard',
         name: '公共事务',
-        icon: 'bank',
+        icon: 'home',
         routes: [
           {
-            path: '/dashboard/analfddysis',
+            path: '/dashboard/hyecnews',
             name: 'HYEC新闻',
             component: './News',
           },
           {
             path: '/dashboard/party',
             name: '党群工作',
-            icon: 'bank',
+            icon: '',
             routes: [
               {
-                path: '/dashboard/party/analssysis',
+                path: '/dashboard/party/jianshe',
                 name: '党的建设',
                 component: './News/party',
               },
@@ -95,6 +95,12 @@ export default [
             name: 'newsDtetail',
             hideInMenu: true,
             component: './News/detail',
+          },
+          {
+            path: '/dashboard/leaderShare',
+            name: '高层学习分享',
+            hideInMenu: true,
+            component: './News/leaderShare',
           },
           {
             path: '/dashboard/commondetail',

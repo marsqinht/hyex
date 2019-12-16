@@ -13,7 +13,7 @@ import Usual from '../../pages/Dashboard/UsualProgram';
 import styles from './index.less';
 
 export default class GlobalHeaderRight extends Component {
-  state = { visible: false, placement: 'top' };
+  state = { visible: false, placement: 'top'};
 
   showDrawer = () => {
     this.setState({
@@ -32,6 +32,7 @@ export default class GlobalHeaderRight extends Component {
       placement: e.target.value,
     });
   };
+
 
   getNoticeData() {
     const { notices = [] } = this.props;

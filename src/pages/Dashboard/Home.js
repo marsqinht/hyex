@@ -12,32 +12,24 @@ import {
   Tooltip,
   Popover,
   Drawer,
-  Descriptions,
   Tag,
-  Button,
   Carousel,
 } from 'antd';
-import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
-import numeral from 'numeral';
-import moment from 'moment';
-import QueueAnim from 'rc-queue-anim';
-import router from 'umi/router';
-import Trend from '@/components/Trend';
-import Yuan from '@/utils/Yuan';
 
-import { ChartCard, MiniArea, MiniBar, MiniProgress, Field } from '@/components/Charts';
+
+import moment from 'moment';
+import router from 'umi/router';
+import Link from 'umi/link';
+
 import styles from './Home.less';
-import UsualProgram from './UsualProgram';
-import ImageList from './imageList';
 import ImageD from './image3D';
 import Cc from './Clendar';
-import BarCharts from './Charts';
 import HomeBanner from './HomeBanner';
 import { queryNews
  } from '../../services/new';
- import { queryLoginManage, queryLeave, queryLeaderShare } from '../../services/home';
+ import { queryLoginManage, queryLeave, queryLeaderShare, queryMenu } from '../../services/home';
 
-const edata = [
+ const edata = [
   {
     author: '会议',
     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
@@ -59,7 +51,6 @@ const edata = [
     ),
   },
 ];
-
 const leaveInfo = item => {
   return (
     <div>
@@ -86,37 +77,6 @@ const leaveInfo = item => {
   );
 };
 
-const content = (
-  <div>
-    <p>Content</p>
-    <p>Content</p>
-  </div>
-);
-const info = (
-  <div>
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      <img
-        src="http://pic2.52pk.com/files/150911/1283574_093700_6640.jpeg"
-        width={50}
-        height={50}
-      />
-      <div style={{ marginLeft: 14 }}>
-        姓名: 李子煜
-        <br />
-        部门: 工程事业部
-        <br />
-        室号: 8508
-        <br />
-        分机: 703829
-        <br />
-      </div>
-    </div>
-    <div style={{ marginTop: 6 }}>
-      <div>职位: 工程师</div>
-      <div>Email: liziyu@heyc.com</div>
-    </div>
-  </div>
-);
 const adata = [
   {
     title: '中共上海华谊工程有限公司第二次党员大会隆重召开',
@@ -144,52 +104,6 @@ const colorMap = {
   公出: '#1890ff',
   请假: '#f5222d',
 };
-const holidayData = [
-  {
-    name: '金海',
-    type: '调休',
-  },
-  {
-    name: '陈恩',
-    type: '公出',
-  },
-  {
-    name: '周亚兵',
-    type: '公出',
-  },
-  {
-    name: '徐荣高',
-    type: '请假',
-  },
-  {
-    name: '王森',
-    type: '公出',
-  },
-  {
-    name: '王丽艳',
-    type: '公出',
-  },
-  {
-    name: '赵群莉',
-    type: '调休',
-  },
-  {
-    name: '刘洪',
-    type: '公出',
-  },
-  {
-    name: '唐敏',
-    type: '调休',
-  },
-  {
-    name: '于双华',
-    type: '公出',
-  },
-  {
-    name: '吴威',
-    type: '公出',
-  },
-];
 
 const visitData = [];
 const beginDay = new Date().getTime();
@@ -349,7 +263,7 @@ export default class Home extends Component {
 
   render() {
     const { newsList, leaderShareData, leaveData, loginManageData } = this.state;
-    console.log(leaveData, 'leaveData')
+
     return (
       <div>
         <div className={styles.content}>
@@ -377,7 +291,7 @@ export default class Home extends Component {
                         />
                       </Carousel>
                     }
-                    extra={<Icon style={{ color: '#fff' }} type="more" />}
+                    extra={<Link to="/dashboard/hyecnews"><Icon style={{ color: '#fff' }} type="more" /></Link>}
                   >
                     <List
                       itemLayout="horizontal"
@@ -424,7 +338,7 @@ export default class Home extends Component {
                         />
                       </Carousel>
                     }
-                    extra={<Icon style={{ color: '#fff' }} type="more" />}
+                    extra={<Link to="/HSE"><Icon style={{ color: '#fff' }} type="more" /></Link>}
                   >
                     <List
                       itemLayout="horizontal"
@@ -525,7 +439,7 @@ export default class Home extends Component {
             </Col>
             <Col span={6}>
               {/* <UsualProgram /> */}
-              <Card className="blue-bg grandient-bg" title={<div>学习分享</div>} bordered={false}>
+              <Card className="blue-bg grandient-bg" title={<div>学习分享</div>} bordered={false} extra={<Link to="/dashboard/leaderShare"><Icon style={{ color: '#fff' }} type="more" /></Link>}>
                 <div style={{height: 210}}>
 
                
