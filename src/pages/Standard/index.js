@@ -15,6 +15,7 @@ import {
   Table,
   Input,
 } from 'antd';
+import moment from 'moment';
 import { queryDocContents, queryDocs } from '../../services/standard';
 import styles from './index.less';
 
@@ -29,21 +30,15 @@ const MyIcon = Icon.createFromIconfontCN({
 });
 const ccolumns = [
   {
-    title: '序号',
-    dataIndex: 'key',
-  },
-  {
     title: '文档名称',
     dataIndex: 'Name',
+    render: (name) => <a>{name}</a>
   },
   {
     title: '发布日期',
     dataIndex: 'RegDate',
-  },
-  {
-    title: '文件级别',
-    dataIndex: 'level',
-  },
+    render: (time) => <div>{moment(time).format('YYYY-MM-DD')}</div>
+  }
 ];
 const cdata = [
   {
