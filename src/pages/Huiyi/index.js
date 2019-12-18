@@ -53,6 +53,7 @@ export default class Huiyi extends React.Component {
   state = {
     currentWeekList: [],
     nextWeekList: [],
+    stayApprWeekRowList: []
   };
 
   componentDidMount() {
@@ -66,12 +67,13 @@ export default class Huiyi extends React.Component {
       this.setState({
         currentWeekList: data[0].ThisWeekRow,
         nextWeekList: data[0].NextWeekRow,
+        stayApprWeekRowList: data[0].StayApprWeekRow
       });
     }
   };
 
   render() {
-    const { currentWeekList, nextWeekList } = this.state;
+    const { currentWeekList, nextWeekList, stayApprWeekRowList } = this.state;
     return (
       <div>
         <Alert
@@ -105,7 +107,7 @@ export default class Huiyi extends React.Component {
               >
                 <Table columns={columns} dataSource={nextWeekList} />
               </TabPane>
-              {/* <TabPane
+              <TabPane
                 tab={
                   <span>
                     <MyIcon type="icon-suoyoudaishenpijilu" />
@@ -114,9 +116,9 @@ export default class Huiyi extends React.Component {
                 }
                 key="3"
               >
-                <Table columns={[]} dataSource={[]} />
+                <Table columns={columns} dataSource={stayApprWeekRowList} />
               </TabPane>
-              <TabPane
+              {/* <TabPane
                 tab={
                   <span>
                     <MyIcon type="icon-wodeshenpi" />
@@ -126,7 +128,8 @@ export default class Huiyi extends React.Component {
                 key="4"
               >
                 <Table columns={[]} dataSource={[]} />
-              </TabPane>
+              </TabPane> */}
+              {/* 
               <TabPane
                 tab={
                   <span>

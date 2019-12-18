@@ -216,18 +216,19 @@ class Employee extends React.Component {
   state = {
     tree: {
       name: '',
-      children: [],
+      children: []
     },
     userList: [],
     detailInfo: {
       MajorRow: [],
       WorkRow: [],
     },
+    userMapByRoom: {}
   };
 
   componentDidMount() {
     this.getTree();
-    this.getUser('8D210EC0-191F-4603-971B-3A85537C7EA0');
+    this.getUser('6B19CA5F-0E91-46B4-9CBE-ACED20678E32');
     this.getDetail();
   }
 
@@ -245,11 +246,24 @@ class Employee extends React.Component {
       name,
     });
     console.log(res);
+    const userFenLeiMap = {}
+    if(res.success && res.data.length) {
+      res.data.forEach(item => {
+        if(!userFenLeiMap[item.RoomNumber]) {
+          userFenLeiMap[item.RoomNumber] = [item];
+        } else {
+          userFenLeiMap[item.RoomNumber].push(item);
+        }
+      })
+      this.setState({
+        userMapByRoom: userFenLeiMap
+      });
+    }
     this.setState({
       userList: res.data,
     });
     if (res.data.length) {
-      this.getDetail(data[0].Id);
+      this.getDetail(res.data[0].Id);
     }
   };
 
@@ -283,10 +297,10 @@ class Employee extends React.Component {
   };
 
   render() {
-    const { tree, userList, detailInfo } = this.state;
+    const { tree, userList, detailInfo, userMapByRoom } = this.state;
     return (
       <div>
-        <Alert message="友情提示" description="最近更新日期 2019-11-11" type="info" showIcon />
+        {/* <Alert message="友情提示" description="最近更新日期 2019-11-11" type="info" showIcon /> */}
         <Card style={{ marginTop: 20, height: '100%' }}>
           <Tabs defaultActiveKey="1">
             <TabPane
@@ -302,7 +316,8 @@ class Employee extends React.Component {
                 <Card>
                   <Tree
                     showLine
-                    defaultExpandedKeys={['0-0']}
+                    defaultExpandAll
+                    defaultSelectedKeys={['6B19CA5F-0E91-46B4-9CBE-ACED20678E32']}
                     onSelect={this.onSelect}
                     showIcon
                     icon={<MyIcon type="icon-jiaoseguanli" style={{ fontSize: '16px' }} />}
@@ -333,8 +348,10 @@ class Employee extends React.Component {
                 <div className={styles.right}>
                   <Card>
                     <div>
-                      <Select defaultValue="jack" style={{ width: 120 }}>
-                        <Option value="jack">按中文名</Option>
+                      <Select defaultValue="name" style={{ width: 120 }}>
+                        <Option value="name">按中文名</Option>
+                        <Option value="code">按Code</Option>
+                        <Option value="phone">按室号</Option>
                         {/* <Option value="lucy">按部门</Option> */}
                       </Select>
                       <Search
@@ -343,19 +360,20 @@ class Employee extends React.Component {
                         style={{ width: 200, marginLeft: '10px' }}
                       />
                     </div>
-                    <div className="mt-20">
+                    {Object.keys(userMapByRoom).map(room => {
+                      return (<div className="mt-20">
                       <Collapse defaultActiveKey={['0', '1']}>
                         <Panel
                           showArrow={false}
                           header={
                             <div>
                               <Icon type="idcard" theme="twoTone" />{' '}
-                              {userList.length && userList[0].dept}
+                              {room}
                             </div>
                           }
                         >
                           <div className={styles.part}>
-                            {userList.map(child => {
+                            {userMapByRoom[room].map(child => {
                               return (
                                 <div
                                   className={styles.nameWrap}
@@ -369,7 +387,11 @@ class Employee extends React.Component {
                           </div>
                         </Panel>
                       </Collapse>
-                    </div>
+                    </div>)
+                    })}
+                    
+
+                    
 
                     <div className="mt-20">
                       <Tabs defaultActiveKey="1" type="card">
