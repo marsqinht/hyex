@@ -216,14 +216,15 @@ class Employee extends React.Component {
   state = {
     tree: {
       name: '',
-      children: []
+      children: [],
     },
     userList: [],
     detailInfo: {
       MajorRow: [],
       WorkRow: [],
     },
-    userMapByRoom: {}
+    userMapByRoom: {},
+    currentSearchKey: 'name',
   };
 
   componentDidMount() {
@@ -240,23 +241,23 @@ class Employee extends React.Component {
     });
   }
 
-  getUser = async (id, name = '') => {
+  getUser = async (id, currentSearchKey = 'name', name = '') => {
     const res = await queryHumanfo({
       id,
-      name,
+      [currentSearchKey]: name,
     });
     console.log(res);
-    const userFenLeiMap = {}
-    if(res.success && res.data.length) {
+    const userFenLeiMap = {};
+    if (res.success && res.data.length) {
       res.data.forEach(item => {
-        if(!userFenLeiMap[item.RoomNumber]) {
+        if (!userFenLeiMap[item.RoomNumber]) {
           userFenLeiMap[item.RoomNumber] = [item];
         } else {
           userFenLeiMap[item.RoomNumber].push(item);
         }
-      })
+      });
       this.setState({
-        userMapByRoom: userFenLeiMap
+        userMapByRoom: userFenLeiMap,
       });
     }
     this.setState({
@@ -297,7 +298,7 @@ class Employee extends React.Component {
   };
 
   render() {
-    const { tree, userList, detailInfo, userMapByRoom } = this.state;
+    const { tree, userList, detailInfo, userMapByRoom, currentSearchKey } = this.state;
     return (
       <div>
         {/* <Alert message="友情提示" description="最近更新日期 2019-11-11" type="info" showIcon /> */}
@@ -348,7 +349,11 @@ class Employee extends React.Component {
                 <div className={styles.right}>
                   <Card>
                     <div>
-                      <Select defaultValue="name" style={{ width: 120 }}>
+                      <Select
+                        defaultValue="name"
+                        style={{ width: 120 }}
+                        onChange={key => this.setState({ currentSearchKey: key })}
+                      >
                         <Option value="name">按中文名</Option>
                         <Option value="code">按Code</Option>
                         <Option value="phone">按室号</Option>
@@ -356,42 +361,40 @@ class Employee extends React.Component {
                       </Select>
                       <Search
                         placeholder="请输入关键字"
-                        onSearch={value => this.getUser('', value)}
+                        onSearch={value => this.getUser('', currentSearchKey, value)}
                         style={{ width: 200, marginLeft: '10px' }}
                       />
                     </div>
                     {Object.keys(userMapByRoom).map(room => {
-                      return (<div className="mt-20">
-                      <Collapse defaultActiveKey={['0', '1']}>
-                        <Panel
-                          showArrow={false}
-                          header={
-                            <div>
-                              <Icon type="idcard" theme="twoTone" />{' '}
-                              {room}
-                            </div>
-                          }
-                        >
-                          <div className={styles.part}>
-                            {userMapByRoom[room].map(child => {
-                              return (
-                                <div
-                                  className={styles.nameWrap}
-                                  onClick={() => this.getDetail(child.Id)}
-                                >
-                                  <div className={styles.name}>{child.Name}</div>
-                                  <div className={styles.fenji}>{child.Phone}</div>
+                      return (
+                        <div className="mt-20">
+                          <Collapse defaultActiveKey={['0', '1']}>
+                            <Panel
+                              showArrow={false}
+                              header={
+                                <div>
+                                  <Icon type="idcard" theme="twoTone" /> {room}
                                 </div>
-                              );
-                            })}
-                          </div>
-                        </Panel>
-                      </Collapse>
-                    </div>)
+                              }
+                            >
+                              <div className={styles.part}>
+                                {userMapByRoom[room].map(child => {
+                                  return (
+                                    <div
+                                      className={styles.nameWrap}
+                                      onClick={() => this.getDetail(child.Id)}
+                                    >
+                                      <div className={styles.name}>{child.Name}</div>
+                                      <div className={styles.fenji}>{child.Phone}</div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </Panel>
+                          </Collapse>
+                        </div>
+                      );
                     })}
-                    
-
-                    
 
                     <div className="mt-20">
                       <Tabs defaultActiveKey="1" type="card">
@@ -422,7 +425,9 @@ class Employee extends React.Component {
                                 <Descriptions.Item label="分机">
                                   {detailInfo.Phone}
                                 </Descriptions.Item>
-                                <Descriptions.Item label="手机">{detailInfo.Mobile}</Descriptions.Item>
+                                <Descriptions.Item label="手机">
+                                  {detailInfo.Mobile}
+                                </Descriptions.Item>
                                 <Descriptions.Item label="邮箱">
                                   {detailInfo.Email}
                                 </Descriptions.Item>
@@ -432,7 +437,7 @@ class Employee extends React.Component {
                               <img
                                 width={85}
                                 height={115}
-                                src={`data:image/jpg;base64,${  detailInfo.Picture}`}
+                                src={`data:image/jpg;base64,${detailInfo.Picture}`}
                               />
                             </div>
                           </div>

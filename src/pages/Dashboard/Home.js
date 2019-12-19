@@ -183,6 +183,7 @@ export default class Home extends Component {
     loginManageData: [],
     leaveData: [],
     leaderShareData: [],
+    meetingList: [],
   };
 
   componentDidMount() {
@@ -190,6 +191,7 @@ export default class Home extends Component {
     this.initLoginManage();
     this.initLeave();
     this.initLeaderShare();
+    this.fetchHuiyiList();
   }
 
   showDrawer = () => {
@@ -238,10 +240,9 @@ export default class Home extends Component {
     const { data, success } = await queryMeetingApply();
     if (success && data.length) {
       // console.log(data[0].NextWeekRow);
-      // this.setState({
-      //   currentWeekList: data[0].ThisWeekRow,
-      //   nextWeekList: data[0].NextWeekRow,
-      // });
+      this.setState({
+        meetingList: data[0].ThisWeekRow.concat(data[0].StayApprWeekRow),
+      });
     }
   };
 
@@ -284,7 +285,7 @@ export default class Home extends Component {
   // };
 
   render() {
-    const { newsList, leaderShareData, leaveData, loginManageData } = this.state;
+    const { newsList, leaderShareData, leaveData, loginManageData, meetingList } = this.state;
 
     return (
       <div>
@@ -600,8 +601,9 @@ export default class Home extends Component {
                     fullscreen={false}
                     onPanelChange={onPanelChange}
                     dateCellRender={time => {
-                      const day = moment(time).format('D');
-                      if (day === '8' || day === '21' || day === '26') {
+                      const day = moment(time).format('YYYY-MM-DD');
+                      const meetDays = meetingList.map(v => moment(v.RegDate).format('YYYY-MM-DD'));
+                      if (meetDays.includes(day)) {
                         return (
                           <div className="flex-center">
                             <Tag color="red">会</Tag>
@@ -620,15 +622,15 @@ export default class Home extends Component {
                   // header={`${data.length} replies`}
                   itemLayout="horizontal"
                   style={{ backgroundColor: '#fff', height: '320px' }}
-                  dataSource={edata}
+                  dataSource={meetingList}
                   renderItem={item => (
                     <li>
                       <Comment
                         // actions={item.actions}
-                        author={item.author}
+                        author={item.MeetingRoomNo}
                         // avatar={item.avatar}
-                        content={item.content}
-                        datetime={item.datetime}
+                        content={item.Name}
+                        datetime={item.RegDate}
                       />
                     </li>
                   )}

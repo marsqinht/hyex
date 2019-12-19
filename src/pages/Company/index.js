@@ -53,9 +53,12 @@ class Content extends React.Component {
     data: [],
     currentTab: '计划与总结',
     selectYear: '',
+    currentPage: 1,
+    selectedDept: '',
+    total: 0,
     tree: {
       children: [],
-    }
+    },
   };
 
   componentDidMount() {
@@ -71,18 +74,19 @@ class Content extends React.Component {
     });
   };
 
-  fetchData = async (page = 1,  year = '', dept = '') => {
+  fetchData = async (page = 1, year = '', dept = '') => {
     const { typeName } = this.props;
     const res = await queryCompayInfo({
       size: 15,
       page,
       type: typeName,
       dept,
-      year
+      year,
     });
     console.log(res.data);
     this.setState({
       data: res.data,
+      total: res.total,
     });
   };
 
@@ -106,28 +110,27 @@ class Content extends React.Component {
 
   goDetail = (item, type = '') => {
     const file = item.FileRow.length && item.FileRow[0].ServerUrl;
-    const { Name, RegHumName, RegDate } = item
-    if(!file) {
+    const { Name, RegHumName, RegDate } = item;
+    if (!file) {
       return;
     }
-      const s = item.FileRow[0];
-      const ext = s.FileExt;
-      if(ext === '.pdf' || ext === '.doc' || ext === '.docx'){
-        router.push({
-          pathname: '/dashboard/commondetail',
-          query: {
-            title: Name,
-            people: RegHumName,
-            date: moment(RegDate).format('YYYY-MM-DD'),
-            file,
-            type
-          },
-        })
-      } else {
-        window.open(file);
-      }
-    
-  }
+    const s = item.FileRow[0];
+    const ext = s.FileExt;
+    if (ext === '.pdf' || ext === '.doc' || ext === '.docx') {
+      router.push({
+        pathname: '/dashboard/commondetail',
+        query: {
+          title: Name,
+          people: RegHumName,
+          date: moment(RegDate).format('YYYY-MM-DD'),
+          file,
+          type,
+        },
+      });
+    } else {
+      window.open(file);
+    }
+  };
 
   onSelect = (selectedKeys, info) => {
     this.setState({
@@ -137,7 +140,16 @@ class Content extends React.Component {
   };
 
   render() {
-    const { appartment, visible, data, tree, selectYear } = this.state;
+    const {
+      appartment,
+      visible,
+      data,
+      tree,
+      selectYear,
+      selectedDept,
+      total,
+      currentPage,
+    } = this.state;
     const { typeName } = this.props;
     return typeName === '计划与总结' ? (
       <div className={styles.wrap}>
@@ -149,6 +161,13 @@ class Content extends React.Component {
                 defaultExpandedKeys={['0-0']}
                 onSelect={this.onSelect}
                 showIcon
+                onSelect={selectedKeys => {
+                  this.setState({
+                    selectedDept: selectedKeys[0],
+                    currentPage: 1,
+                  });
+                  this.fetchData(1, '', selectedKeys[0]);
+                }}
                 icon={<MyIcon type="icon-jiaoseguanli" style={{ fontSize: '16px' }} />}
               >
                 <TreeNode
@@ -157,7 +176,7 @@ class Content extends React.Component {
                   icon={<MyIcon type="icon-zuzhijigouguanli" style={{ fontSize: '16px' }} />}
                 >
                   {tree.children.map(child => {
-                    return <TreeNode title={child.Name} key={`0-0-${child.Id}"`} />;
+                    return <TreeNode title={child.Name} key={child.Name} />;
                   })}
                 </TreeNode>
               </Tree>
@@ -200,9 +219,18 @@ class Content extends React.Component {
             className="grandient-bg"
             extra={
               <div>
-                <Select defaultValue="" style={{ width: 120, marginRight: 14 }} size="small">
+                <Select
+                  defaultValue=""
+                  style={{ width: 120, marginRight: 14 }}
+                  size="small"
+                  onChange={year => {
+                    this.fetchData(1, year, selectedDept);
+                  }}
+                >
                   <Option value="">年度过滤</Option>
-                  {renderYear().map(v => <Option value={v}>{v}</Option>)}
+                  {renderYear().map(v => (
+                    <Option value={v}>{v}</Option>
+                  ))}
                 </Select>
                 {/* <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>
                   编辑
@@ -215,9 +243,19 @@ class Content extends React.Component {
                 header={<div style={{ fontWeight: 'bold' }}>{typeName}</div>}
                 bordered
                 dataSource={data}
+                pagination={{
+                  onChange: page => {
+                    this.fetchData(page, selectYear, selectedDept);
+                    console.log(page);
+                  },
+                  pageSize: 15,
+                  current: currentPage,
+                  total,
+                }}
                 renderItem={item => (
                   <List.Item>
-                    <Typography.Text mark></Typography.Text> <a onClick={() => this.goDetail(item)}>{item.Name}</a>
+                    <Typography.Text mark></Typography.Text>{' '}
+                    <a onClick={() => this.goDetail(item)}>{item.Name}</a>
                   </List.Item>
                 )}
               />
@@ -237,15 +275,17 @@ class Content extends React.Component {
               defaultValue=""
               style={{ width: 120, marginRight: 14 }}
               size="small"
-              onChange={(key) => {
-              this.setState({
-                selectYear: key
-              })
-              this.fetchData(1, key)
+              onChange={key => {
+                this.setState({
+                  selectYear: key,
+                });
+                this.fetchData(1, key);
               }}
             >
               <Option value="">年度过滤</Option>
-              {renderYear().map(v => <Option value={v}>{v}</Option>)}
+              {renderYear().map(v => (
+                <Option value={v}>{v}</Option>
+              ))}
             </Select>
             {/* <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>
               编辑
@@ -259,13 +299,14 @@ class Content extends React.Component {
           renderItem={item => (
             <List.Item>
               <div className={styles.list}>
-              <a onClick={() => this.goDetail(item, typeName)}> <div>{item.Name}</div></a>
-                <div>
-                  {moment(item.RegDate).format('YYYY-MM-DD')}
-                </div>
+                <a onClick={() => this.goDetail(item, typeName)}>
+                  {' '}
+                  <div>{item.Name}</div>
+                </a>
+                <div>{moment(item.RegDate).format('YYYY-MM-DD')}</div>
               </div>
             </List.Item>
-        )}
+          )}
         />
       </div>
     );

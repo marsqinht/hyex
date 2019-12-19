@@ -50,7 +50,7 @@ export default [
             ],
           },
           {
-            path: '/dashboard/dsfds',
+            path: '/dashboard/fawen',
             name: '公司发文',
             component: './Company',
           },
