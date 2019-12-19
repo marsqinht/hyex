@@ -54,33 +54,34 @@ export default class News extends Component {
     visible: false,
     total: 0,
     list: [],
-    currentPage: 1
+    currentPage: 1,
   };
 
   componentDidMount() {
     this.getNewsList(1);
   }
 
-  getNewsList = (page = 1) => {
+  getNewsList = (page = 1, year = '') => {
     queryNews({
       page,
-      size: 15
+      size: 15,
+      year,
     }).then(({ success, data, total }) => {
-      console.log(data)
-      if(success) {
+      console.log(data);
+      if (success) {
         this.setState({
           list: data,
           total,
-          currentPage: 1
-        })
+          currentPage: 1,
+        });
       }
-    })
-  }
+    });
+  };
 
   goDetail = (item, type) => {
     const file = item.FileRow.length && item.FileRow[0].ServerUrl;
-    const { Name, RegHumName, RegDate } = item
-    if(!file) {
+    const { Name, RegHumName, RegDate } = item;
+    if (!file) {
       return;
     }
     router.push({
@@ -90,10 +91,10 @@ export default class News extends Component {
         people: RegHumName,
         date: moment(RegDate).format('YYYY-MM-DD'),
         file,
-        type
+        type,
       },
-    })
-  }
+    });
+  };
 
   handleOk = () => {
     this.setState({
@@ -115,8 +116,8 @@ export default class News extends Component {
 
   goDetail = (item, type) => {
     const file = item.FileRow.length && item.FileRow[0].ServerUrl;
-    const { Name, RegHumName, RegDate } = item
-    if(!file) {
+    const { Name, RegHumName, RegDate } = item;
+    if (!file) {
       return;
     }
     router.push({
@@ -126,10 +127,10 @@ export default class News extends Component {
         people: RegHumName,
         date: moment(RegDate).format('YYYY-MM-DD'),
         file,
-        type
+        type,
       },
-    })
-  }
+    });
+  };
 
   render() {
     const { visible, list, total, currentPage } = this.state;
@@ -171,11 +172,23 @@ export default class News extends Component {
           ,
         </Modal>
         <div className="flex-right">
-          <Select defaultValue="" style={{ width: 120, marginBottom: 10 }}>
+          <Select
+            defaultValue=""
+            style={{ width: 120, marginBottom: 10 }}
+            onChange={key => {
+              this.getNewsList(1, key);
+            }}
+          >
             <Option value="">年度筛选</Option>
             <Option value="2019">2019</Option>
             <Option value="2018">2018</Option>
             <Option value="2017">2017</Option>
+            <Option value="2016">2016</Option>
+            <Option value="2015">2015</Option>
+            <Option value="2014">2014</Option>
+            <Option value="2013">2013</Option>
+            <Option value="2012">2012</Option>
+            <Option value="2011">2011</Option>
           </Select>
 
           {/* <Button type="link" icon="edit" onClick={this.openEdit}>
@@ -190,8 +203,8 @@ export default class News extends Component {
           pagination={{
             onChange: page => {
               this.setState({
-                currentPage: page
-              })
+                currentPage: page,
+              });
               this.getNewsList(page);
             },
             total,
@@ -200,19 +213,19 @@ export default class News extends Component {
           renderItem={item => (
             <List.Item>
               <div className={styles.list}>
-                <a href="javascript:;" onClick={() => this.goDetail(item, '新闻')}><div>{item.Name}</div></a>
-                <div>
-                  {moment(item.RegDate).format('YYYY-MM-DD')}
-                </div>
+                <a href="javascript:;" onClick={() => this.goDetail(item, '新闻')}>
+                  <div>{item.Name}</div>
+                </a>
+                <div>{moment(item.RegDate).format('YYYY-MM-DD')}</div>
               </div>
             </List.Item>
-                    )}
+          )}
         />
         {/* <List
           style={{ backgroundColor: '#fff', padding: '0 20px 30px' }}
           header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
           bordered
-          
+
           dataSource={list}
           renderItem={(item,index) => (
             <List.Item
