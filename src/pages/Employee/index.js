@@ -229,8 +229,8 @@ class Employee extends React.Component {
 
   componentDidMount() {
     this.getTree();
-    this.getUser('6B19CA5F-0E91-46B4-9CBE-ACED20678E32');
-    this.getDetail();
+    // this.getUser('6B19CA5F-0E91-46B4-9CBE-ACED20678E32');
+    // this.getDetail();
   }
 
   async getTree() {

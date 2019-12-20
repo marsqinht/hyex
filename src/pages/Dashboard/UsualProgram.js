@@ -31,6 +31,7 @@ export default class Workplace extends React.Component {
       {
         icon: 'icongroup',
         name: '员工信息',
+        link: '/PowerService/#/PowerService/dashboard/yuanong',
       },
       // {
       //   icon: 'iconcalendar2',
@@ -68,14 +69,7 @@ export default class Workplace extends React.Component {
               <Tooltip placement="bottom" title={v.name}>
                 <div className={styles.icon}>
                   <a href={v.link || 'javascript:;'} target={v.target || ''}>
-                    <IconFont
-                      type={v.icon}
-                      onClick={() => {
-                        if (Item.name === '员工信息') {
-                          router.push('/PowerService/dashboard/yuanong');
-                        }
-                      }}
-                    />
+                    <IconFont type={v.icon} />
                   </a>
                 </div>
               </Tooltip>
