@@ -302,7 +302,7 @@ class Employee extends React.Component {
     return (
       <div>
         {/* <Alert message="友情提示" description="最近更新日期 2019-11-11" type="info" showIcon /> */}
-        <Card style={{ marginTop: 20, height: '100%' }}>
+        <Card style={{ marginTop: 20, height: '78vh' }}>
           <Tabs defaultActiveKey="1">
             <TabPane
               tab={
@@ -318,7 +318,7 @@ class Employee extends React.Component {
                   <Tree
                     showLine
                     defaultExpandAll
-                    defaultSelectedKeys={['6B19CA5F-0E91-46B4-9CBE-ACED20678E32']}
+                    defaultSelectedKeys={[]}
                     onSelect={this.onSelect}
                     showIcon
                     icon={<MyIcon type="icon-jiaoseguanli" style={{ fontSize: '16px' }} />}
@@ -365,36 +365,38 @@ class Employee extends React.Component {
                         style={{ width: 200, marginLeft: '10px' }}
                       />
                     </div>
-                    {Object.keys(userMapByRoom).map(room => {
-                      return (
-                        <div className="mt-20">
-                          <Collapse defaultActiveKey={['0', '1']}>
-                            <Panel
-                              showArrow={false}
-                              header={
-                                <div>
-                                  <Icon type="idcard" theme="twoTone" /> {room}
+                    <div className={styles.list}>
+                      {Object.keys(userMapByRoom).map(room => {
+                        return (
+                          <div className="mt-20">
+                            <Collapse defaultActiveKey={['0', '1']} bordered={false}>
+                              <Panel
+                                showArrow={false}
+                                header={
+                                  <div>
+                                    <Icon type="idcard" theme="twoTone" /> {room}
+                                  </div>
+                                }
+                              >
+                                <div className={styles.part}>
+                                  {userMapByRoom[room].map(child => {
+                                    return (
+                                      <div
+                                        className={styles.nameWrap}
+                                        onClick={() => this.getDetail(child.Id)}
+                                      >
+                                        <div className={styles.name}>{child.Name}</div>
+                                        <div className={styles.fenji}>{child.Phone}</div>
+                                      </div>
+                                    );
+                                  })}
                                 </div>
-                              }
-                            >
-                              <div className={styles.part}>
-                                {userMapByRoom[room].map(child => {
-                                  return (
-                                    <div
-                                      className={styles.nameWrap}
-                                      onClick={() => this.getDetail(child.Id)}
-                                    >
-                                      <div className={styles.name}>{child.Name}</div>
-                                      <div className={styles.fenji}>{child.Phone}</div>
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                            </Panel>
-                          </Collapse>
-                        </div>
-                      );
-                    })}
+                              </Panel>
+                            </Collapse>
+                          </div>
+                        );
+                      })}
+                    </div>
 
                     <div className="mt-20">
                       <Tabs defaultActiveKey="1" type="card">
