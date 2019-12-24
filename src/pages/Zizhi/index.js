@@ -239,7 +239,7 @@ class Content extends React.Component {
     return (
       <div className={styles.wrap}>
         <div className={styles.left}>
-          <Card title="选择相关部门" className="grandient-bg">
+          <Card title="选择相关部门">
             <div style={{'min-height': 500}}>
             {typeName === '职称聘任' && <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
                 {this.renderTree(zhiwuTree)}
@@ -287,7 +287,6 @@ class Content extends React.Component {
           </Modal>
           <Card
             bordered={false}
-            className="grandient-bg"
             extra={<div>
               <Button type="link">年度职称聘任</Button>
               <Select defaultValue="" style={{ width: 120 , marginRight: 14}} size="small" onSelect={(key)=> {
@@ -319,9 +318,9 @@ export default class Zizhi extends React.Component {
   render() {
     return (
       <div>
-        <div className="mb-20">
+        {/* <div className="mb-20">
           <Alert message="资质提醒: 最新更新日期 2019-11-03" type="warning" />
-        </div>
+        </div> */}
         <Tabs className="mt-20" style={{background: '#fff'}}>
           <TabPane
             tab={

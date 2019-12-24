@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card, Icon, Tooltip } from 'antd';
-import styles from './Home.less';
-import { queryMenu } from '../../services/home';
 import { Item } from 'rc-menu';
 import { router } from 'umi';
+import styles from './Home.less';
+import { queryMenu } from '../../services/home';
 
 const IconFont = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1251765_mco4fu4f3kr.js',

@@ -17,6 +17,7 @@ import {
 } from 'antd';
 import styles from './employee.less';
 import { queryCarsTree, queryCarsInfo } from '../../services/car';
+
 const { TreeNode } = Tree;
 const { TabPane } = Tabs;
 const { Option } = Select;
@@ -258,7 +259,7 @@ class Employee extends React.Component {
     const { tree, cars } = this.state;
     return (
       <div>
-        <Alert message="友情提示" description="最近更新日期 2019-11-11" type="info" showIcon />
+        {/* <Alert message="友情提示" description="最近更新日期 2019-11-11" type="info" showIcon /> */}
         <Card style={{ marginTop: 20, height: '100%' }}>
           <Tabs defaultActiveKey="1">
             <TabPane
