@@ -1,6 +1,7 @@
-import{ Component }from 'react';
+import React from 'react';
 import { Alert, Tabs, Card, Tree , List, Typography, Icon, Select, Button, Modal, Upload, message, Table } from 'antd';
 import styles from './index.less'
+import { queryZizhiTree, queryZhiwuTree, queryQualificationList, queryEngageList } from '../../services/zizhi';
 
 const { TabPane } = Tabs;
 const { TreeNode } = Tree;
@@ -13,23 +14,23 @@ const MyIcon = Icon.createFromIconfontCN({
 const ccolumns = [
   {
     title: '序号',
-    dataIndex: 'key',
+    dataIndex: 'RowNum',
   },
   {
     title: '部门',
-    dataIndex: 'part',
+    dataIndex: 'Dept',
   },
   {
     title: '姓名',
-    dataIndex: 'name',
+    dataIndex: 'Name',
   },
   {
     title: '聘任职称',
-    dataIndex: 'zhicheng',
+    dataIndex: 'Position',
   },
   {
     title: '聘任年度',
-    dataIndex: 'year',
+    dataIndex: 'PositionalYear',
   },
   {
     title: '备注',
@@ -131,10 +132,28 @@ const props = {
 const data = [
   '关于丁更等同志职务任免的通知'
 ]
-class Content extends Component {
+class Content extends React.Component {
   state = {
     appartment: '商务部',
-    visible: false
+    visible: false,
+    renzhiTree: [],
+    zhiwuTree: [],
+    currentId:'',
+    list: [],
+    // engageList: []
+  }
+
+  componentDidMount() {
+    this.initRenZhiTree();
+    this.initZhiwuTree();
+    this.fetchQualificationList({
+      id: '162131B1-7B3E-5E28-6710-0A620C811548',
+      year: ''
+    })
+    // this.fetchEngageList({
+    //   id: '',
+    //   year: ''
+    // })
   }
 
   handleOk = () => {
@@ -149,22 +168,73 @@ class Content extends Component {
     });
   };
 
+  fetchQualificationList = async (params) => {
+    const { typeName } = this.props;
+    let list = [];
+    if(typeName === '职称聘任') {
+      const { data } = await queryEngageList(params);
+      list = data;
+    } else {
+      const { data } = await queryQualificationList(params);
+      list = data;
+    }
+    console.log(list, 'list')
+    this.setState({
+      list
+    })
+  }
+
+  // fetchEngageList = async (params) => {
+  //   const { data } = await queryEngageList(params);
+  //   this.setState({
+  //     engageList: data
+  //   })
+  // }
+
+  renderTree = (trees) => {
+    if(!Array.isArray(trees)) {
+      trees = [trees];
+    }
+    return trees.map(item => (<TreeNode title={item.Name} key={item.Id}>{item.children.length && this.renderTree(item.children)}</TreeNode>))
+  }
+
   openEdit = () => {
     this.setState({
       visible: true,
     });
   };
 
+  initRenZhiTree = async () => {
+    const res = await queryZizhiTree();
+    console.log(res, 'renzhiTree');
+    this.setState({
+      renzhiTree: res
+    })
+  }
+
+  initZhiwuTree = async () => {
+    const res = await queryZhiwuTree();
+    console.log(res, 'zhiwuTree');
+    this.setState({
+      zhiwuTree: res
+    })
+  }
+
 
   onSelect = (selectedKeys, info) => {
     this.setState({
-      appartment: info.node.props.title
+      appartment: info.node.props.title,
+      currentId: selectedKeys && selectedKeys[0],
+    })
+    this.fetchQualificationList({
+      id: selectedKeys && selectedKeys[0],
+      year: ''
     })
     console.log('selected', selectedKeys, info);
   };
 
   render() {
-    const { appartment } = this.state;
+    const { appartment, renzhiTree, zhiwuTree, list,currentId } = this.state;
     const { typeName } = this.props;
     return (
       <div className={styles.wrap}>
@@ -172,38 +242,10 @@ class Content extends Component {
           <Card title="选择相关部门" className="grandient-bg">
             <div style={{'min-height': 500}}>
             {typeName === '职称聘任' && <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
-                <TreeNode title="技术职称聘任一览表" key="0" icon={<MyIcon type="icon-zuzhijigouguanli" style={{fontSize: '16px'}} />}>
-                  <TreeNode title="华谊工程" key="0-0" icon={<MyIcon type="icon-zuzhijigouguanli" style={{fontSize: '16px'}} />}>
-                    <TreeNode title="公司高管" key="0-0-0" />
-                    <TreeNode title="设计事业部" key="0-0-1" />
-                    <TreeNode title="总承包事业部" key="0-0-2" />
-                    <TreeNode title="党群工作部" key="0-0-3" />
-                    <TreeNode title="精细化工事业部" key="0-0-4" />
-                    <TreeNode title="资产财务部" key="0-0-5" />
-                    <TreeNode title="QHSE部" key="0-0-6" />
-                    <TreeNode title="数字化中心" key="0-0-7" />
-                    <TreeNode title="技术公司" key="0-0-8" />
-                  </TreeNode>
-                </TreeNode>
+                {this.renderTree(zhiwuTree)}
               </Tree>}
-              {typeName === '任职资格' && <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
-                  <TreeNode title="项目及技术岗位任职一览表" key="0-0" icon={<MyIcon type="icon-zuzhijigouguanli" style={{fontSize: '16px'}} />}>
-                    <TreeNode title="项目经理" key="0-0-0" />
-                    <TreeNode title="项目、专业审定" key="0-0-1" />
-                    <TreeNode title="设计经理" key="0-0-2" />
-                    <TreeNode title="专业工程师" key="0-0-3" />
-                    <TreeNode title="质量工程师" key="0-0-4" />
-                    <TreeNode title="IT工程师" key="0-0-5" />
-                    <TreeNode title="采购经理" key="0-0-6" />
-                    <TreeNode title="施工经理" key="0-0-7" />
-                    <TreeNode title="费用控制工程师" key="0-0-8" />
-                    <TreeNode title="进度控制工程师" key="0-0-9" />
-                    <TreeNode title="材料控制工程师" key="0-0-10" />
-                    <TreeNode title="开车经理" key="0-0-11" />
-                    <TreeNode title="HSE工程师" key="0-0-12" />
-                    <TreeNode title="设、校、审" key="0-0-13" />
-                    <TreeNode title="个别项目技术岗位任职表" key="0-0-14" />
-                  </TreeNode>
+              {typeName === '任职资格' && <Tree showLine defaultCheckedKeys={['162131B1-7B3E-5E28-6710-0A620C8115480']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
+              {this.renderTree(renzhiTree)}
               </Tree>}
             </div>
           </Card>
@@ -247,18 +289,24 @@ class Content extends Component {
             bordered={false}
             className="grandient-bg"
             extra={<div>
-              <Button type="link">2019年度职称聘任</Button>
-              <Select defaultValue="1" style={{ width: 120 , marginRight: 14}} size="small">
-                <Option value="1">年度过滤</Option>
-                <Option value="lucy">时间过滤</Option>
-                <Option value="disabled">
-                  标题
-                </Option>
+              <Button type="link">年度职称聘任</Button>
+              <Select defaultValue="" style={{ width: 120 , marginRight: 14}} size="small" onSelect={(key)=> {
+                this.fetchQualificationList({
+                  year: key,
+                  id: currentId
+                })}}>
+                <Option value="">年度过滤</Option>
+                <Option value="2019">2019</Option>
+                <Option value="2018">2018</Option>
+                <Option value="2017">2017</Option>
+                <Option value="2016">2016</Option>
+                <Option value="2015">2015</Option>
+                <Option value="2014">2014</Option>
               </Select>
             </div>}
           >
             <div className={styles.right}>
-              <Table columns={ccolumns} dataSource={cdata} />
+              <Table columns={ccolumns} dataSource={list} />
             </div>
           </Card>
         </div>
@@ -267,7 +315,7 @@ class Content extends Component {
   }
 }
 
-export default class Zizhi extends Component {
+export default class Zizhi extends React.Component {
   render() {
     return (
       <div>
