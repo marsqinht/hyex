@@ -83,22 +83,32 @@ const leaveInfo = item => {
 
 const adata = [
   {
-    title: '中共上海华谊工程有限公司第二次党员大会隆重召开',
-    time: '2019-11-11',
+    title: '喜报：华谊钦州醋酸项目胜利开工！',
+    link: 'http://www1.hyec.com:8085/GroupForum/ForumDetail.aspx?topicid=969&forumid=1005',
+    time: '华谊工程科技园',
   },
   {
-    title: '华谊工程召开2018年度QHSE体系管理评审会',
-    time: '2019-06-04',
+    title: '罐顶计算公式比较',
+    link: 'http://www1.hyec.com:8085/KnShare/KeTopicShow.aspx?id=2309',
+    time: '知识互动',
   },
   {
-    title: '万华一期烧碱项目喜获2018年度工程建设项目优秀设计成果二等奖',
-    time: '2019-05-06',
+    title: '应急照明',
+    link: 'http://www1.hyec.com:8085/KnShare/KePracShow.aspx?id=2901',
+    time: '最佳实践',
   },
   {
-    title: '提供组织保障 加强业务发展——数字化中心正式成立',
-    time: '2019-04-18',
+    title: '2019年全国聚氯乙烯行业技术年会总结',
+    link: 'http://www1.hyec.com:8085/KnShare/KeOtherDataShow.aspx?id=5689',
+    time: '资料分享',
+  },
+  {
+    title: '党章电视辅导教材-10',
+    link: 'http://www1.hyec.com:8085/KnShare/KeMeetingVideoShow.aspx?id=652',
+    time: '影响分享',
   },
 ];
+
 
 const IconFont = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1251765_mco4fu4f3kr.js',
@@ -430,7 +440,7 @@ export default class Home extends Component {
                         <List.Item>
                           <div className={styles.newList}>
                             <Tooltip placement="top" title={item.title}>
-                              <div className={styles.newsTitle}>{item.title}</div>
+                              <div className={styles.newsTitle}><a href={item.link} target="_blank">{item.title}</a></div>
                             </Tooltip>
                             {this.renderNew(item.time) && <div className={styles.newTag} />}
                             <div style={{ color: '#333' }}>{item.time}</div>
