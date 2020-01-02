@@ -13,7 +13,7 @@ export default class Demo extends Component {
     super(...arguments);
     this.imgArray = [
       {
-        img: 'https://tva1.sinaimg.cn/large/006tNbRwly1g9zc3qbzctj319k0u0npd.jpg',
+        img: require('../../../public/homeImages/carousel/1.jpg'),
         title: '五年规划',
         content: (
           <div>
@@ -55,13 +55,13 @@ export default class Demo extends Component {
         ),
       },
       {
-        img: 'https://tva1.sinaimg.cn/large/006tNbRwly1g9zc3wo00nj31dc0u07ud.jpg',
+        img: require('../../../public/homeImages/carousel/2.jpg'),
         title: '公司愿景',
         content:
           '将成为使顾客满意、让员工有为、对股东有利和被社会认可的，专业化的工程建设全过程服务商，并持之以恒地追求协力、创新和高效。',
       },
       {
-        img: 'https://tva1.sinaimg.cn/large/006tNbRwly1g9zc48np0cj31480u0e8a.jpg',
+        img: require('../../../public/homeImages/carousel/3.jpg'),
         title: '公司使命',
         content: (
           <div>
@@ -76,7 +76,7 @@ export default class Demo extends Component {
         ),
       },
       {
-        img: 'https://tva1.sinaimg.cn/large/006tNbRwly1g9zc3rxtsqj32440u0nf1.jpg',
+        img: require('../../../public/homeImages/carousel/4.jpg'),
         title: '核心价值观',
         content: (
           <div>
@@ -103,7 +103,7 @@ export default class Demo extends Component {
         ),
       },
       {
-        img: 'https://tva1.sinaimg.cn/large/006tNbRwly1g9zc43chwcj31ez0u0u16.jpg',
+        img: require('../../../public/homeImages/carousel/5.jpg'),
         title: '人才观',
         content: (
           <div>
@@ -128,7 +128,7 @@ export default class Demo extends Component {
         ),
       },
       {
-        img: 'https://tva1.sinaimg.cn/large/006tNbRwly1g9zc4froi1j31900u0e89.jpg',
+        img: require('../../../public/homeImages/carousel/6.jpg'),
         title: '职业发展观',
         content: (
           <div>
@@ -155,7 +155,7 @@ export default class Demo extends Component {
         ),
       },
       {
-        img: 'https://tva1.sinaimg.cn/large/006tNbRwly1g9zc4b7o13j31400u0npe.jpg',
+        img: require('../../../public/homeImages/carousel/7.jpg'),
         title: '司训',
         content: (
           <div>

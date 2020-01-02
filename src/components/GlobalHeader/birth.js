@@ -54,7 +54,7 @@ const item = item => {
         <img
           width={20}
           height={20}
-          src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pq10s10tg305k05kq2r.gif"
+          src={require('../../../public/images/cake.gif')}
         />
         诚祝{' '}
         <Popover content={info(item)} title="员工信息" placement="rightBottom">

@@ -123,7 +123,7 @@ class BasicLayout extends React.Component {
       >
         {isTop && !isMobile ? null : (
           <SiderMenu
-            logo="https://tva1.sinaimg.cn/large/006y8mN6ly1g9dcpnxgccj310p0s9762.jpg"
+            logo={require('../../public/images/logo.jpg')}
             theme={navTheme}
             onCollapse={this.handleMenuCollapse}
             menuData={menuData}

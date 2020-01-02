@@ -32,6 +32,7 @@ import {
   queryMenu,
   queryMeetingApply,
 } from '../../services/home';
+import { calendar } from '../../utils/calendar';
 
 const edata = [
   {
@@ -317,12 +318,12 @@ export default class Home extends Component {
                         <img
                           alt="example"
                           height={200}
-                          src="http://5b0988e595225.cdn.sohucs.com/images/20180604/cec8268873f54e70acf9bed4d75fdc18.jpeg"
+                          src={require('../../../public/homeImages/news/2.jpg')}
                         />
                         <img
                           alt="example"
                           height={200}
-                          src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zc4b7o13j31400u0npe.jpg"
+                          src={require('../../../public/homeImages/news/1.jpg')}
                         />
                       </Carousel>
                     }
@@ -368,7 +369,7 @@ export default class Home extends Component {
                         <img
                           alt="example"
                           height={200}
-                          src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zc49t6j8j31400u04qq.jpg"
+                          src={require('../../../public/homeImages/hse/1.jpg')}
                         />
                         {/* <img
                           alt="example"
@@ -425,7 +426,7 @@ export default class Home extends Component {
                         <img
                           alt="example"
                           height={230}
-                          src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zc4froi1j31900u0e89.jpg"
+                          src={require('../../../public/homeImages/knowledage/1.jpg')}
                         />
                       </Carousel>
                     }
@@ -460,7 +461,7 @@ export default class Home extends Component {
                         <img
                           alt="example"
                           height={230}
-                          src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zc3ui1c4j318b0u0nma.jpg"
+                          src={require('../../../public/homeImages/training/1.jpg')}
                         />
                       </Carousel>
                     }
@@ -620,6 +621,7 @@ export default class Home extends Component {
                           </div>
                         );
                       }
+                     
                     }}
                   />
                 </div>

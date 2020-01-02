@@ -24,7 +24,7 @@ export default class Huayi extends Component {
           cover={
             <img
               alt="example"
-              src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9v3ghr330j30ro0ss0ud.jpg"
+              src={require('../../../public/images/log_with_txt.jpg')}
             />
           }
         />
@@ -35,7 +35,7 @@ export default class Huayi extends Component {
           cover={
             <img
               alt="example"
-              src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8giq8eclgj30dw098q3l.jpg"
+              src={require('../../../public/images/zhiduhuibian.jpg')}
             />
           }
         >
