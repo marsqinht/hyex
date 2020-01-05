@@ -5,8 +5,12 @@ export async function queryBirthday() {
   return cRequest(`/Birthday`);
 }
 
-export async function queryLoginManage() {
-  return cRequest('/LoginManage');
+export async function queryLoginManage(params) {
+  return cRequest(`/LoginManage?${stringify(params)}`);
+}
+
+export async function queryHSEManage(params) {
+  return cRequest(`/HSEManage?${stringify(params)}`);
 }
 
 export async function queryLeave() {
@@ -27,4 +31,9 @@ export async function queryMeetingApply() {
 
 export async function queryMenu() {
   return cRequest('/Menu');
+}
+
+// 登录 login
+export async function doLogin(params) {
+  return cRequest(`/Login?${stringify(params)}`);
 }

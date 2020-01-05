@@ -13,8 +13,11 @@ import {
   Pagination,
 } from 'antd';
 import moment from 'moment';
+import router from 'umi/router';
+import { renderYear } from '@/utils/utils';
 import styles from './index.less';
 import { querySkillManage } from '../../services/quantity';
+
 const { Search } = Input;
 
 const { Option } = Select;
@@ -74,12 +77,13 @@ export default class Huiyi extends React.Component {
     this.fetchApi();
   }
 
-  fetchApi = async (page = 1, type = '工作总结', Name = '') => {
+  fetchApi = async (page = 1, type = '工作总结', Name = '', year ='') => {
     const { data, total, success } = await querySkillManage({
       type,
       size: 15,
       page,
       Name,
+      year
     });
     console.log(data);
     success &&
@@ -88,6 +92,24 @@ export default class Huiyi extends React.Component {
         total,
       });
   };
+
+  goDetail = (item, type) => {
+    const file = item.FileRow.length && item.FileRow[0].ServerUrl;
+    const { Name, RegHumName, RegDate } = item
+    if(!file) {
+      return;
+    }
+    router.push({
+      pathname: '/dashboard/commondetail',
+      query: {
+        title: Name,
+        people: RegHumName,
+        date: moment(RegDate).format('YYYY-MM-DD'),
+        file,
+        type
+      },
+    })
+  }
 
   render() {
     const { data, total, activeKey } = this.state;
@@ -118,8 +140,15 @@ export default class Huiyi extends React.Component {
                   bordered={false}
                   extra={
                     <div>
-                      <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
-                        <Option value="1">年度筛选</Option>
+                      <Select
+                        defaultValue=""
+                        style={{ width: 120, marginRight: 14 }}
+                        onChange={(key) => this.fetchApi(1, activeKey, '', key)}
+                      >
+                        <Option value="">年度筛选</Option>
+                        {renderYear().map(v => (
+                          <Option value={v}>{v}</Option>
+                        ))}
                       </Select>
                       <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
                         <Option value="1">文档主题</Option>
@@ -136,10 +165,11 @@ export default class Huiyi extends React.Component {
                     header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
                     bordered
                     dataSource={data}
+                    size="small"
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
-                          <div>{item.Name}</div>
+                          <a href="javascript:;" onClick={() => this.goDetail(item, '工作总结')}><div>{item.Name}</div></a>
                           <div style={{ color: '#1890FF' }}>
                             {moment(item.RegDate).format('YYYY-MM-DD')}
                           </div>
@@ -171,15 +201,18 @@ export default class Huiyi extends React.Component {
                   bordered={false}
                   extra={
                     <div>
-                      <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
-                        <Option value="1">年度筛选</Option>
+                      <Select defaultValue="" style={{ width: 120, marginRight: 14 }} onChange={(key) => this.fetchApi(1, activeKey, '', key)}>
+                        <Option value="">年度筛选</Option>
+                        {renderYear().map(v => (
+                          <Option value={v}>{v}</Option>
+                        ))}
                       </Select>
                       <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
                         <Option value="1">文档主题</Option>
                       </Select>
                       <Search
                         placeholder="请输入关键字"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.fetchApi(1, activeKey, value)}
                         style={{ width: 200 }}
                       />
                     </div>
@@ -189,10 +222,11 @@ export default class Huiyi extends React.Component {
                     header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
                     bordered
                     dataSource={data}
+                    size="small"
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
-                          <div>{item.Name}</div>
+                          <a href="javascript:;" onClick={() => this.goDetail(item, '获奖情况')}><div>{item.Name}</div></a>
                           <div style={{ color: '#1890FF' }}>
                             {moment(item.RegDate).format('YYYY-MM-DD')}
                           </div>
@@ -224,15 +258,18 @@ export default class Huiyi extends React.Component {
                   bordered={false}
                   extra={
                     <div>
-                      <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
-                        <Option value="1">年度筛选</Option>
+                      <Select defaultValue="" style={{ width: 120, marginRight: 14 }} onChange={(key) => this.fetchApi(1, activeKey, '', key)}>
+                        <Option value="">年度筛选</Option>
+                        {renderYear().map(v => (
+                          <Option value={v}>{v}</Option>
+                        ))}
                       </Select>
                       <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
                         <Option value="1">文档主题</Option>
                       </Select>
                       <Search
                         placeholder="请输入关键字"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.fetchApi(1, activeKey, value)}
                         style={{ width: 200 }}
                       />
                     </div>
@@ -242,10 +279,11 @@ export default class Huiyi extends React.Component {
                     header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
                     bordered
                     dataSource={data}
+                    size="small"
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
-                          <div>{item.Name}</div>
+                          <a href="javascript:;" onClick={() => this.goDetail(item, '业务建设')}><div>{item.Name}</div></a>
                           <div style={{ color: '#1890FF' }}>
                             {moment(item.RegDate).format('YYYY-MM-DD')}
                           </div>
@@ -282,7 +320,7 @@ export default class Huiyi extends React.Component {
                       </Select>
                       <Search
                         placeholder="请输入关键字"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.fetchApi(1, activeKey, value)}
                         style={{ width: 200 }}
                       />
                     </div>
@@ -292,10 +330,11 @@ export default class Huiyi extends React.Component {
                     header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
                     bordered
                     dataSource={data}
+                    size="small"
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
-                          <div>{item.Name}</div>
+                          <a href="javascript:;" onClick={() => this.goDetail(item, '知识产权')}><div>{item.Name}</div></a>
                           <div style={{ color: '#1890FF' }}>
                             {moment(item.RegDate).format('YYYY-MM-DD')}
                           </div>

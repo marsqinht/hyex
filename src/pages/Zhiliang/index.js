@@ -16,6 +16,7 @@ import {
 import moment from 'moment';
 import router from 'umi/router';
 import styles from './index.less';
+import { renderYear } from '@/utils/utils';
 import { queryZhiliangManage } from '../../services/quantity';
 
 const { Search } = Input;
@@ -179,13 +180,14 @@ export default class Huiyi extends React.Component {
     })
   }
 
-  fetchApi = async (page = 1, type = 'notice', qctype, Name = '') => {
+  fetchApi = async (page = 1, type = 'notice', qctype, Name = '', year = '') => {
     const { data, total, success } = await queryZhiliangManage({
       type,
       qctype,
       size: 15,
       page,
       Name,
+      year
     });
     console.log(data);
     success &&
@@ -216,8 +218,15 @@ export default class Huiyi extends React.Component {
                   bordered={false}
                   extra={
                     <div>
-                      <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
-                        <Option value="1">年度筛选</Option>
+                      <Select
+                        defaultValue=""
+                        style={{ width: 120, marginRight: 14 }}
+                        onChange={(key) => this.fetchApi(1, 'notice', '', '', key)}
+                      >
+                        <Option value="">年度筛选</Option>
+                        {renderYear().map(v => (
+                          <Option value={v}>{v}</Option>
+                        ))}
                       </Select>
                       <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
                         <Option value="1">文档主题</Option>
@@ -234,6 +243,7 @@ export default class Huiyi extends React.Component {
                     header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
                     bordered
                     dataSource={data}
+                    size="small"
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
@@ -269,8 +279,15 @@ export default class Huiyi extends React.Component {
                   bordered={false}
                   extra={
                     <div>
-                      <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
-                        <Option value="1">年度筛选</Option>
+                      <Select
+                        defaultValue=""
+                        style={{ width: 120, marginRight: 14 }}
+                        onChange={(key) => this.fetchApi(1, 'meeting', '', '', key)}
+                      >
+                        <Option value="">年度筛选</Option>
+                        {renderYear().map(v => (
+                          <Option value={v}>{v}</Option>
+                        ))}
                       </Select>
                       <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
                         <Option value="1">文档主题</Option>
@@ -287,6 +304,7 @@ export default class Huiyi extends React.Component {
                     header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
                     bordered
                     dataSource={data}
+                    size="small"
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
@@ -322,8 +340,11 @@ export default class Huiyi extends React.Component {
                   bordered={false}
                   extra={
                     <div>
-                      <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
-                        <Option value="1">年度筛选</Option>
+                      <Select defaultValue="" style={{ width: 120, marginRight: 14 }} onChange={(key) => this.fetchApi(1, 'message', '', '', key)}>
+                        <Option value="">年度筛选</Option>
+                        {renderYear().map(v => (
+                          <Option value={v}>{v}</Option>
+                        ))}
                       </Select>
                       <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
                         <Option value="1">文档主题</Option>
@@ -340,6 +361,7 @@ export default class Huiyi extends React.Component {
                     header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
                     bordered
                     dataSource={data}
+                    size="small"
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
@@ -390,6 +412,7 @@ export default class Huiyi extends React.Component {
                     header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
                     bordered
                     dataSource={data}
+                    size="small"
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
@@ -425,8 +448,11 @@ export default class Huiyi extends React.Component {
                   bordered={false}
                   extra={
                     <div>
-                      <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
-                        <Option value="1">年度筛选</Option>
+                      <Select defaultValue="" style={{ width: 120, marginRight: 14 }} onChange={(key) => this.fetchApi(1, 'toexamine', '', '', key)}>
+                        <Option value="">年度筛选</Option>
+                        {renderYear().map(v => (
+                          <Option value={v}>{v}</Option>
+                        ))}
                       </Select>
                       <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
                         <Option value="1">文档主题</Option>
@@ -443,6 +469,7 @@ export default class Huiyi extends React.Component {
                     header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
                     bordered
                     dataSource={data}
+                    size="small"
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>
@@ -502,6 +529,7 @@ export default class Huiyi extends React.Component {
                     header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
                     bordered
                     dataSource={data}
+                    size="small"
                     renderItem={item => (
                       <List.Item>
                         <div className={styles.list}>

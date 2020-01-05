@@ -140,6 +140,7 @@ class Content extends React.Component {
     zhiwuTree: [],
     currentId:'',
     list: [],
+    isFile: false,
     // engageList: []
   }
 
@@ -147,7 +148,7 @@ class Content extends React.Component {
     this.initRenZhiTree();
     this.initZhiwuTree();
     this.fetchQualificationList({
-      id: '162131B1-7B3E-5E28-6710-0A620C811548',
+      id: '69717041-9B56-7B83-4307-B9D204791D30',
       year: ''
     })
     // this.fetchEngageList({
@@ -180,7 +181,8 @@ class Content extends React.Component {
     }
     console.log(list, 'list')
     this.setState({
-      list
+      list,
+      isFile: list.length && list[0].ServerUrl
     })
   }
 
@@ -234,17 +236,18 @@ class Content extends React.Component {
   };
 
   render() {
-    const { appartment, renzhiTree, zhiwuTree, list,currentId } = this.state;
+    const { appartment, renzhiTree, zhiwuTree, list,currentId, isFile } = this.state;
+    console.log(isFile, 'isFile');
     const { typeName } = this.props;
     return (
       <div className={styles.wrap}>
         <div className={styles.left}>
           <Card title="选择相关部门">
             <div style={{'min-height': 500}}>
-            {typeName === '职称聘任' && <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
+            {typeName === '职称聘任' && <Tree showLine defaultExpandAll defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
                 {this.renderTree(zhiwuTree)}
               </Tree>}
-              {typeName === '任职资格' && <Tree showLine defaultCheckedKeys={['162131B1-7B3E-5E28-6710-0A620C8115480']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
+              {typeName === '任职资格' && <Tree showLine defaultExpandAll defaultCheckedKeys={['162131B1-7B3E-5E28-6710-0A620C8115480']} onSelect={this.onSelect} showIcon icon={<MyIcon type="icon-jiaoseguanli" style={{fontSize: '16px'}} />}>
               {this.renderTree(renzhiTree)}
               </Tree>}
             </div>
@@ -285,6 +288,7 @@ class Content extends React.Component {
               </TabPane>
             </Tabs>
           </Modal>
+          {!isFile ? 
           <Card
             bordered={false}
             extra={<div>
@@ -295,6 +299,7 @@ class Content extends React.Component {
                   id: currentId
                 })}}>
                 <Option value="">年度过滤</Option>
+                <Option value="2020">2020</Option>
                 <Option value="2019">2019</Option>
                 <Option value="2018">2018</Option>
                 <Option value="2017">2017</Option>
@@ -305,9 +310,10 @@ class Content extends React.Component {
             </div>}
           >
             <div className={styles.right}>
-              <Table columns={ccolumns} dataSource={list} />
+              <Table columns={ccolumns} dataSource={list} size="small"/>
             </div>
-          </Card>
+          </Card> :
+          <iframe style={{ border: 0, padding: 0}} height="1000" name="pdf" width="100%" src={isFile} />}
         </div>
       </div>
     )

@@ -6,6 +6,11 @@ export default [
       // dashboard
       { path: '/', component: './Dashboard/Home' },
       {
+        path: '/Login',
+        hideInMenu: true,
+        component: './Login/Login',
+      },
+      {
         path: '/dashboard',
         name: '公共事务',
         icon: 'home',

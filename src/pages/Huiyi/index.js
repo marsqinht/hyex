@@ -1,7 +1,8 @@
 import React from 'react';
 import moment from 'moment';
-import { Alert, Tabs, Table, Card, Icon } from 'antd';
+import { Alert, Tabs, Table, Card, Icon, Button } from 'antd';
 import { queryMeetingApply } from '../../services/home';
+import { goToEdit } from '@/utils/edit';
 
 const MyIcon = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1277028_jejs7t1j2ca.js', // 在 iconfont.cn 上生成
@@ -78,12 +79,19 @@ export default class Huiyi extends React.Component {
       <div>
         <Alert
           message="今日提醒"
-          description="5个本周会议; 6个下周会议; 5条待批准会议提醒"
+          description={`${currentWeekList.length}个本周会议; ${nextWeekList.length}个下周会议; ${stayApprWeekRowList.length}条待批准会议提醒`}
           type="warning"
           showIcon
         />
         <div className="mt-20">
           <Card>
+            <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+              <Button type="primary" icon="edit" onClick={() => goToEdit('会议申请')}>
+
+                    会议申请
+              </Button>
+            
+            </div>
             <Tabs defaultActiveKey="1">
               <TabPane
                 tab={
@@ -116,7 +124,7 @@ export default class Huiyi extends React.Component {
                 }
                 key="3"
               >
-                <Table columns={columns} dataSource={stayApprWeekRowList} />
+                <Table columns={columns} dataSource={stayApprWeekRowList} size="small" />
               </TabPane>
               {/* <TabPane
                 tab={

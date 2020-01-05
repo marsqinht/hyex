@@ -2,12 +2,14 @@ import React from 'react';
 import { Card, Icon, Tooltip } from 'antd';
 import { Item } from 'rc-menu';
 import { router } from 'umi';
+import Cookies from 'js-cookie';
 import styles from './Home.less';
 import { queryMenu } from '../../services/home';
 
 const IconFont = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1251765_mco4fu4f3kr.js',
 });
+const noop = () => {}
 export default class Workplace extends React.Component {
   state = {
     Items: [
@@ -15,6 +17,7 @@ export default class Workplace extends React.Component {
         icon: 'iconmonitor',
         name: 'HYPM平台',
         link: 'http://10.43.1.69/',
+        target: '_blank'
       },
       // {
       //   icon: 'icondingcan',
@@ -33,13 +36,28 @@ export default class Workplace extends React.Component {
         name: '员工信息',
         link: '/PowerService/#/PowerService/dashboard/yuanong',
       },
-      // {
-      //   icon: 'iconcalendar2',
-      //   name: '请假系统'
-      // },
+      {
+        icon: 'iconcalendar2',
+        name: '请假系统',
+        onClick() {
+          try {
+            const userInfo = JSON.parse(Cookies.get('userInfo') || '{}')
+            console.log(userInfo);
+            if(userInfo.Code) {
+              window.open('')
+            } else {
+              router.push(`/Login?redirect=${encodeURIComponent(window.location.href)}`)
+            }
+            
+          } catch (error) {
+            
+          }
+        }
+      },
       {
         icon: 'iconfolder',
         name: '图纸入库系统',
+        link: 'http://www1.hyec.com:8085/'
       },
     ],
   };
@@ -68,7 +86,7 @@ export default class Workplace extends React.Component {
             <li className={styles.uli}>
               <Tooltip placement="bottom" title={v.name}>
                 <div className={styles.icon}>
-                  <a href={v.link || 'javascript:;'} target={v.target || ''}>
+                  <a href={v.link || 'javascript:;'} target={v.target || ''} onClick={v.onClick || noop}>
                     <IconFont type={v.icon} />
                   </a>
                 </div>

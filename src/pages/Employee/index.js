@@ -302,7 +302,8 @@ class Employee extends React.Component {
     return (
       <div>
         {/* <Alert message="友情提示" description="最近更新日期 2019-11-11" type="info" showIcon /> */}
-        <Card style={{ marginTop: 20, height: '78vh' }}>
+        {/* <Card style={{ marginTop: 20, height: '78vh' }}> */}
+          <div style={{backgroundColor: '#fff'}}>
           <Tabs defaultActiveKey="1">
             <TabPane
               tab={
@@ -355,7 +356,7 @@ class Employee extends React.Component {
                         onChange={key => this.setState({ currentSearchKey: key })}
                       >
                         <Option value="name">按中文名</Option>
-                        <Option value="code">按Code</Option>
+                        <Option value="code">按英文</Option>
                         <Option value="phone">按室号</Option>
                         {/* <Option value="lucy">按部门</Option> */}
                       </Select>
@@ -399,7 +400,7 @@ class Employee extends React.Component {
                     </div>
 
                     <div className="mt-20">
-                      <Tabs defaultActiveKey="1" type="card">
+                      <Tabs defaultActiveKey="1" type="card" size="small">
                         <TabPane
                           tab={
                             <span>
@@ -459,7 +460,7 @@ class Employee extends React.Component {
                           <Table
                             columns={columns}
                             dataSource={detailInfo.WorkRow}
-                            size="middle"
+                            size="small"
                             pagination={false}
                           />
                         </TabPane>
@@ -483,7 +484,7 @@ class Employee extends React.Component {
                             <Table
                               columns={ccolumns}
                               dataSource={detailInfo.MajorRow}
-                              size="middle"
+                              size="small"
                               pagination={false}
                             />
                           </div>
@@ -495,7 +496,8 @@ class Employee extends React.Component {
               </div>
             </TabPane>
           </Tabs>
-        </Card>
+          </div>
+        {/* </Card> */}
       </div>
     );
   }

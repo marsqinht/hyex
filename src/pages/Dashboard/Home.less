@@ -10,6 +10,9 @@
     line-height: 16px;
   }
 }
+.calendar {
+  background-color: #1890ff;
+}
 .newList {
   display: flex;
   width: 100%;
@@ -23,14 +26,15 @@
   background-size: contain;
   width: 28px;
   height: 26px;
-  right: 0;
-  top: 2px;
+  right: -18px;
+  top: -2px;
 }
 .newsTitle {
   flex:1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: pointer;
 }
 .margin {
   margin-bottom: 16px;
@@ -97,6 +101,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  margin-bottom: 4px;
 }
 .wrap {
   display: flex;

@@ -17,8 +17,9 @@ import {
 } from 'antd';
 import router from 'umi/router';
 import moment from 'moment';
+import { goToEdit } from '@/utils/edit';
 import styles from './index.less';
-import { queryApartmentTree, queryCompayInfo } from '../../services/company';
+import { queryApartmentTree, queryCompayInfo, queryPlanSummary } from '../../services/company';
 import { renderYear } from '@/utils/utils';
 
 const MyIcon = Icon.createFromIconfontCN({
@@ -48,14 +49,16 @@ const props = {
 // const data = ['关于丁更等同志职务任免的通知'];
 class Content extends React.Component {
   state = {
-    appartment: '商务部',
+    appartment: '',
     visible: false,
     data: [],
     currentTab: '计划与总结',
-    selectYear: '',
+    selectYear: '2020',
     currentPage: 1,
     selectedDept: '',
     total: 0,
+    planTotal: 0,
+    planData: [],
     tree: {
       children: [],
     },
@@ -64,6 +67,7 @@ class Content extends React.Component {
   componentDidMount() {
     this.fetchTree();
     this.fetchData();
+    this.fetchSummary()
   }
 
   fetchTree = async () => {
@@ -73,6 +77,16 @@ class Content extends React.Component {
       tree,
     });
   };
+
+  fetchSummary = async (id='', page =1, year='') => {
+    const res = await queryPlanSummary({id, page, size: 15, year})
+    if(res.success) {
+      this.setState({
+        planData: res.data,
+        planTotal: res.total,
+      })
+    }
+  }
 
   fetchData = async (page = 1, year = '', dept = '') => {
     const { typeName } = this.props;
@@ -149,6 +163,8 @@ class Content extends React.Component {
       selectedDept,
       total,
       currentPage,
+      planTotal,
+      planData
     } = this.state;
     const { typeName } = this.props;
     return typeName === '计划与总结' ? (
@@ -166,7 +182,7 @@ class Content extends React.Component {
                     selectedDept: selectedKeys[0],
                     currentPage: 1,
                   });
-                  this.fetchData(1, '', selectedKeys[0]);
+                  this.fetchSummary(selectedKeys[0], 1, '');
                 }}
                 icon={<MyIcon type="icon-jiaoseguanli" style={{ fontSize: '16px' }} />}
               >
@@ -176,7 +192,7 @@ class Content extends React.Component {
                   icon={<MyIcon type="icon-zuzhijigouguanli" style={{ fontSize: '16px' }} />}
                 >
                   {tree.children.map(child => {
-                    return <TreeNode title={child.Name} key={child.Name} />;
+                    return <TreeNode title={child.Name} key={child.Id} />;
                   })}
                 </TreeNode>
               </Tree>
@@ -224,17 +240,18 @@ class Content extends React.Component {
                   style={{ width: 120, marginRight: 14 }}
                   size="small"
                   onChange={year => {
-                    this.fetchData(1, year, selectedDept);
+                    this.fetchSummary(selectedDept, 1, year);
                   }}
                 >
                   <Option value="">年度过滤</Option>
                   {renderYear().map(v => (
                     <Option value={v}>{v}</Option>
                   ))}
+                  
                 </Select>
-                {/* <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>
+                <Button type="link" icon="edit" size="small" onClick={() => goToEdit(typeName)}>
                   编辑
-                </Button> */}
+                </Button>
               </div>
             }
           >
@@ -242,20 +259,21 @@ class Content extends React.Component {
               <List
                 header={<div style={{ fontWeight: 'bold' }}>{typeName}</div>}
                 bordered
-                dataSource={data}
+                dataSource={planData}
+                size="small"
                 pagination={{
                   onChange: page => {
-                    this.fetchData(page, selectYear, selectedDept);
+                    this.fetchSummary(selectedDept, page, selectYear);
                     console.log(page);
                   },
                   pageSize: 15,
                   current: currentPage,
-                  total,
+                  total: planTotal,
                 }}
                 renderItem={item => (
                   <List.Item>
                     <Typography.Text mark></Typography.Text>{' '}
-                    <a onClick={() => this.goDetail(item)}>{item.Name}</a>
+                    <a href={item.ServerUrl || 'javascript:;'} target="_blank">{item.FileName}</a>
                   </List.Item>
                 )}
               />
@@ -272,7 +290,7 @@ class Content extends React.Component {
           </div>
           <div>
             <Select
-              defaultValue=""
+              defaultValue="2020"
               style={{ width: 120, marginRight: 14 }}
               size="small"
               onChange={key => {
@@ -282,19 +300,19 @@ class Content extends React.Component {
                 this.fetchData(1, key);
               }}
             >
-              <Option value="">年度过滤</Option>
               {renderYear().map(v => (
                 <Option value={v}>{v}</Option>
               ))}
             </Select>
-            {/* <Button type="primary" icon="edit" size="small" onClick={this.openEdit}>
-              编辑
-            </Button> */}
+            <Button type="link" icon="edit" size="small" onClick={() => goToEdit(typeName)}>
+                  编辑
+            </Button>
           </div>
         </div>
         <List
           header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
           bordered
+          size="small"
           dataSource={data}
           renderItem={item => (
             <List.Item>
@@ -317,9 +335,9 @@ export default class Fawen extends React.Component {
   render() {
     return (
       <div>
-        <div className="mb-20">
+        {/* <div className="mb-20">
           <Alert message="行政提醒: 最新更新日期 2019-11-03" type="info" />
-        </div>
+        </div> */}
         <Tabs className="mt-20" style={{ background: '#fff' }}>
           <TabPane
             tab={

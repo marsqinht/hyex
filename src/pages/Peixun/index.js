@@ -150,7 +150,7 @@ export default class Huiyi extends React.Component {
                   </span>}
                 key="1"
               >
-                <Table columns={columns} dataSource={[]} />
+                <Table columns={columns} dataSource={[]} size="small" />
               </TabPane>
             </Tabs>
           </Card>

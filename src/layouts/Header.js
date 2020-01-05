@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { formatMessage } from 'umi-plugin-react/locale';
+import Cookies from 'js-cookie';
+
 import { Layout, message } from 'antd';
 import Animate from 'rc-animate';
 import { connect } from 'dva';
@@ -69,9 +71,11 @@ class HeaderView extends Component {
       return;
     }
     if (key === 'logout') {
-      dispatch({
-        type: 'login/logout',
-      });
+      // dispatch({
+      //   type: 'login/logout',
+      // });
+      Cookies.remove('userInfo');
+      window.location.reload()
     }
   };
 

@@ -2,6 +2,7 @@ import { Icon, Button, Table, Modal, Tabs, Upload, message , Card, List, Paginat
 import React from 'react';
 import moment from 'moment';
 import router from 'umi/router';
+import { goToEdit } from '@/utils/edit';
 // import Detail from './detail';
 import styles from './huayi.less';
 import { queryParyConstruct } from '../../services/party';
@@ -155,18 +156,20 @@ export default class Huayi extends React.Component {
         <Card
           title="华谊工程"
           bordered={false}
+          extra={<Button type="link" icon="edit" onClick={() => goToEdit('华谊工程')} size="small">编辑</Button>}
         >
           <List
             header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
             bordered
             dataSource={data}
+            size="small"
             renderItem={item => (
               <List.Item>
                 <div className={styles.list}>
                   <a href="javascript:;" onClick={() => this.goDetail(item, '华谊工程')}><div>{item.Name}</div></a>
                   <div>
-                  {moment(item.RegDate).format('YYYY-MM-DD')}
-                </div>
+                    {moment(item.RegDate).format('YYYY-MM-DD')}
+                  </div>
                 </div>
               </List.Item>
                     )}

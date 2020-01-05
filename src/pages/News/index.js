@@ -3,10 +3,13 @@ import { List, Avatar, Icon, Button, Select, Modal, Tabs, Upload, message } from
 import router from 'umi/router';
 import moment from 'moment';
 import styles from './huayi.less';
+import { renderYear } from '@/utils/utils';
+import { goToEdit } from '@/utils/edit';
 
 // import Detail from './detail';
 
 import { queryNews } from '../../services/new';
+import { toEdit } from '../../services/edit';
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -64,7 +67,7 @@ export default class News extends Component {
   getNewsList = (page = 1, year = '') => {
     queryNews({
       page,
-      size: 15,
+      size: 12,
       year,
     }).then(({ success, data, total }) => {
       console.log(data);
@@ -108,10 +111,8 @@ export default class News extends Component {
     });
   };
 
-  openEdit = () => {
-    this.setState({
-      visible: true,
-    });
+  openEdit = async () => {
+    goToEdit('HYEC新闻')
   };
 
   goDetail = (item, type) => {
@@ -175,30 +176,26 @@ export default class News extends Component {
           <Select
             defaultValue=""
             style={{ width: 120, marginBottom: 10 }}
+            size="small"
             onChange={key => {
               this.getNewsList(1, key);
             }}
-          >
-            <Option value="">年度筛选</Option>
-            <Option value="2019">2019</Option>
-            <Option value="2018">2018</Option>
-            <Option value="2017">2017</Option>
-            <Option value="2016">2016</Option>
-            <Option value="2015">2015</Option>
-            <Option value="2014">2014</Option>
-            <Option value="2013">2013</Option>
-            <Option value="2012">2012</Option>
-            <Option value="2011">2011</Option>
+          > 
+            <Option value=''>年度筛选</Option>
+            {renderYear().map(v => (
+              <Option value={v}>{v}</Option>
+                  ))}
           </Select>
 
-          {/* <Button type="link" icon="edit" onClick={this.openEdit}>
+          <Button type="link" icon="edit" onClick={this.openEdit} size="small">
             编辑
-          </Button> */}
+          </Button>
         </div>
         <List
           header={<div style={{ fontWeight: 'bold', fontSize: '18px' }}>HYEC新闻</div>}
           style={{ backgroundColor: '#fff' }}
           bordered
+          size="small"
           dataSource={list}
           pagination={{
             onChange: page => {
@@ -208,7 +205,8 @@ export default class News extends Component {
               this.getNewsList(page);
             },
             total,
-            pageSize: 15,
+            size: 'small',
+            pageSize:12,
           }}
           renderItem={item => (
             <List.Item>

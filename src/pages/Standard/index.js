@@ -161,7 +161,7 @@ class Content extends Component {
   componentDidMount() {
     const { params } = this.state;
     this.fetchContents();
-    this.fetchDocs(params);
+    // this.fetchDocs(params);
   }
 
   handleOk = () => {
@@ -205,6 +205,7 @@ class Content extends Component {
     const key = selectedKeys.length && selectedKeys[0];
     const { params } = this.state;
     params.id = key;
+    params.Name = '';
     this.setState({
       params,
     });
@@ -291,6 +292,7 @@ class Content extends Component {
               <Table
                 columns={ccolumns}
                 dataSource={list}
+                size="small"
                 onRow={record => {
                   return {
                     onClick: event => {
@@ -299,7 +301,7 @@ class Content extends Component {
                   };
                 }}
                 pagination={{
-                  total: total,
+                  total,
                   pageSize: 15,
                   defaultCurrent: 1,
                   onChange: page => {

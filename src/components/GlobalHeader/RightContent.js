@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import { Spin, Tag, Menu, Icon, Avatar, Tooltip, message, Drawer, Button, Popover } from 'antd';
+import Cookies from 'js-cookie';
 import moment from 'moment';
+import Link from 'umi/link';
 import groupBy from 'lodash/groupBy';
 import NoticeIcon from '../NoticeIcon';
 import HeaderSearch from '../HeaderSearch';
@@ -13,7 +15,16 @@ import Usual from '../../pages/Dashboard/UsualProgram';
 import styles from './index.less';
 
 export default class GlobalHeaderRight extends Component {
-  state = { visible: false, placement: 'top'};
+  state = { visible: false, placement: 'top', userInfo: {
+    Name: ''
+  }};
+
+  componentDidMount() {
+    setInterval(() => {
+      this.getCookie();
+    }, 1000);
+    
+  }
 
   showDrawer = () => {
     this.setState({
@@ -65,6 +76,19 @@ export default class GlobalHeaderRight extends Component {
     return groupBy(newNotices, 'type');
   }
 
+  getCookie = () =>  {
+    if(Cookies.get('userInfo')) {
+      try {
+        this.setState({
+          userInfo: JSON.parse(Cookies.get('userInfo') || '{}')
+        })
+      } catch (error) {
+        
+      }
+      
+    }
+  }
+
   getUnreadData = noticeData => {
     const unreadMsg = {};
     Object.entries(noticeData).forEach(([key, value]) => {
@@ -96,9 +120,10 @@ export default class GlobalHeaderRight extends Component {
       onNoticeClear,
       theme,
     } = this.props;
+    const { userInfo } = this.state;
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
-        <Menu.Item key="userCenter">
+        {/* <Menu.Item key="userCenter">
           <Icon type="user" />
           <FormattedMessage id="menu.account.center" defaultMessage="account center" />
         </Menu.Item>
@@ -110,7 +135,7 @@ export default class GlobalHeaderRight extends Component {
           <Icon type="close-circle" />
           <FormattedMessage id="menu.account.trigger" defaultMessage="Trigger Error" />
         </Menu.Item>
-        <Menu.Divider />
+        <Menu.Divider /> */}
         <Menu.Item key="logout">
           <Icon type="logout" />
           <FormattedMessage id="menu.account.logout" defaultMessage="logout" />
@@ -160,6 +185,30 @@ export default class GlobalHeaderRight extends Component {
               </Tag>
             </div>
           </Popover>
+          {userInfo.Name ? (
+
+            <HeaderDropdown overlay={menu}>
+
+              <span className={`${styles.action} ${styles.account}`}>
+
+                <Avatar
+
+                  size="small"
+
+                  className={styles.avatar}
+
+                  src="/images/user1.png"
+
+                  alt="avatar"
+                />
+
+                <span className={styles.name}>{userInfo.Name}</span>
+
+              </span>
+
+            </HeaderDropdown>
+
+        ) : <div style={{marginRight: 20}}><Link to="/Login"><a>登录</a></Link></div>}
         </div>
       </div>
     );

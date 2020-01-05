@@ -4,26 +4,12 @@ import GlobalFooter from '@/components/GlobalFooter';
 
 const { Footer } = Layout;
 const FooterView = () => (
-    <GlobalFooter 
-      links={[
-        {
-          key: '33',
-          title: '华谊工程首页',
-          href: 'https://pro.ant.design',
-          blankTarget: true,
-        },
-        {
-          key: 'github',
-          title: <Icon type="github" />,
-          href: 'https://github.com/ant-design/ant-design-pro',
-          blankTarget: true,
-        },
-      ]}
-      copyright={
-        <Fragment>
-          Copyright <Icon type="copyright" /> 2019 华谊工程
-        </Fragment>
+  <GlobalFooter 
+    copyright={
+      <Fragment>
+       © 2020 Shanghai HuaYi Engineering Co.,Ltd. 版权所有. 保留所有权利 | 商标 | 隐私权声明
+      </Fragment>
       }
-    />
+  />
 );
 export default FooterView;

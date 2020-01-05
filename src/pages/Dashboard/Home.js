@@ -26,7 +26,7 @@ import Cc from './Clendar';
 import HomeBanner from './HomeBanner';
 import { queryNews } from '../../services/new';
 import {
-  queryLoginManage,
+  queryHSEManage,
   queryLeave,
   queryLeaderShare,
   queryMenu,
@@ -106,7 +106,17 @@ const adata = [
   {
     title: '党章电视辅导教材-10',
     link: 'http://www1.hyec.com:8085/KnShare/KeMeetingVideoShow.aspx?id=652',
-    time: '影响分享',
+    time: '影像分享',
+  },
+  {
+    title: '《上海华谊报》总第800期第48期',
+    link: '',
+    time: '电子刊物',
+  },
+  {
+    title: '“不忘初心, 牢记使命”主题教育',
+    link: '',
+    time: '团队互动',
   },
 ];
 
@@ -191,10 +201,14 @@ export default class Home extends Component {
     visible: false,
     placement: 'top',
     newsList: [],
+    newsImageList: [],
     loginManageData: [],
     leaveData: [],
     leaderShareData: [],
     meetingList: [],
+    loginManageImagesData: [],
+    currentDayInfo: {},
+    allMeetingList: []
   };
 
   componentDidMount() {
@@ -203,6 +217,7 @@ export default class Home extends Component {
     this.initLeave();
     this.initLeaderShare();
     this.fetchHuiyiList();
+    this.setDayInfo();
   }
 
   showDrawer = () => {
@@ -211,10 +226,32 @@ export default class Home extends Component {
     });
   };
 
+  setDayInfo = () => {
+    const days = moment().format('YYYY-MM-DD');
+    const splitDay = days.split('-');
+    const curData = calendar.solar2lunar(splitDay[0], splitDay[1], splitDay[2]);
+    console.log(curData);
+    this.setState({
+      currentDayInfo: curData
+    })
+  }
+
   initLoginManage = async () => {
-    const { data } = await queryLoginManage();
+    const { data } = await queryHSEManage({
+      page: 1,
+      size: 7,
+      type: 'list'
+    });
     this.setState({
       loginManageData: data,
+    });
+    const { data: imgData } = await queryHSEManage({
+      page: 1,
+      size: 5,
+      type: 'images'
+    });
+    this.setState({
+      loginManageImagesData: imgData,
     });
   };
 
@@ -236,12 +273,23 @@ export default class Home extends Component {
   getNewsList = (page = 1) => {
     queryNews({
       page,
-      size: 5,
+      size: 7,
     }).then(({ success, data, total }) => {
       console.log(data);
       if (success) {
         this.setState({
           newsList: data,
+        });
+      }
+    });
+    queryNews({
+      page,
+      size: 5,
+      type: 'images'
+    }).then(({ success, data, total }) => {
+      if (success) {
+        this.setState({
+          newsImageList: data,
         });
       }
     });
@@ -251,8 +299,10 @@ export default class Home extends Component {
     const { data, success } = await queryMeetingApply();
     if (success && data.length) {
       // console.log(data[0].NextWeekRow);
+      const allMeetingList = data[0].ThisWeekRow.concat(data[0].StayApprWeekRow).concat(data[0].NextWeekRow);
       this.setState({
-        meetingList: data[0].ThisWeekRow.concat(data[0].StayApprWeekRow),
+        allMeetingList,
+        meetingList: allMeetingList.filter(v=> moment(v.BeginDate).format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')),
       });
     }
   };
@@ -268,9 +318,23 @@ export default class Home extends Component {
       placement: e.target.value,
     });
   };
+  clickImage = (item, type) => {
+    const file = item.FileRow.length && item.FileRow[1].ServerUrl;
 
-  goDetail = (item, type) => {
-    const file = item.FileRow.length && item.FileRow[0].ServerUrl;
+    router.push({
+      pathname: '/dashboard/commondetail',
+      query: {
+        title: item.Name,
+        people: '',
+        date: moment(item.RegDate).format('YYYY-MM-DD'),
+        file,
+        type,
+      },
+    });
+  }
+
+  goDetail = (item, type, fileIndex = 0) => {
+    const file = item.FileRow.length && item.FileRow[fileIndex].ServerUrl;
     const { Name, RegHumName, RegDate } = item;
     if (!file) {
       return;
@@ -296,7 +360,7 @@ export default class Home extends Component {
   // };
 
   render() {
-    const { newsList, leaderShareData, leaveData, loginManageData, meetingList } = this.state;
+    const { newsList, leaderShareData, leaveData, loginManageData, meetingList, newsImageList, loginManageImagesData, currentDayInfo, allMeetingList } = this.state;
 
     return (
       <div>
@@ -315,21 +379,22 @@ export default class Home extends Component {
                     bordered={false}
                     cover={
                       <Carousel autoplay>
+                        {newsImageList.length ? newsImageList.map(img => {
+                          const images = img.FileRow.filter(v => '.jpg.jpeg.png'.indexOf(v.FileExt) !== -1);
+                          return  <img height={200} onClick={() => this.clickImage(img, '新闻')} src={images.length && images[0].ServerUrl} />
+                        }):
                         <img
-                          alt="example"
                           height={200}
                           src={require('../../../public/homeImages/news/2.jpg')}
-                        />
-                        <img
-                          alt="example"
-                          height={200}
-                          src={require('../../../public/homeImages/news/1.jpg')}
-                        />
+                        />}
                       </Carousel>
                     }
                     extra={
                       <Link to="/dashboard/hyecnews">
-                        <Icon style={{ color: '#fff' }} type="more" />
+                      <Tooltip title='更多'  placement="right">
+                      <Icon style={{ color: '#fff' }} type="more" />
+                        </Tooltip>
+                       
                       </Link>
                     }
                   >
@@ -366,11 +431,14 @@ export default class Home extends Component {
                     className="blue-bg grandient-bg"
                     cover={
                       <Carousel autoplay>
+                      {loginManageImagesData.length ? loginManageImagesData.map(img => {
+                          const images = img.FileRow.filter(v => '.jpg.jpeg.png'.indexOf(v.FileExt) !== -1);
+                          return  <img height={200} onClick={() => this.clickImage(img, 'HSE信息')} src={images.length && images[0].ServerUrl} />
+                        }):
                         <img
-                          alt="example"
                           height={200}
                           src={require('../../../public/homeImages/hse/1.jpg')}
-                        />
+                        />}
                         {/* <img
                           alt="example"
                           src="http://5b0988e595225.cdn.sohucs.com/images/20180604/cec8268873f54e70acf9bed4d75fdc18.jpeg"
@@ -384,7 +452,9 @@ export default class Home extends Component {
                     }
                     extra={
                       <Link to="/HSE">
-                        <Icon style={{ color: '#fff' }} type="more" />
+                        <Tooltip title='更多'  placement="right">
+                      <Icon style={{ color: '#fff' }} type="more" />
+                        </Tooltip>
                       </Link>
                     }
                   >
@@ -418,7 +488,7 @@ export default class Home extends Component {
               <Row gutter={16} style={{ marginTop: 14 }}>
                 <Col span={12}>
                   <Card
-                    className="blue-bg"
+                    className="blue-bg grandient-bg"
                     title={<div>知识经验</div>}
                     bordered={false}
                     cover={
@@ -430,7 +500,9 @@ export default class Home extends Component {
                         />
                       </Carousel>
                     }
-                    extra={<Icon style={{ color: '#fff' }} type="more" />}
+                    extra={<a href="http://www1.hyec.com:8085/" target="_blank"><Tooltip title='更多'  placement="right">
+                      <Icon style={{ color: '#fff' }} type="more" />
+                        </Tooltip></a>}
                   >
                     <List
                       itemLayout="horizontal"
@@ -453,7 +525,7 @@ export default class Home extends Component {
                 </Col>
                 <Col span={12}>
                   <Card
-                    className="blue-bg"
+                    className="blue-bg grandient-bg"
                     title={<div>近期培训</div>}
                     bordered={false}
                     cover={
@@ -465,7 +537,9 @@ export default class Home extends Component {
                         />
                       </Carousel>
                     }
-                    extra={<Icon style={{ color: '#fff' }} type="more" />}
+                    extra={<Tooltip title='更多'  placement="right">
+                      <Icon style={{ color: '#fff' }} type="more" />
+                        </Tooltip>}
                   >
                     <List
                       itemLayout="horizontal"
@@ -496,7 +570,9 @@ export default class Home extends Component {
                 bordered={false}
                 extra={
                   <Link to="/dashboard/leaderShare">
-                    <Icon style={{ color: '#fff' }} type="more" />
+                    <Tooltip title='更多'  placement="right">
+                      <Icon style={{ color: '#fff' }} type="more" />
+                        </Tooltip>
                   </Link>
                 }
               >
@@ -593,11 +669,17 @@ export default class Home extends Component {
           <Row gutter={16} style={{ marginTop: 20 }}>
             <Col span={14}>
               <div style={{ display: 'flex', height: '320px' }}>
-                <img
-                  style={{ width: '260px', border: '1px solid #1890ff', borderRight: 'none' }}
-                  onClick={this.showDrawer}
-                  src="http://ww3.sinaimg.cn/large/006tNc79ly1g47yu3i6w5j30la0pawsx.jpg"
-                />
+                <div
+                  style={{ width: '200px', border: '1px solid #1890ff', borderRight: 'none', backgroundColor: '#94c9ff' }}
+                  src="/images/clendar.jpg"
+                >
+                  <p className="op-calendar-new-right-date">{currentDayInfo.date} {currentDayInfo.ncWeek}</p> 
+                  <p className="op-calendar-new-right-day">{currentDayInfo.cDay}</p>
+                  <p className="op-calendar-new-right-lunar c-gap-top-small">
+                    <span>{'星座: ' + currentDayInfo.astro}</span>
+                    <span>{currentDayInfo.IMonthCn + currentDayInfo.IDayCn}</span><span>{currentDayInfo.gzYear}年 【{currentDayInfo.Animal}年】</span><span>{currentDayInfo.gzMonth}月 {currentDayInfo.gzDay}日</span>
+                  </p>                            
+                </div>
                 <div
                   style={{
                     // width: '400px',
@@ -611,17 +693,27 @@ export default class Home extends Component {
                   <Calendar
                     fullscreen={false}
                     onPanelChange={onPanelChange}
+                    onChange={(date) => {
+                      const days = moment(date).format('YYYY-MM-DD');
+                      const splitDay = days.split('-');
+                      this.setState({
+                        currentDayInfo: calendar.solar2lunar(splitDay[0], splitDay[1], splitDay[2])
+                      })
+                      this.setState({
+                        meetingList: allMeetingList.filter(v=> moment(v.BeginDate).format('YYYY-MM-DD') === moment(date).format('YYYY-MM-DD')),
+                      })
+                    }}
                     dateCellRender={time => {
                       const day = moment(time).format('YYYY-MM-DD');
-                      const meetDays = meetingList.map(v => moment(v.RegDate).format('YYYY-MM-DD'));
+                      const meetDays = allMeetingList.map(v => moment(v.BeginDate).format('YYYY-MM-DD'));
+                      //
                       if (meetDays.includes(day)) {
-                        return (
-                          <div className="flex-center">
-                            <Tag color="red">会</Tag>
-                          </div>
-                        );
+                        return (<div className="ccc-meeting-day">会</div>);
                       }
-                     
+                      const splitDay = day.split('-');
+                      console.log(calendar.solar2lunar(splitDay[0], splitDay[1], splitDay[2]))
+                      const curData = calendar.solar2lunar(splitDay[0], splitDay[1], splitDay[2]);
+                      return  <div className="custom-celendar-data">{curData.festival || curData.IDayCn}</div>
                     }}
                   />
                 </div>
@@ -640,9 +732,9 @@ export default class Home extends Component {
                       <Comment
                         // actions={item.actions}
                         author={item.MeetingRoomNo}
-                        // avatar={item.avatar}
+                        avatar={<Tag color="red">会</Tag>}
                         content={item.Name}
-                        datetime={item.RegDate}
+                        datetime={moment(item.BeginDate).format('YYYY-MM-DD hh:mm')}
                       />
                     </li>
                   )}

@@ -144,6 +144,7 @@ export default class Jijian extends React.Component {
                     <Table
                       columns={columns}
                       dataSource={data}
+                      size="small"
                       onRow={record => {
                         return {
                           onClick: event => {
