@@ -70,8 +70,8 @@ const request = extend({
 });
 
 export const cRequest = extend({
-  prefix: '/hy',
-  // prefix: '/PowerService',
+  // npmprefix: '/hy',
+  prefix: '/PowerService',
   timeout: 10000,
   charset: 'gbk'
   // parseResponse: false

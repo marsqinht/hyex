@@ -15,7 +15,7 @@ import {
   Tag,
   Carousel,
 } from 'antd';
-
+import classNames from 'classnames';
 import moment from 'moment';
 import router from 'umi/router';
 import Link from 'umi/link';
@@ -192,9 +192,7 @@ function monthCellRender(value) {
   ) : null;
 }
 
-function onPanelChange(value, mode) {
-  console.log(value, mode);
-}
+
 
 export default class Home extends Component {
   state = {
@@ -208,7 +206,8 @@ export default class Home extends Component {
     meetingList: [],
     loginManageImagesData: [],
     currentDayInfo: {},
-    allMeetingList: []
+    allMeetingList: [],
+    selectedMonth: moment().format('MM')
   };
 
   componentDidMount() {
@@ -232,7 +231,14 @@ export default class Home extends Component {
     const curData = calendar.solar2lunar(splitDay[0], splitDay[1], splitDay[2]);
     console.log(curData);
     this.setState({
-      currentDayInfo: curData
+      currentDayInfo: curData,
+    })
+  }
+
+  onPanelChange = (value, mode) => {
+    console.log(value, mode, 'onPanelChange');
+    this.setState({
+      selectedMonth: moment(value).format('MM')
     })
   }
 
@@ -360,7 +366,7 @@ export default class Home extends Component {
   // };
 
   render() {
-    const { newsList, leaderShareData, leaveData, loginManageData, meetingList, newsImageList, loginManageImagesData, currentDayInfo, allMeetingList } = this.state;
+    const { newsList, selectedMonth, leaderShareData, leaveData, loginManageData, meetingList, newsImageList, loginManageImagesData, currentDayInfo, allMeetingList } = this.state;
 
     return (
       <div>
@@ -576,7 +582,11 @@ export default class Home extends Component {
                   </Link>
                 }
               >
-                <div style={{ height: 210 }}>
+                <div style={{ height: 260}}>
+                  <div style={{display: 'flex'}}>
+                    <img style={{marginBottom: 6}} src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1578233531013&di=de64c2f9f4087b320d4b91b8c959a5b8&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F16%2F53%2F44%2F74N58PICfYu_1024.jpg" width={120}/>
+                    <p style={{color: 'red', marginLeft: 10, cursor: 'pointer'}}>公司2019党风廉政工作金海</p>
+                  </div>
                   {leaderShareData
                     .map(v => {
                       return (
@@ -590,7 +600,7 @@ export default class Home extends Component {
               </Card>
               <Card
                 className="blue-bg grandient-bg"
-                style={{ marginTop: 14, height: 320, overflow: 'hidden' }}
+                style={{ marginTop: 14, height: 260, overflow: 'hidden' }}
                 title={<div>今日请假</div>}
                 bordered={false}
               >
@@ -640,14 +650,14 @@ export default class Home extends Component {
                       <br />
                       <p className={styles.banci}>
                         <Icon
-                          style={{ fontSize: '24px' }}
+                          style={{ fontSize: '20px' }}
                           type="phone"
                           theme="twoTone"
                           twoToneColor="orange"
                         />
                         <p
                           style={{
-                            fontSize: '20px',
+                            fontSize: '14px',
                             color: 'orange',
                             'line-height': 1.2,
                             marginTop: 12,
@@ -657,7 +667,7 @@ export default class Home extends Component {
                           6470588
                         </p>
                       </p>
-                      <p style={{ color: 'orange' }}>公司门卫24小时值班电话</p>
+                      <p style={{ color: 'orange', fontSize: '12px', marginBottom: 6 }}>公司门卫24小时值班电话</p>
                     </div>
                   </div>
                 </Card>
@@ -692,7 +702,7 @@ export default class Home extends Component {
                 >
                   <Calendar
                     fullscreen={false}
-                    onPanelChange={onPanelChange}
+                    onPanelChange={(value, mode) => this.onPanelChange(value, mode)}
                     onChange={(date) => {
                       const days = moment(date).format('YYYY-MM-DD');
                       const splitDay = days.split('-');
@@ -703,6 +713,27 @@ export default class Home extends Component {
                         meetingList: allMeetingList.filter(v=> moment(v.BeginDate).format('YYYY-MM-DD') === moment(date).format('YYYY-MM-DD')),
                       })
                     }}
+                    dateFullCellRender={time => {
+                      const day = moment(time).format('DD');
+                     //  const currM = moment().format('MM');
+                      const renderM = moment(time).format('MM');
+                      const dates = moment(time).format('YYYY-MM-DD');
+                      const splitDay = dates.split('-');
+                      // const meetDays = ['2020-01-07']
+                      const meetDays = allMeetingList.map(v => moment(v.BeginDate).format('YYYY-MM-DD'));
+                      const curData = calendar.solar2lunar(splitDay[0], splitDay[1], splitDay[2]);
+                      const cls = classNames('custom-days', {
+                        'no-curr-month': selectedMonth !== renderM,
+                        'c-huiyi': meetDays.includes(dates)
+                      })
+                      return <div className={cls}>
+                        <div className="c-day-tag">会</div>
+                        <div className="c-day">{day}</div>
+                        <div className="custom-celendar-data">{curData.festival || curData.IDayCn}</div>
+                      </div>
+                    }
+
+                    }
                     dateCellRender={time => {
                       const day = moment(time).format('YYYY-MM-DD');
                       const meetDays = allMeetingList.map(v => moment(v.BeginDate).format('YYYY-MM-DD'));
