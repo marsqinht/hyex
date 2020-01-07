@@ -43,9 +43,9 @@ body,
   line-height: 1;
   text-align: center;
 }
-.c-huiyi {
-  background-color: rgba(230, 230, 250, 0.8);
-}
+// .c-huiyi {
+//   background-color: rgba(230, 230, 250, 0.8);
+// }
 .no-curr-month {
   color: rgba(0, 0, 0, 0.25);
 }
@@ -211,7 +211,6 @@ body,
   }
   .c-day-tag {
     color: #fff;
-    background: #bdbdff;
     display: none;
     width: 16px;
     height: 16px;
@@ -220,10 +219,33 @@ body,
     left: 2px;
     top: 2px;
   }
+  &.is-common-week {
+    .c-day {
+      color: red;
+    }
+  }
   &.c-huiyi {
+    background-color: rgba(230, 230, 250, 0.8);
     .c-day-tag {
       display: block;
       background: #bdbdff;
+    }
+    
+  }
+  //198,226,255
+  &.is-tiaoban {
+    background-color: rgba(198,226,255, 0.4);
+    .c-day-tag {
+      display: block;
+      background: #A4D3EE;
+    }
+    
+  }
+  &.is-fading-holiday {
+    background-color: rgba(255,228,225, 0.4);
+    .c-day-tag {
+      display: block;
+      background: #EE799F;
     }
     
   }

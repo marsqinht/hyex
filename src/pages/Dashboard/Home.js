@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 import router from 'umi/router';
 import Link from 'umi/link';
-
+import request from 'umi-request';
 import styles from './Home.less';
 import ImageD from './image3D';
 import Cc from './Clendar';
@@ -207,7 +207,8 @@ export default class Home extends Component {
     loginManageImagesData: [],
     currentDayInfo: {},
     allMeetingList: [],
-    selectedMonth: moment().format('MM')
+    selectedMonth: moment().format('MM'),
+    curYearHoliday: {}
   };
 
   componentDidMount() {
@@ -217,6 +218,7 @@ export default class Home extends Component {
     this.initLeaderShare();
     this.fetchHuiyiList();
     this.setDayInfo();
+    this.setCurrYearHoliady(moment().format('YYYY'))
   }
 
   showDrawer = () => {
@@ -224,6 +226,16 @@ export default class Home extends Component {
       visible: true,
     });
   };
+
+  setCurrYearHoliady = async (year = '') => {
+    const res = await request.get(`http://timor.tech/api/holiday/year/${year}`);
+    console.log(res, 'erweer');
+    if(res.code === 0) {
+      this.setState({
+        curYearHoliday: res.holiday
+      })
+    }
+  }
 
   setDayInfo = () => {
     const days = moment().format('YYYY-MM-DD');
@@ -240,6 +252,7 @@ export default class Home extends Component {
     this.setState({
       selectedMonth: moment(value).format('MM')
     })
+    this.setCurrYearHoliady(moment(value).format('YYYY'));
   }
 
   initLoginManage = async () => {
@@ -366,7 +379,7 @@ export default class Home extends Component {
   // };
 
   render() {
-    const { newsList, selectedMonth, leaderShareData, leaveData, loginManageData, meetingList, newsImageList, loginManageImagesData, currentDayInfo, allMeetingList } = this.state;
+    const { newsList, selectedMonth, curYearHoliday, leaderShareData, leaveData, loginManageData, meetingList, newsImageList, loginManageImagesData, currentDayInfo, allMeetingList } = this.state;
 
     return (
       <div>
@@ -583,10 +596,10 @@ export default class Home extends Component {
                 }
               >
                 <div style={{ height: 260}}>
-                  <div style={{display: 'flex'}}>
-                    <img style={{marginBottom: 6}} src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1578233531013&di=de64c2f9f4087b320d4b91b8c959a5b8&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F16%2F53%2F44%2F74N58PICfYu_1024.jpg" width={120}/>
-                    <p style={{color: 'red', marginLeft: 10, cursor: 'pointer'}}>公司2019党风廉政工作金海</p>
-                  </div>
+                  {leaderShareData.length && <div style={{display: 'flex'}}>
+                    <img style={{marginBottom: 6}} src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1578233531013&di=de64c2f9f4087b320d4b91b8c959a5b8&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F16%2F53%2F44%2F74N58PICfYu_1024.jpg" width={120} height={155}/>
+                    <p style={{color: 'red', marginLeft: 10, cursor: 'pointer'}} onClick={() => this.goDetail(leaderShareData[0], '学习分享')}>{leaderShareData[0].Name}</p>
+                  </div>}
                   {leaderShareData
                     .map(v => {
                       return (
@@ -595,7 +608,7 @@ export default class Home extends Component {
                         </a>
                       );
                     })
-                    .filter((v, index) => index < 6)}
+                    .filter((v, index) => index < 7 && index > 0)}
                 </div>
               </Card>
               <Card
@@ -718,18 +731,40 @@ export default class Home extends Component {
                      //  const currM = moment().format('MM');
                       const renderM = moment(time).format('MM');
                       const dates = moment(time).format('YYYY-MM-DD');
+                      const mmdd = moment(time).format('MM-DD');
                       const splitDay = dates.split('-');
                       // const meetDays = ['2020-01-07']
                       const meetDays = allMeetingList.map(v => moment(v.BeginDate).format('YYYY-MM-DD'));
                       const curData = calendar.solar2lunar(splitDay[0], splitDay[1], splitDay[2]);
-                      const cls = classNames('custom-days', {
+                      const isWeek = curData.ncWeek === '星期六' || curData.ncWeek === '星期日';
+  
+                      let clsName = '';
+                      const textMap = {
+                        'c-huiyi': '会',
+                        'is-fading-holiday': '休',
+                        'is-tiaoban': '班'
+                      }
+                      const todayHoliday = curYearHoliday[mmdd];
+                      let lunarDay = curData.festival || curData.IDayCn;
+                      if(todayHoliday) {
+                        if(todayHoliday.holiday) {
+                          clsName = 'is-fading-holiday';
+                          lunarDay = todayHoliday.name;
+                        }  else {
+                          clsName = 'is-tiaoban';
+                        }
+                      }
+                      if(meetDays.includes(dates)) {
+                        clsName = 'c-huiyi';
+                      }
+                      const cls = classNames('custom-days', clsName, {
                         'no-curr-month': selectedMonth !== renderM,
-                        'c-huiyi': meetDays.includes(dates)
+                        'is-common-week':  isWeek && !curYearHoliday[mmdd] && (selectedMonth === renderM)
                       })
                       return <div className={cls}>
-                        <div className="c-day-tag">会</div>
+                        <div className="c-day-tag">{textMap[clsName] || ''}</div>
                         <div className="c-day">{day}</div>
-                        <div className="custom-celendar-data">{curData.festival || curData.IDayCn}</div>
+                        <div className="custom-celendar-data">{lunarDay}</div>
                       </div>
                     }
 

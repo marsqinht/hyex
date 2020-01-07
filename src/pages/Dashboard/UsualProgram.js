@@ -84,14 +84,15 @@ export default class Workplace extends React.Component {
         {Items.map(v => {
           return (
             <li className={styles.uli}>
-              <Tooltip placement="bottom" title={v.name}>
-                <div className={styles.icon}>
-                  <a href={v.link || 'javascript:;'} target={v.target || ''} onClick={v.onClick || noop}>
-                    <IconFont type={v.icon} />
-                  </a>
-                </div>
-              </Tooltip>
-              {/* <p className={styles.name}>{v.name}</p> */}
+              {/* <Tooltip placement="bottom" title={v.name}> */}
+              <div className={styles.icon}>
+                <a href={v.link || 'javascript:;'} target={v.target || ''} onClick={v.onClick || noop}>
+                  <IconFont type={v.icon} />
+                  {/* <p className={styles.name}>{v.name}</p> */}
+                </a>
+              </div>
+              <p className={styles.name}>{v.name}</p>
+              {/* </Tooltip> */}
             </li>
           );
         })}

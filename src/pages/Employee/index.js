@@ -357,7 +357,7 @@ class Employee extends React.Component {
                       >
                         <Option value="name">按中文名</Option>
                         <Option value="code">按英文</Option>
-                        <Option value="phone">按室号</Option>
+                        <Option value="phone">按分机号</Option>
                         {/* <Option value="lucy">按部门</Option> */}
                       </Select>
                       <Search
@@ -423,7 +423,7 @@ class Employee extends React.Component {
                                   {detailInfo.PosiName}
                                 </Descriptions.Item>
                                 <Descriptions.Item label="直线">
-                                  {detailInfo.Phone}
+                                  {detailInfo.StraightLine}
                                 </Descriptions.Item>
                                 <Descriptions.Item label="分机">
                                   {detailInfo.Phone}
