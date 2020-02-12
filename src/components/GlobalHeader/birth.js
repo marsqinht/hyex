@@ -12,7 +12,7 @@ const info = item => {
           <br />
           部门: {item.dept}
           <br />
-          室号: {item.RegHumName}
+          室号: {item.RoomNumber}
           <br />
           分机: {item.Phone}
           <br />

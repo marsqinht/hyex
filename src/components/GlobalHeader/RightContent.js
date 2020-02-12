@@ -178,13 +178,100 @@ export default class GlobalHeaderRight extends Component {
           }
             trigger="hover"
           >
-            <div style={{height: '40px', 'paddingRight': '30px'}}>
+            <div style={{height: '40px', 'paddingRight': '10px'}}>
               <Tag color="#07C160" style={{ cursor: 'pointer' }}>
                 <Icon type="wechat" />
                 <span style={{ color: '#fff', cursor: 'pointer' }}>关注微信</span>
               </Tag>
             </div>
           </Popover>
+          {/* <NoticeIcon
+
+            className={styles.action}
+
+            count={currentUser.unreadCount}
+
+            onItemClick={(item, tabProps) => {
+
+            console.log(item, tabProps); // eslint-disable-line
+
+            this.changeReadState(item, tabProps);
+
+          }}
+
+            loading={fetchingNotices}
+
+            locale={{
+
+            emptyText: formatMessage({ id: 'component.noticeIcon.empty' }),
+
+            clear: formatMessage({ id: 'component.noticeIcon.clear' }),
+
+            viewMore: formatMessage({ id: 'component.noticeIcon.view-more' }),
+
+            notification: formatMessage({ id: 'component.globalHeader.notification' }),
+
+            message: formatMessage({ id: 'component.globalHeader.message' }),
+
+            event: formatMessage({ id: 'component.globalHeader.event' }),
+
+          }}
+
+            onClear={onNoticeClear}
+
+            onPopupVisibleChange={onNoticeVisibleChange}
+
+            onViewMore={() => message.info('Click on view more')}
+
+            clearClose
+          >
+
+            <NoticeIcon.Tab
+
+              count={unreadMsg.notification}
+
+              list={noticeData.notification}
+
+              title="notification"
+
+              emptyText={formatMessage({ id: 'component.globalHeader.notification.empty' })}
+
+              emptyImage="https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg"
+
+              showViewMore
+            />
+
+            <NoticeIcon.Tab
+
+              count={unreadMsg.message}
+
+              list={noticeData.message}
+
+              title="message"
+
+              emptyText={formatMessage({ id: 'component.globalHeader.message.empty' })}
+
+              emptyImage="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg"
+
+              showViewMore
+            />
+
+            <NoticeIcon.Tab
+
+              count={unreadMsg.event}
+
+              list={noticeData.event}
+
+              title="event"
+
+              emptyText={formatMessage({ id: 'component.globalHeader.event.empty' })}
+
+              emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
+
+              showViewMore
+            />
+
+          </NoticeIcon> */}
           {userInfo.Name ? (
 
             <HeaderDropdown overlay={menu}>
@@ -197,7 +284,7 @@ export default class GlobalHeaderRight extends Component {
 
                   className={styles.avatar}
 
-                  src="/images/user1.png"
+                  src="/images/user.png"
 
                   alt="avatar"
                 />

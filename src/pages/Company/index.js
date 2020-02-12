@@ -29,6 +29,49 @@ const { TabPane } = Tabs;
 const { TreeNode } = Tree;
 const { Option } = Select;
 const { Dragger } = Upload;
+
+const goDetail = (item, type = '') => {
+  const file = item.FileRow.length && item.FileRow[0].ServerUrl;
+  const { Name, RegHumName, RegDate } = item;
+  if (!file) {
+    return;
+  }
+  const s = item.FileRow[0];
+  const ext = s.FileExt;
+  if (ext === '.pdf' || ext === '.doc' || ext === '.docx') {
+    router.push({
+      pathname: '/dashboard/commondetail',
+      query: {
+        title: Name,
+        people: RegHumName,
+        date: moment(RegDate).format('YYYY-MM-DD'),
+        file,
+        type,
+      },
+    });
+  } else {
+    window.open(file);
+  }
+};
+const columns = [
+  {
+    title: '标准文号',
+    dataIndex: 'FileCode'
+  },
+  {
+    title: '文件标题',
+    // dataIndex: 'Name',
+    render: item => <a href="javascript:;" onClick={() => goDetail(item, '公司发文')}> <div>{item.Name}</div></a>
+  },
+  {
+    title: '状态',
+    dataIndex: 'Status',
+  },
+  {
+    title: '时间',
+    dataIndex: 'RegDate',
+    render: time => <div>{moment(time).format('YYYY-MM-DD')}</div>,
+  }]
 const props = {
   name: 'file',
   multiple: true,
@@ -66,7 +109,7 @@ class Content extends React.Component {
 
   componentDidMount() {
     this.fetchTree();
-    this.fetchData();
+    this.fetchData(1, moment().format('YYYY'));
     this.fetchSummary()
   }
 
@@ -309,7 +352,7 @@ class Content extends React.Component {
             </Button>
           </div>
         </div>
-        <List
+        {typeName === '管理例会' ?  <List
           header={<div style={{ textAlign: 'center', color: '#1890FF' }}>文档主题</div>}
           bordered
           size="small"
@@ -325,7 +368,12 @@ class Content extends React.Component {
               </div>
             </List.Item>
           )}
-        />
+        /> : <Table
+          columns={columns}
+          dataSource={data}
+          size="small"
+        />}
+       
       </div>
     );
   }

@@ -37,3 +37,7 @@ export async function queryMenu() {
 export async function doLogin(params) {
   return cRequest(`/Login?${stringify(params)}`);
 }
+
+export async function goHse(params) {
+  return cRequest(`/LoginPMS?${stringify(params)}`)
+}

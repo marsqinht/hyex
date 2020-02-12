@@ -15,6 +15,7 @@ const { SubMenu } = Menu;
 //   icon: 'icon-geren' #For Iconfont ,
 //   icon: 'http://demo.com/icon.png',
 //   icon: <Icon type="setting" />,
+let a = 0;
 const getIcon = icon => {
   if (typeof icon === 'string') {
     if (isUrl(icon)) {
@@ -145,12 +146,14 @@ export default class BaseMenu extends PureComponent {
       fixedHeader,
       layout,
     } = this.props;
+    console.log(openKeys,'openKeys');
     // if pathname can't match, use the nearest parent's key
     let selectedKeys = this.getSelectedMenuKeys(pathname);
     if (!selectedKeys.length && openKeys) {
       selectedKeys = [openKeys[openKeys.length - 1]];
     }
-    let props = {};
+    let props = {
+    };
     if (openKeys && !collapsed) {
       props = {
         openKeys: openKeys.length === 0 ? [...selectedKeys] : openKeys,
@@ -160,7 +163,12 @@ export default class BaseMenu extends PureComponent {
     const cls = classNames(className, {
       'top-nav-menu': mode === 'horizontal',
     });
-
+    if(Array.isArray(openKeys) && a === 0) {
+      openKeys.push('/dashboard');
+      a++;
+    }
+    
+    console.log(props)
     return (
       <>
         <Menu
@@ -172,6 +180,7 @@ export default class BaseMenu extends PureComponent {
           style={style}
           className={cls}
           {...props}
+          defaultOpenKeys={['/dashboard']}
           getPopupContainer={() => this.getPopupContainer(fixedHeader, layout)}
         >
           {this.getNavMenuItems(menuData)}

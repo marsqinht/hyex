@@ -24,10 +24,14 @@ export default class Huayi extends Component {
           cover={
             <img
               alt="example"
-              src={require('../../../public/images/log_with_txt.jpg')}
+              width={240}
+              height={160}
+              src={require('../../../public/images/huayidd.jpeg')}
             />
           }
-        />
+        >
+          <Meta title="华谊工程" style={{textAlign: 'center'}} />
+        </Card>
         <Card
           hoverable
           style={{ width: 240 }}
@@ -35,11 +39,13 @@ export default class Huayi extends Component {
           cover={
             <img
               alt="example"
-              src={require('../../../public/images/zhiduhuibian.jpg')}
+              width={240}
+              height={160}
+              src={require('../../../public/images/shu.jpeg')}
             />
           }
         >
-          <Meta title="制度汇编" />
+          <Meta title="制度汇编" style={{textAlign: 'center'}} />
         </Card>
       </div>
     );

@@ -3,6 +3,7 @@ import BannerAnim from 'rc-banner-anim';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import 'rc-banner-anim/assets/index.css';
 import { Button, Icon } from 'antd';
+import Cookies from 'js-cookie';
 import styles from './HomeBanner.less';
 
 const { Element, Arrow, Thumb } = BannerAnim;
@@ -13,6 +14,11 @@ export default class Demo extends Component {
   constructor() {
     super(...arguments);
     this.imgArray = [
+      {
+        img: require('../../../public/images/yejing.png'),
+        title: '',
+        content: ''
+      },
       {
         img: require('../../../public/homeImages/carousel/1.jpg'),
         title: '五年规划',
@@ -208,6 +214,16 @@ export default class Demo extends Component {
     }
   }
 
+  componentDidMount() {
+    if(!this.timer) {
+      this.timer = setInterval(() => {
+        this.setState({
+          isShouQi: Cookies.get('closeBannar') === '1'
+        })
+      }, 200);
+    }
+  }
+
   getNextPrevNumber() {
     let nextInt = this.state.intShow + 1;
     let prevInt = this.state.intShow - 1;
@@ -269,7 +285,7 @@ export default class Demo extends Component {
       <div>
         {' '}
         <Button
-          style={{ display: !isShouQi ? 'none' : 'block' }}
+          style={{ display: !isShouQi ? 'none' : 'none' }}
           onClick={() => this.setState({ isShouQi: false })}
         >
           显示公司文化图
@@ -279,7 +295,13 @@ export default class Demo extends Component {
           className={styles.content}
           style={{ display: isShouQi ? 'none' : 'block', height: isShouQi ? 0 : 'auto' }}
         >
-          <div className={styles.arrow} onClick={() => this.setState({ isShouQi: true })}>
+          <div
+            className={styles.arrow}
+            onClick={() => {
+            Cookies.set('closeBannar','1');
+            this.setState({ isShouQi: true })
+            }}
+          >
             <Icon type="up" />
             收起
           </div>
@@ -301,10 +323,9 @@ export default class Demo extends Component {
                       backgroundImage: `url(${v.img})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
-                      filter: 'blur(1px)',
                     }}
                   />
-                  <div className="home-banner-bg" />
+                  <div className={index === 0 ? 'home-banner-bg': 'home-banner-bg-no'} />
                   <TweenOne
                     className="banner-user-title"
                     animation={{ y: 30, opacity: 0, type: 'from' }}

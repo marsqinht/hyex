@@ -161,7 +161,7 @@ export default [
         routes: [
           {
             name: '公司工作手册',
-            path: 'http://www1.hyec.com:8501/Index.aspx',
+            path: 'http://std.hyec.com:8501/',
             target: '_blank',
           },
           {
@@ -196,13 +196,13 @@ export default [
       },
 
       {
-        path: 'http://www1.hyec.com:8085/',
+        path: 'http://km.hyec.com:8085/',
         target: '_blank', // 点击新窗口打开
         name: '知识经验KM',
         icon: 'cluster',
       },
       {
-        path: 'http://www1.hyec.com:8082/',
+        path: 'http://hrs.hyec.com:8082/',
         target: '_blank', // 点击新窗口打开
         name: '人力资源HRS',
         icon: 'read',
@@ -220,17 +220,17 @@ export default [
         icon: 'usergroup-add',
       },
       {
-        path: 'http://www1.hyec.com:8087/AMS/it/user/login.asp',
+        path: 'http://ams.hyec.com:8087/',
         target: '_blank', //
         name: '办公资产AMS',
         icon: 'audit',
       },
-      {
-        path: 'http://10.43.1.100:8085/',
-        target: '_blank', //
-        name: '项目网站',
-        icon: 'link',
-      },
+      // {
+      //   path: 'http://10.43.1.100:8085/',
+      //   target: '_blank', //
+      //   name: '项目网站',
+      //   icon: 'link',
+      // },
       {
         path: '/other',
         name: '友情链接',

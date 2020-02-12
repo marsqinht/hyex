@@ -137,6 +137,7 @@ export default class Huiyi extends React.Component {
       page,
       size: 8,
       hsetype,
+      type: 'HSE适用法规',
       Name: name,
       year
     })

@@ -338,7 +338,8 @@ export default class Home extends Component {
     });
   };
   clickImage = (item, type) => {
-    const file = item.FileRow.length && item.FileRow[1].ServerUrl;
+     let doc = item.FileRow.filter(v => '.jpg.jpeg.png'.indexOf(v.FileExt) === -1);
+    const file = doc.length && doc[0].ServerUrl;
 
     router.push({
       pathname: '/dashboard/commondetail',
@@ -399,13 +400,22 @@ export default class Home extends Component {
                     cover={
                       <Carousel autoplay>
                         {newsImageList.length ? newsImageList.map(img => {
+                          const name = img.Name;
                           const images = img.FileRow.filter(v => '.jpg.jpeg.png'.indexOf(v.FileExt) !== -1);
-                          return  <img height={200} onClick={() => this.clickImage(img, '新闻')} src={images.length && images[0].ServerUrl} />
+                          return  <div className={styles.imageList}>
+                            <img className={styles.image1} height={200} onClick={() => this.clickImage(img, '新闻')} src={images.length && images[0].ServerUrl} />
+                            <div className={styles.imageName}>{name}</div>
+                          </div>
                         }):
+                        <div className={styles.imageList}>
                         <img
+                        className={styles.image1}
                           height={200}
                           src={require('../../../public/homeImages/news/2.jpg')}
-                        />}
+                        />
+                        <div className={styles.imageName}>每日新闻</div>
+                        </div>
+                        }
                       </Carousel>
                     }
                     extra={
@@ -451,8 +461,12 @@ export default class Home extends Component {
                     cover={
                       <Carousel autoplay>
                       {loginManageImagesData.length ? loginManageImagesData.map(img => {
+                        const name = img.Name;
                           const images = img.FileRow.filter(v => '.jpg.jpeg.png'.indexOf(v.FileExt) !== -1);
-                          return  <img height={200} onClick={() => this.clickImage(img, 'HSE信息')} src={images.length && images[0].ServerUrl} />
+                          return  <div className={styles.imageList}>
+                            <img className={styles.image1} height={200} onClick={() => this.clickImage(img, 'HSE信息')} src={images.length && images[0].ServerUrl} />
+                            <div className={styles.imageName}>{name}</div>
+                          </div>
                         }):
                         <img
                           height={200}
@@ -491,11 +505,11 @@ export default class Home extends Component {
                             <Tooltip placement="top" title={item.Name}>
                               <div className={styles.newsTitle}>{item.Name}</div>
                             </Tooltip>
-                            {this.renderNew(moment(item.RegDate).format('YYYY-MM-DD')) && (
+                            {this.renderNew(moment(item.PublishDate).format('YYYY-MM-DD')) && (
                               <div className={styles.newTag} />
                             )}
                             <div style={{ color: '#333' }}>
-                              {moment(item.RegDate).format('YYYY-MM-DD')}
+                              {moment(item.PublishDate).format('YYYY-MM-DD')}
                             </div>
                           </div>
                         </List.Item>
@@ -510,15 +524,6 @@ export default class Home extends Component {
                     className="blue-bg grandient-bg"
                     title={<div>知识经验</div>}
                     bordered={false}
-                    cover={
-                      <Carousel autoplay>
-                        <img
-                          alt="example"
-                          height={230}
-                          src={require('../../../public/homeImages/knowledage/1.jpg')}
-                        />
-                      </Carousel>
-                    }
                     extra={<a href="http://www1.hyec.com:8085/" target="_blank"><Tooltip title='更多'  placement="right">
                       <Icon style={{ color: '#fff' }} type="more" />
                         </Tooltip></a>}
@@ -547,15 +552,6 @@ export default class Home extends Component {
                     className="blue-bg grandient-bg"
                     title={<div>近期培训</div>}
                     bordered={false}
-                    cover={
-                      <Carousel autoplay>
-                        <img
-                          alt="example"
-                          height={230}
-                          src={require('../../../public/homeImages/training/1.jpg')}
-                        />
-                      </Carousel>
-                    }
                     extra={<Tooltip title='更多'  placement="right">
                       <Icon style={{ color: '#fff' }} type="more" />
                         </Tooltip>}
@@ -597,7 +593,7 @@ export default class Home extends Component {
               >
                 <div style={{ height: 260}}>
                   {leaderShareData.length && <div style={{display: 'flex'}}>
-                    <img style={{marginBottom: 6}} src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1578233531013&di=de64c2f9f4087b320d4b91b8c959a5b8&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F16%2F53%2F44%2F74N58PICfYu_1024.jpg" width={120} height={155}/>
+                    <img style={{marginBottom: 6}} src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1578233531013&di=de64c2f9f4087b320d4b91b8c959a5b8&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F16%2F53%2F44%2F74N58PICfYu_1024.jpg" width={120} height={120}/>
                     <p style={{color: 'red', marginLeft: 10, cursor: 'pointer'}} onClick={() => this.goDetail(leaderShareData[0], '学习分享')}>{leaderShareData[0].Name}</p>
                   </div>}
                   {leaderShareData
@@ -613,11 +609,11 @@ export default class Home extends Component {
               </Card>
               <Card
                 className="blue-bg grandient-bg"
-                style={{ marginTop: 14, height: 260, overflow: 'hidden' }}
+                style={{ marginTop: 14, height: 368, overflow: 'hidden' }}
                 title={<div>今日请假</div>}
                 bordered={false}
               >
-                <div style={{ overflow: 'hidden', height: 300 }}>
+                <div style={{ overflow: 'hidden', height: 320 }}>
                   <List
                     className={leaveData.length > 8 ? 'mymove' : ''}
                     style={{ position: 'relative' }}
@@ -626,65 +622,20 @@ export default class Home extends Component {
                     dataSource={leaveData}
                     renderItem={item => (
                       <List.Item
-                        actions={[
-                          <a style={{ color: colorMap[item.LeaveType] }}>{item.LeaveType}</a>,
-                        ]}
                       >
-                        <Popover content={leaveInfo(item)} title="员工信息" placement="left">
-                          {item.Name}
-                        </Popover>
+                        <div style={{display: 'flex',justifyContent: 'space-between', width: '100%'}}>
+                          <Popover content={leaveInfo(item)} title="员工信息" placement="left">
+                            {item.Name}
+                          </Popover>
+                          <a style={{ color: colorMap[item.LeaveType] }}>{item.LeaveType}</a>
+                        </div>
+                        
                       </List.Item>
                     )}
                   />
                 </div>
               </Card>
-              <div className={styles.margin}>
-                {/* <UsualProgram /> */}
-                <Card
-                  className="blue-bg grandient-bg"
-                  title={<div>服务中心</div>}
-                  style={{ marginTop: 20 }}
-                  bordered={false}
-                >
-                  <div className={styles.serv}>
-                    <div style={{ width: '100%' }}>
-                      <a>华谊信息运维</a>
-                      <p>
-                        6# 号楼: <br /> 李建新(703897) 丁毅(703895) <br /> 孟爽(703893) 钟强(703889){' '}
-                        <br /> 李磊(709195)
-                      </p>
-                    </div>
-                    <div style={{ width: '100%' }}>
-                      <a>大楼设备维修</a>
-                      <p>11# 号楼: 刘洪(703882)</p>
-                    </div>
-                    <div style={{ width: '100%' }}>
-                      <a>联系电话</a>
-                      <br />
-                      <p className={styles.banci}>
-                        <Icon
-                          style={{ fontSize: '20px' }}
-                          type="phone"
-                          theme="twoTone"
-                          twoToneColor="orange"
-                        />
-                        <p
-                          style={{
-                            fontSize: '14px',
-                            color: 'orange',
-                            'line-height': 1.2,
-                            marginTop: 12,
-                            marginLeft: 10,
-                          }}
-                        >
-                          6470588
-                        </p>
-                      </p>
-                      <p style={{ color: 'orange', fontSize: '12px', marginBottom: 6 }}>公司门卫24小时值班电话</p>
-                    </div>
-                  </div>
-                </Card>
-              </div>
+            
             </Col>
           </Row>
 
@@ -809,7 +760,52 @@ export default class Home extends Component {
             </Col>
           </Row>
           <div />
-
+          <div className={styles.margin}>
+                <Card
+                  className="blue-bg grandient-bg"
+                  title={<div>服务中心</div>}
+                  style={{ marginTop: 20 }}
+                  bordered={false}
+                >
+                  <div className={styles.serv}>
+                    <div style={{ width: '100%' }}>
+                      <a>华谊信息运维</a>
+                      <p>
+                        6# 号楼: <br /> 李建新(703897) 丁毅(703895) <br /> 孟爽(703893) 钟强(703889){' '}
+                        <br /> 李磊(709195)
+                      </p>
+                    </div>
+                    <div style={{ width: '100%' }}>
+                      <a>大楼设备维修</a>
+                      <p>11# 号楼: 刘洪(703882)</p>
+                    </div>
+                    <div style={{ width: '100%' }}>
+                      <a>联系电话</a>
+                      <br />
+                      <p className={styles.banci}>
+                        <Icon
+                          style={{ fontSize: '20px' }}
+                          type="phone"
+                          theme="twoTone"
+                          twoToneColor="orange"
+                        />
+                        <p
+                          style={{
+                            fontSize: '14px',
+                            color: 'orange',
+                            'line-height': 1.2,
+                            marginTop: 12,
+                            marginLeft: 10,
+                          }}
+                        >
+                          64705888
+                        </p>
+                      </p>
+                      <p style={{ color: 'orange', fontSize: '12px', marginBottom: 6 }}>公司门卫24小时值班电话</p>
+                    </div>
+                  </div>
+                </Card>
+              </div>          
           <Drawer
             title="完整日历"
             height={880}

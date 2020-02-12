@@ -224,7 +224,7 @@ class Employee extends React.Component {
       WorkRow: [],
     },
     userMapByRoom: {},
-    currentSearchKey: 'name',
+    currentSearchKey: 'code',
   };
 
   componentDidMount() {
@@ -351,12 +351,13 @@ class Employee extends React.Component {
                   <Card>
                     <div>
                       <Select
-                        defaultValue="name"
+                        defaultValue="code"
                         style={{ width: 120 }}
                         onChange={key => this.setState({ currentSearchKey: key })}
                       >
+                      <Option value="code">按英文</Option>
                         <Option value="name">按中文名</Option>
-                        <Option value="code">按英文</Option>
+                       
                         <Option value="phone">按分机号</Option>
                         {/* <Option value="lucy">按部门</Option> */}
                       </Select>
