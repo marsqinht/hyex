@@ -66,7 +66,7 @@ const leaveInfo = item => {
           <br />
           部门: {item.dept}
           <br />
-          室号: {item.RegHumName}
+          室号: {item.RoomNumbergbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv}
           <br />
           分机: {item.Phone}
           <br />
@@ -85,41 +85,40 @@ const leaveInfo = item => {
 const adata = [
   {
     title: '喜报：华谊钦州醋酸项目胜利开工！',
-    link: 'http://www1.hyec.com:8085/GroupForum/ForumDetail.aspx?topicid=969&forumid=1005',
+    link: 'http://10.43.1.240:8085/GroupForum/ForumDetail.aspx?topicid=969&forumid=1005',
     time: '华谊工程科技园',
   },
   {
     title: '罐顶计算公式比较',
-    link: 'http://www1.hyec.com:8085/KnShare/KeTopicShow.aspx?id=2309',
+    link: 'http://10.43.1.240:8085/KnShare/KeTopicShow.aspx?id=2309',
     time: '知识互动',
   },
   {
     title: '应急照明',
-    link: 'http://www1.hyec.com:8085/KnShare/KePracShow.aspx?id=2901',
+    link: 'http://10.43.1.240:8085/KnShare/KePracShow.aspx?id=2901',
     time: '最佳实践',
   },
   {
     title: '2019年全国聚氯乙烯行业技术年会总结',
-    link: 'http://www1.hyec.com:8085/KnShare/KeOtherDataShow.aspx?id=5689',
+    link: 'http://10.43.1.240:8085/KnShare/KeOtherDataShow.aspx?id=5689',
     time: '资料分享',
   },
   {
     title: '党章电视辅导教材-10',
-    link: 'http://www1.hyec.com:8085/KnShare/KeMeetingVideoShow.aspx?id=652',
+    link: 'http://10.43.1.240:8085/KnShare/KeMeetingVideoShow.aspx?id=652',
     time: '影像分享',
   },
   {
-    title: '《上海华谊报》总第800期第48期',
-    link: '',
+    title: '2020形势任务宣传特刊',
+    link: 'http://10.43.1.240:8085/DigitalBook/DigitalBookDetail.aspx?booktype=&id=3012',
     time: '电子刊物',
   },
   {
     title: '“不忘初心, 牢记使命”主题教育',
-    link: '',
+    link: 'http://10.43.1.240:8085/GroupForum/ForumDetail.aspx?topicid=970&forumid=1003',
     time: '团队互动',
   },
 ];
-
 
 const IconFont = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1251765_mco4fu4f3kr.js',
@@ -192,8 +191,6 @@ function monthCellRender(value) {
   ) : null;
 }
 
-
-
 export default class Home extends Component {
   state = {
     visible: false,
@@ -208,7 +205,7 @@ export default class Home extends Component {
     currentDayInfo: {},
     allMeetingList: [],
     selectedMonth: moment().format('MM'),
-    curYearHoliday: {}
+    curYearHoliday: {},
   };
 
   componentDidMount() {
@@ -218,7 +215,7 @@ export default class Home extends Component {
     this.initLeaderShare();
     this.fetchHuiyiList();
     this.setDayInfo();
-    this.setCurrYearHoliady(moment().format('YYYY'))
+    this.setCurrYearHoliady(moment().format('YYYY'));
   }
 
   showDrawer = () => {
@@ -230,12 +227,12 @@ export default class Home extends Component {
   setCurrYearHoliady = async (year = '') => {
     const res = await request.get(`http://timor.tech/api/holiday/year/${year}`);
     console.log(res, 'erweer');
-    if(res.code === 0) {
+    if (res.code === 0) {
       this.setState({
-        curYearHoliday: res.holiday
-      })
+        curYearHoliday: res.holiday,
+      });
     }
-  }
+  };
 
   setDayInfo = () => {
     const days = moment().format('YYYY-MM-DD');
@@ -244,22 +241,22 @@ export default class Home extends Component {
     console.log(curData);
     this.setState({
       currentDayInfo: curData,
-    })
-  }
+    });
+  };
 
   onPanelChange = (value, mode) => {
     console.log(value, mode, 'onPanelChange');
     this.setState({
-      selectedMonth: moment(value).format('MM')
-    })
+      selectedMonth: moment(value).format('MM'),
+    });
     this.setCurrYearHoliady(moment(value).format('YYYY'));
-  }
+  };
 
   initLoginManage = async () => {
     const { data } = await queryHSEManage({
       page: 1,
       size: 7,
-      type: 'list'
+      type: 'list',
     });
     this.setState({
       loginManageData: data,
@@ -267,7 +264,7 @@ export default class Home extends Component {
     const { data: imgData } = await queryHSEManage({
       page: 1,
       size: 5,
-      type: 'images'
+      type: 'images',
     });
     this.setState({
       loginManageImagesData: imgData,
@@ -304,7 +301,7 @@ export default class Home extends Component {
     queryNews({
       page,
       size: 5,
-      type: 'images'
+      type: 'images',
     }).then(({ success, data, total }) => {
       if (success) {
         this.setState({
@@ -318,10 +315,14 @@ export default class Home extends Component {
     const { data, success } = await queryMeetingApply();
     if (success && data.length) {
       // console.log(data[0].NextWeekRow);
-      const allMeetingList = data[0].ThisWeekRow.concat(data[0].StayApprWeekRow).concat(data[0].NextWeekRow);
+      const allMeetingList = data[0].ThisWeekRow.concat(data[0].StayApprWeekRow).concat(
+        data[0].NextWeekRow
+      );
       this.setState({
         allMeetingList,
-        meetingList: allMeetingList.filter(v=> moment(v.BeginDate).format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')),
+        meetingList: allMeetingList.filter(
+          v => moment(v.BeginDate).format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')
+        ),
       });
     }
   };
@@ -338,7 +339,7 @@ export default class Home extends Component {
     });
   };
   clickImage = (item, type) => {
-     let doc = item.FileRow.filter(v => '.jpg.jpeg.png'.indexOf(v.FileExt) === -1);
+    let doc = item.FileRow.filter(v => '.jpg.jpeg.png'.indexOf(v.FileExt) === -1);
     const file = doc.length && doc[0].ServerUrl;
 
     router.push({
@@ -351,7 +352,7 @@ export default class Home extends Component {
         type,
       },
     });
-  }
+  };
 
   goDetail = (item, type, fileIndex = 0) => {
     const file = item.FileRow.length && item.FileRow[fileIndex].ServerUrl;
@@ -380,7 +381,19 @@ export default class Home extends Component {
   // };
 
   render() {
-    const { newsList, selectedMonth, curYearHoliday, leaderShareData, leaveData, loginManageData, meetingList, newsImageList, loginManageImagesData, currentDayInfo, allMeetingList } = this.state;
+    const {
+      newsList,
+      selectedMonth,
+      curYearHoliday,
+      leaderShareData,
+      leaveData,
+      loginManageData,
+      meetingList,
+      newsImageList,
+      loginManageImagesData,
+      currentDayInfo,
+      allMeetingList,
+    } = this.state;
 
     return (
       <div>
@@ -399,31 +412,41 @@ export default class Home extends Component {
                     bordered={false}
                     cover={
                       <Carousel autoplay>
-                        {newsImageList.length ? newsImageList.map(img => {
-                          const name = img.Name;
-                          const images = img.FileRow.filter(v => '.jpg.jpeg.png'.indexOf(v.FileExt) !== -1);
-                          return  <div className={styles.imageList}>
-                            <img className={styles.image1} height={200} onClick={() => this.clickImage(img, '新闻')} src={images.length && images[0].ServerUrl} />
-                            <div className={styles.imageName}>{name}</div>
+                        {newsImageList.length ? (
+                          newsImageList.map(img => {
+                            const name = img.Name;
+                            const images = img.FileRow.filter(
+                              v => '.jpg.jpeg.png'.indexOf(v.FileExt) !== -1
+                            );
+                            return (
+                              <div className={styles.imageList}>
+                                <img
+                                  className={styles.image1}
+                                  height={200}
+                                  onClick={() => this.clickImage(img, '新闻')}
+                                  src={images.length && images[0].ServerUrl}
+                                />
+                                <div className={styles.imageName}>{name}</div>
+                              </div>
+                            );
+                          })
+                        ) : (
+                          <div className={styles.imageList}>
+                            <img
+                              className={styles.image1}
+                              height={200}
+                              src={require('../../../public/homeImages/news/2.jpg')}
+                            />
+                            <div className={styles.imageName}>每日新闻</div>
                           </div>
-                        }):
-                        <div className={styles.imageList}>
-                        <img
-                        className={styles.image1}
-                          height={200}
-                          src={require('../../../public/homeImages/news/2.jpg')}
-                        />
-                        <div className={styles.imageName}>每日新闻</div>
-                        </div>
-                        }
+                        )}
                       </Carousel>
                     }
                     extra={
                       <Link to="/dashboard/hyecnews">
-                      <Tooltip title='更多'  placement="right">
-                      <Icon style={{ color: '#fff' }} type="more" />
+                        <Tooltip title="更多" placement="right">
+                          <Icon style={{ color: '#fff' }} type="more" />
                         </Tooltip>
-                       
                       </Link>
                     }
                   >
@@ -460,18 +483,27 @@ export default class Home extends Component {
                     className="blue-bg grandient-bg"
                     cover={
                       <Carousel autoplay>
-                      {loginManageImagesData.length ? loginManageImagesData.map(img => {
-                        const name = img.Name;
-                          const images = img.FileRow.filter(v => '.jpg.jpeg.png'.indexOf(v.FileExt) !== -1);
-                          return  <div className={styles.imageList}>
-                            <img className={styles.image1} height={200} onClick={() => this.clickImage(img, 'HSE信息')} src={images.length && images[0].ServerUrl} />
-                            <div className={styles.imageName}>{name}</div>
-                          </div>
-                        }):
-                        <img
-                          height={200}
-                          src={require('../../../public/homeImages/hse/1.jpg')}
-                        />}
+                        {loginManageImagesData.length ? (
+                          loginManageImagesData.map(img => {
+                            const name = img.Name;
+                            const images = img.FileRow.filter(
+                              v => '.jpg.jpeg.png'.indexOf(v.FileExt) !== -1
+                            );
+                            return (
+                              <div className={styles.imageList}>
+                                <img
+                                  className={styles.image1}
+                                  height={200}
+                                  onClick={() => this.clickImage(img, 'HSE信息')}
+                                  src={images.length && images[0].ServerUrl}
+                                />
+                                <div className={styles.imageName}>{name}</div>
+                              </div>
+                            );
+                          })
+                        ) : (
+                          <img height={200} src={require('../../../public/homeImages/hse/1.jpg')} />
+                        )}
                         {/* <img
                           alt="example"
                           src="http://5b0988e595225.cdn.sohucs.com/images/20180604/cec8268873f54e70acf9bed4d75fdc18.jpeg"
@@ -485,8 +517,8 @@ export default class Home extends Component {
                     }
                     extra={
                       <Link to="/HSE">
-                        <Tooltip title='更多'  placement="right">
-                      <Icon style={{ color: '#fff' }} type="more" />
+                        <Tooltip title="更多" placement="right">
+                          <Icon style={{ color: '#fff' }} type="more" />
                         </Tooltip>
                       </Link>
                     }
@@ -524,9 +556,13 @@ export default class Home extends Component {
                     className="blue-bg grandient-bg"
                     title={<div>知识经验</div>}
                     bordered={false}
-                    extra={<a href="http://www1.hyec.com:8085/" target="_blank"><Tooltip title='更多'  placement="right">
-                      <Icon style={{ color: '#fff' }} type="more" />
-                        </Tooltip></a>}
+                    extra={
+                      <a href="http://10.43.1.240:8085/" target="_blank">
+                        <Tooltip title="更多" placement="right">
+                          <Icon style={{ color: '#fff' }} type="more" />
+                        </Tooltip>
+                      </a>
+                    }
                   >
                     <List
                       itemLayout="horizontal"
@@ -537,7 +573,11 @@ export default class Home extends Component {
                         <List.Item>
                           <div className={styles.newList}>
                             <Tooltip placement="top" title={item.title}>
-                              <div className={styles.newsTitle}><a href={item.link} target="_blank">{item.title}</a></div>
+                              <div className={styles.newsTitle}>
+                                <a href={item.link} target="_blank">
+                                  {item.title}
+                                </a>
+                              </div>
                             </Tooltip>
                             {this.renderNew(item.time) && <div className={styles.newTag} />}
                             <div style={{ color: '#333' }}>{item.time}</div>
@@ -552,9 +592,11 @@ export default class Home extends Component {
                     className="blue-bg grandient-bg"
                     title={<div>近期培训</div>}
                     bordered={false}
-                    extra={<Tooltip title='更多'  placement="right">
-                      <Icon style={{ color: '#fff' }} type="more" />
-                        </Tooltip>}
+                    extra={
+                      <Tooltip title="更多" placement="right">
+                        <Icon style={{ color: '#fff' }} type="more" />
+                      </Tooltip>
+                    }
                   >
                     <List
                       itemLayout="horizontal"
@@ -585,17 +627,29 @@ export default class Home extends Component {
                 bordered={false}
                 extra={
                   <Link to="/dashboard/leaderShare">
-                    <Tooltip title='更多'  placement="right">
+                    <Tooltip title="更多" placement="right">
                       <Icon style={{ color: '#fff' }} type="more" />
-                        </Tooltip>
+                    </Tooltip>
                   </Link>
                 }
               >
-                <div style={{ height: 260}}>
-                  {leaderShareData.length && <div style={{display: 'flex'}}>
-                    <img style={{marginBottom: 6}} src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1578233531013&di=de64c2f9f4087b320d4b91b8c959a5b8&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F16%2F53%2F44%2F74N58PICfYu_1024.jpg" width={120} height={120}/>
-                    <p style={{color: 'red', marginLeft: 10, cursor: 'pointer'}} onClick={() => this.goDetail(leaderShareData[0], '学习分享')}>{leaderShareData[0].Name}</p>
-                  </div>}
+                <div style={{ height: 260 }}>
+                  {leaderShareData.length && (
+                    <div style={{ display: 'flex' }}>
+                      <img
+                        style={{ marginBottom: 6 }}
+                        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1578233531013&di=de64c2f9f4087b320d4b91b8c959a5b8&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F16%2F53%2F44%2F74N58PICfYu_1024.jpg"
+                        width={120}
+                        height={120}
+                      />
+                      <p
+                        style={{ color: 'red', marginLeft: 10, cursor: 'pointer' }}
+                        onClick={() => this.goDetail(leaderShareData[0], '学习分享')}
+                      >
+                        {leaderShareData[0].Name}
+                      </p>
+                    </div>
+                  )}
                   {leaderShareData
                     .map(v => {
                       return (
@@ -621,21 +675,24 @@ export default class Home extends Component {
                     split={false}
                     dataSource={leaveData}
                     renderItem={item => (
-                      <List.Item
-                      >
-                        <div style={{display: 'flex',justifyContent: 'space-between', width: '100%'}}>
+                      <List.Item>
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            width: '100%',
+                          }}
+                        >
                           <Popover content={leaveInfo(item)} title="员工信息" placement="left">
                             {item.Name}
                           </Popover>
                           <a style={{ color: colorMap[item.LeaveType] }}>{item.LeaveType}</a>
                         </div>
-                        
                       </List.Item>
                     )}
                   />
                 </div>
               </Card>
-            
             </Col>
           </Row>
 
@@ -644,15 +701,28 @@ export default class Home extends Component {
             <Col span={14}>
               <div style={{ display: 'flex', height: '320px' }}>
                 <div
-                  style={{ width: '200px', border: '1px solid #1890ff', borderRight: 'none', backgroundColor: '#94c9ff' }}
+                  style={{
+                    width: '200px',
+                    border: '1px solid #1890ff',
+                    borderRight: 'none',
+                    backgroundColor: '#94c9ff',
+                  }}
                   src="/images/clendar.jpg"
                 >
-                  <p className="op-calendar-new-right-date">{currentDayInfo.date} {currentDayInfo.ncWeek}</p> 
+                  <p className="op-calendar-new-right-date">
+                    {currentDayInfo.date} {currentDayInfo.ncWeek}
+                  </p>
                   <p className="op-calendar-new-right-day">{currentDayInfo.cDay}</p>
                   <p className="op-calendar-new-right-lunar c-gap-top-small">
                     <span>{'星座: ' + currentDayInfo.astro}</span>
-                    <span>{currentDayInfo.IMonthCn + currentDayInfo.IDayCn}</span><span>{currentDayInfo.gzYear}年 【{currentDayInfo.Animal}年】</span><span>{currentDayInfo.gzMonth}月 {currentDayInfo.gzDay}日</span>
-                  </p>                            
+                    <span>{currentDayInfo.IMonthCn + currentDayInfo.IDayCn}</span>
+                    <span>
+                      {currentDayInfo.gzYear}年 【{currentDayInfo.Animal}年】
+                    </span>
+                    <span>
+                      {currentDayInfo.gzMonth}月 {currentDayInfo.gzDay}日
+                    </span>
+                  </p>
                 </div>
                 <div
                   style={{
@@ -667,70 +737,83 @@ export default class Home extends Component {
                   <Calendar
                     fullscreen={false}
                     onPanelChange={(value, mode) => this.onPanelChange(value, mode)}
-                    onChange={(date) => {
+                    onChange={date => {
                       const days = moment(date).format('YYYY-MM-DD');
                       const splitDay = days.split('-');
                       this.setState({
-                        currentDayInfo: calendar.solar2lunar(splitDay[0], splitDay[1], splitDay[2])
-                      })
+                        currentDayInfo: calendar.solar2lunar(splitDay[0], splitDay[1], splitDay[2]),
+                      });
                       this.setState({
-                        meetingList: allMeetingList.filter(v=> moment(v.BeginDate).format('YYYY-MM-DD') === moment(date).format('YYYY-MM-DD')),
-                      })
+                        meetingList: allMeetingList.filter(
+                          v =>
+                            moment(v.BeginDate).format('YYYY-MM-DD') ===
+                            moment(date).format('YYYY-MM-DD')
+                        ),
+                      });
                     }}
                     dateFullCellRender={time => {
                       const day = moment(time).format('DD');
-                     //  const currM = moment().format('MM');
+                      //  const currM = moment().format('MM');
                       const renderM = moment(time).format('MM');
                       const dates = moment(time).format('YYYY-MM-DD');
                       const mmdd = moment(time).format('MM-DD');
                       const splitDay = dates.split('-');
                       // const meetDays = ['2020-01-07']
-                      const meetDays = allMeetingList.map(v => moment(v.BeginDate).format('YYYY-MM-DD'));
+                      const meetDays = allMeetingList.map(v =>
+                        moment(v.BeginDate).format('YYYY-MM-DD')
+                      );
                       const curData = calendar.solar2lunar(splitDay[0], splitDay[1], splitDay[2]);
                       const isWeek = curData.ncWeek === '星期六' || curData.ncWeek === '星期日';
-  
+
                       let clsName = '';
                       const textMap = {
                         'c-huiyi': '会',
                         'is-fading-holiday': '休',
-                        'is-tiaoban': '班'
-                      }
+                        'is-tiaoban': '班',
+                      };
                       const todayHoliday = curYearHoliday[mmdd];
                       let lunarDay = curData.festival || curData.IDayCn;
-                      if(todayHoliday) {
-                        if(todayHoliday.holiday) {
+                      if (todayHoliday) {
+                        if (todayHoliday.holiday) {
                           clsName = 'is-fading-holiday';
                           lunarDay = todayHoliday.name;
-                        }  else {
+                        } else {
                           clsName = 'is-tiaoban';
                         }
                       }
-                      if(meetDays.includes(dates)) {
+                      if (meetDays.includes(dates)) {
                         clsName = 'c-huiyi';
                       }
                       const cls = classNames('custom-days', clsName, {
                         'no-curr-month': selectedMonth !== renderM,
-                        'is-common-week':  isWeek && !curYearHoliday[mmdd] && (selectedMonth === renderM)
-                      })
-                      return <div className={cls}>
-                        <div className="c-day-tag">{textMap[clsName] || ''}</div>
-                        <div className="c-day">{day}</div>
-                        <div className="custom-celendar-data">{lunarDay}</div>
-                      </div>
-                    }
-
-                    }
+                        'is-common-week':
+                          isWeek && !curYearHoliday[mmdd] && selectedMonth === renderM,
+                      });
+                      return (
+                        <div className={cls}>
+                          <div className="c-day-tag">{textMap[clsName] || ''}</div>
+                          <div className="c-day">{day}</div>
+                          <div className="custom-celendar-data">{lunarDay}</div>
+                        </div>
+                      );
+                    }}
                     dateCellRender={time => {
                       const day = moment(time).format('YYYY-MM-DD');
-                      const meetDays = allMeetingList.map(v => moment(v.BeginDate).format('YYYY-MM-DD'));
+                      const meetDays = allMeetingList.map(v =>
+                        moment(v.BeginDate).format('YYYY-MM-DD')
+                      );
                       //
                       if (meetDays.includes(day)) {
-                        return (<div className="ccc-meeting-day">会</div>);
+                        return <div className="ccc-meeting-day">会</div>;
                       }
                       const splitDay = day.split('-');
-                      console.log(calendar.solar2lunar(splitDay[0], splitDay[1], splitDay[2]))
+                      console.log(calendar.solar2lunar(splitDay[0], splitDay[1], splitDay[2]));
                       const curData = calendar.solar2lunar(splitDay[0], splitDay[1], splitDay[2]);
-                      return  <div className="custom-celendar-data">{curData.festival || curData.IDayCn}</div>
+                      return (
+                        <div className="custom-celendar-data">
+                          {curData.festival || curData.IDayCn}
+                        </div>
+                      );
                     }}
                   />
                 </div>
@@ -761,51 +844,53 @@ export default class Home extends Component {
           </Row>
           <div />
           <div className={styles.margin}>
-                <Card
-                  className="blue-bg grandient-bg"
-                  title={<div>服务中心</div>}
-                  style={{ marginTop: 20 }}
-                  bordered={false}
-                >
-                  <div className={styles.serv}>
-                    <div style={{ width: '100%' }}>
-                      <a>华谊信息运维</a>
-                      <p>
-                        6# 号楼: <br /> 李建新(703897) 丁毅(703895) <br /> 孟爽(703893) 钟强(703889){' '}
-                        <br /> 李磊(709195)
-                      </p>
-                    </div>
-                    <div style={{ width: '100%' }}>
-                      <a>大楼设备维修</a>
-                      <p>11# 号楼: 刘洪(703882)</p>
-                    </div>
-                    <div style={{ width: '100%' }}>
-                      <a>联系电话</a>
-                      <br />
-                      <p className={styles.banci}>
-                        <Icon
-                          style={{ fontSize: '20px' }}
-                          type="phone"
-                          theme="twoTone"
-                          twoToneColor="orange"
-                        />
-                        <p
-                          style={{
-                            fontSize: '14px',
-                            color: 'orange',
-                            'line-height': 1.2,
-                            marginTop: 12,
-                            marginLeft: 10,
-                          }}
-                        >
-                          64705888
-                        </p>
-                      </p>
-                      <p style={{ color: 'orange', fontSize: '12px', marginBottom: 6 }}>公司门卫24小时值班电话</p>
-                    </div>
-                  </div>
-                </Card>
-              </div>          
+            <Card
+              className="blue-bg grandient-bg"
+              title={<div>服务中心</div>}
+              style={{ marginTop: 20 }}
+              bordered={false}
+            >
+              <div className={styles.serv}>
+                <div style={{ width: '100%' }}>
+                  <a>华谊信息运维</a>
+                  <p>
+                    6# 号楼: <br /> 李建新(703897) 丁毅(703895) <br /> 孟爽(703893) 钟强(703889){' '}
+                    <br /> 李磊(709195)
+                  </p>
+                </div>
+                <div style={{ width: '100%' }}>
+                  <a>大楼设备维修</a>
+                  <p>11# 号楼: 刘洪(703882)</p>
+                </div>
+                <div style={{ width: '100%' }}>
+                  <a>联系电话</a>
+                  <br />
+                  <p className={styles.banci}>
+                    <Icon
+                      style={{ fontSize: '20px' }}
+                      type="phone"
+                      theme="twoTone"
+                      twoToneColor="orange"
+                    />
+                    <p
+                      style={{
+                        fontSize: '14px',
+                        color: 'orange',
+                        'line-height': 1.2,
+                        marginTop: 12,
+                        marginLeft: 10,
+                      }}
+                    >
+                      64705888
+                    </p>
+                  </p>
+                  <p style={{ color: 'orange', fontSize: '12px', marginBottom: 6 }}>
+                    公司门卫24小时值班电话
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </div>
           <Drawer
             title="完整日历"
             height={880}
