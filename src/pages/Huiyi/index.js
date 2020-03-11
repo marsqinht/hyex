@@ -43,7 +43,7 @@ const columns = [
   },
   {
     title: '出席范围',
-    dataIndex: 'range',
+    dataIndex: 'Range',
   },
   {
     title: '召集部门',

@@ -66,7 +66,7 @@ const leaveInfo = item => {
           <br />
           部门: {item.dept}
           <br />
-          室号: {item.RoomNumbergbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv}
+          室号: {item.RoomNumber}
           <br />
           分机: {item.Phone}
           <br />
@@ -633,6 +633,7 @@ export default class Home extends Component {
                   </Link>
                 }
               >
+<<<<<<< HEAD
                 <div style={{ height: 260 }}>
                   {leaderShareData.length && (
                     <div style={{ display: 'flex' }}>
@@ -650,6 +651,13 @@ export default class Home extends Component {
                       </p>
                     </div>
                   )}
+=======
+                <div style={{ height: 260}}>
+                  {leaderShareData.length && <div style={{display: 'flex'}}>
+                    <img style={{marginBottom: 6}} src={require('../../../public/images/xuexi.jpeg')} width={120} height={120}/>
+                    <p style={{color: 'red', marginLeft: 10, cursor: 'pointer'}} onClick={() => this.goDetail(leaderShareData[0], '学习分享')}>{leaderShareData[0].Name}</p>
+                  </div>}
+>>>>>>> update
                   {leaderShareData
                     .map(v => {
                       return (
