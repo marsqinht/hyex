@@ -12,7 +12,7 @@ const { TabPane } = Tabs;
 const columns = [
   {
     title: '日期',
-    dataIndex: 'RegDate',
+    dataIndex: 'BeginDate',
     render: time => <div>{moment(time).format('YYYY-MM-DD')}</div>,
   },
   {
@@ -22,7 +22,7 @@ const columns = [
   {
     title: '开始时间',
     dataIndex: 'BeginDate',
-    render: time => <div>{moment(time).format('YYYY-MM-DD')}</div>,
+    render: time => <div>{moment(time).format('HH:mm:ss')}</div>,
   },
   {
     title: '会议用时',
@@ -43,7 +43,11 @@ const columns = [
   },
   {
     title: '出席范围',
-    dataIndex: 'Range',
+    dataIndex: 'AtRange',
+  },
+  {
+    title: '主持人',
+    dataIndex: 'Host',
   },
   {
     title: '召集部门',

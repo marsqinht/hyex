@@ -338,8 +338,9 @@ export default class Home extends Component {
       placement: e.target.value,
     });
   };
+
   clickImage = (item, type) => {
-    let doc = item.FileRow.filter(v => '.jpg.jpeg.png'.indexOf(v.FileExt) === -1);
+    const doc = item.FileRow.filter(v => '.jpg.jpeg.png'.indexOf(v.FileExt) === -1);
     const file = doc.length && doc[0].ServerUrl;
 
     router.push({
@@ -633,7 +634,6 @@ export default class Home extends Component {
                   </Link>
                 }
               >
-<<<<<<< HEAD
                 <div style={{ height: 260 }}>
                   {leaderShareData.length && (
                     <div style={{ display: 'flex' }}>
@@ -651,13 +651,6 @@ export default class Home extends Component {
                       </p>
                     </div>
                   )}
-=======
-                <div style={{ height: 260}}>
-                  {leaderShareData.length && <div style={{display: 'flex'}}>
-                    <img style={{marginBottom: 6}} src={require('../../../public/images/xuexi.jpeg')} width={120} height={120}/>
-                    <p style={{color: 'red', marginLeft: 10, cursor: 'pointer'}} onClick={() => this.goDetail(leaderShareData[0], '学习分享')}>{leaderShareData[0].Name}</p>
-                  </div>}
->>>>>>> update
                   {leaderShareData
                     .map(v => {
                       return (
@@ -722,7 +715,7 @@ export default class Home extends Component {
                   </p>
                   <p className="op-calendar-new-right-day">{currentDayInfo.cDay}</p>
                   <p className="op-calendar-new-right-lunar c-gap-top-small">
-                    <span>{'星座: ' + currentDayInfo.astro}</span>
+                    <span>{`星座: ${  currentDayInfo.astro}`}</span>
                     <span>{currentDayInfo.IMonthCn + currentDayInfo.IDayCn}</span>
                     <span>
                       {currentDayInfo.gzYear}年 【{currentDayInfo.Animal}年】
@@ -842,7 +835,7 @@ export default class Home extends Component {
                         author={item.MeetingRoomNo}
                         avatar={<Tag color="red">会</Tag>}
                         content={item.Name}
-                        datetime={moment(item.BeginDate).format('YYYY-MM-DD hh:mm')}
+                        datetime={moment(item.BeginDate).format('YYYY-MM-DD HH:mm')}
                       />
                     </li>
                   )}

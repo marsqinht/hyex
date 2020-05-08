@@ -49,7 +49,7 @@ const columns = [
   {
     title: '结束时间',
     dataIndex: 'EndDate',
-    render: time => <div>{moment(time).format('YYYY-MM-DD')}</div>,
+    render: time => <div>{time ? moment(time).format('YYYY-MM-DD') : ''}</div>,
   },
 ];
 const data = [
@@ -303,7 +303,7 @@ class Employee extends React.Component {
       <div>
         {/* <Alert message="友情提示" description="最近更新日期 2019-11-11" type="info" showIcon /> */}
         {/* <Card style={{ marginTop: 20, height: '78vh' }}> */}
-          <div style={{backgroundColor: '#fff'}}>
+        <div style={{backgroundColor: '#fff'}}>
           <Tabs defaultActiveKey="1">
             <TabPane
               tab={
@@ -355,7 +355,7 @@ class Employee extends React.Component {
                         style={{ width: 120 }}
                         onChange={key => this.setState({ currentSearchKey: key })}
                       >
-                      <Option value="code">按英文</Option>
+                        <Option value="code">按英文</Option>
                         <Option value="name">按中文名</Option>
                        
                         <Option value="phone">按分机号</Option>
@@ -405,18 +405,18 @@ class Employee extends React.Component {
                         <TabPane
                           tab={
                             <span>
-                              <MyIcon
+                                <MyIcon
                                 type="icon-zhengjixiangguanrenyuanxinxi"
                                 style={{ fontSize: '16px' }}
                               />
                               基本信息
-                            </span>
+                              </span>
                           }
                           key="1"
                         >
                           <div className={styles.info}>
                             <div style={{ flex: 1 }}>
-                              <Descriptions bordered title="基本信息" size="small">
+                                <Descriptions bordered title="基本信息" size="small">
                                 <Descriptions.Item label="姓名" span={3}>
                                   {detailInfo.Name}
                                 </Descriptions.Item>
@@ -436,25 +436,25 @@ class Employee extends React.Component {
                                   {detailInfo.Email}
                                 </Descriptions.Item>
                               </Descriptions>
-                            </div>
+                              </div>
                             <div style={{ width: 85, marginLeft: '10px' }}>
-                              <img
+                                <img
                                 width={85}
                                 height={115}
                                 src={`data:image/jpg;base64,${detailInfo.Picture}`}
                               />
-                            </div>
+                              </div>
                           </div>
                         </TabPane>
                         <TabPane
                           tab={
                             <span>
-                              <MyIcon
+                                <MyIcon
                                 type="icon-yuanchengjieyuetongji"
                                 style={{ fontSize: '16px' }}
                               />
                               工作履历
-                            </span>
+                              </span>
                           }
                           key="2"
                         >
@@ -468,12 +468,12 @@ class Employee extends React.Component {
                         <TabPane
                           tab={
                             <span>
-                              <MyIcon
+                                <MyIcon
                                 type="icon-wodegongzuoqingkuang"
                                 style={{ fontSize: '16px' }}
                               />
                               专业经历
-                            </span>
+                              </span>
                           }
                           key="3"
                         >
@@ -483,11 +483,11 @@ class Employee extends React.Component {
                           </Radio.Group> */}
                           <div style={{ marginTop: 10 }}>
                             <Table
-                              columns={ccolumns}
-                              dataSource={detailInfo.MajorRow}
-                              size="small"
-                              pagination={false}
-                            />
+                                columns={ccolumns}
+                                dataSource={detailInfo.MajorRow}
+                                size="small"
+                                pagination={false}
+                              />
                           </div>
                         </TabPane>
                       </Tabs>
@@ -497,7 +497,7 @@ class Employee extends React.Component {
               </div>
             </TabPane>
           </Tabs>
-          </div>
+        </div>
         {/* </Card> */}
       </div>
     );
