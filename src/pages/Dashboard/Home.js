@@ -225,7 +225,7 @@ export default class Home extends Component {
   };
 
   setCurrYearHoliady = async (year = '') => {
-    const res = await request.get(`http://timor.tech/api/holiday/year/${year}`);
+    const res = await request.get(`http://39.98.195.112/api/holiday/year/${year}`);
     console.log(res, 'erweer');
     if (res.code === 0) {
       this.setState({

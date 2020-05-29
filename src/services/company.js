@@ -1,5 +1,9 @@
-import { stringify } from 'qs';
-import { cRequest } from '@/utils/request';
+import {
+  stringify
+} from 'qs';
+import {
+  cRequest, configRequest
+} from '@/utils/request';
 
 
 export async function queryApartmentTree() {
@@ -13,4 +17,8 @@ export async function queryCompayInfo(params) {
 // PlanSummary
 export async function queryPlanSummary(params) {
   return cRequest(`/PlanSummary?${stringify(params)}`);
+}
+
+export async function queryConfigJson() {
+  return configRequest(`/data-config.json?timestamp=${new Date().getTime()}`);
 }

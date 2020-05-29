@@ -70,8 +70,15 @@ const request = extend({
 });
 
 export const cRequest = extend({
-  prefix: '/hy',
-  // prefix: '/PowerService',
+  // prefix: '/hy',
+  prefix: '/PowerService',
+  timeout: 10000,
+  charset: 'gbk',
+  // parseResponse: false
+});
+
+export const configRequest = extend({
+  // prefix: '/hy',
   timeout: 10000,
   charset: 'gbk',
   // parseResponse: false

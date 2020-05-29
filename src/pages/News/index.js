@@ -58,6 +58,7 @@ export default class News extends Component {
     total: 0,
     list: [],
     currentPage: 1,
+    year: '',
   };
 
   componentDidMount() {
@@ -134,7 +135,7 @@ export default class News extends Component {
   };
 
   render() {
-    const { visible, list, total, currentPage } = this.state;
+    const { visible, list, total, currentPage, year } = this.state;
     return (
       <div>
         <Modal
@@ -178,6 +179,9 @@ export default class News extends Component {
             style={{ width: 120, marginBottom: 10 }}
             size="small"
             onChange={key => {
+              this.setState({
+                year: key
+              })
               this.getNewsList(1, key);
             }}
           > 
@@ -202,7 +206,7 @@ export default class News extends Component {
               this.setState({
                 currentPage: page,
               });
-              this.getNewsList(page);
+              this.getNewsList(page, year);
             },
             total,
             size: 'small',

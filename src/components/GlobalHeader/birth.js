@@ -1,6 +1,9 @@
 import { Component } from 'react';
 import { Carousel, Popover } from 'antd';
 import { queryBirthday } from '../../services/home';
+import {
+  queryConfigJson
+ } from '../../services/company';
 
 const info = item => {
   return (
@@ -47,6 +50,9 @@ const info = item => {
 // };
 
 const item = item => {
+  if(item.welcomeTitle) return (
+    <div dangerouslySetInnerHTML={{ __html: item.welcomeTitle}} />
+  )
   return (
     <div>
       <div style={{ display: 'flex', width: 300 }}>
@@ -69,26 +75,44 @@ const item = item => {
 export default class Birth extends Component {
   state = {
     list: [],
+    configJson: {}
   };
 
   componentDidMount() {
     this.fetchBirth();
+    this.fetchConfigJson();
   }
 
   fetchBirth = async () => {
     const { data } = await queryBirthday();
-    console.log(data);
+    // data.push('热烈欢迎牟松均，王贇，蔡清清入驻本公司。')
+    // console.log(data);
     this.setState({
       list: data,
     });
   };
 
+  fetchConfigJson = async () => {
+    const data = await queryConfigJson();
+    const json = typeof data === 'string' ? JSON.parse(data) : data;
+    this.setState({
+      configJson: json
+    })
+  }
+
   render() {
-    const { list } = this.state;
+    const { list, configJson } = this.state;
+    const formatList = [...list]
+    if(typeof configJson === 'object' && configJson.welcomeTitle) {
+      formatList.push({
+        welcomeTitle: configJson.welcomeTitle
+      })
+    }
+   
     return (
       <div style={{ position: 'absolute', left: 66, top: 20, width: 300 }}>
         <Carousel autoplay dotPosition="right" dots={false}>
-          {list.map(v => item(v))}
+          {formatList.map(v => item(v))}
         </Carousel>
       </div>
     );

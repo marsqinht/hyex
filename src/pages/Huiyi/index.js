@@ -22,7 +22,7 @@ const columns = [
   {
     title: '开始时间',
     dataIndex: 'BeginDate',
-    render: time => <div>{moment(time).format('HH:mm:ss')}</div>,
+    render: time => <div>{moment(time).format('HH:mm')}</div>,
   },
   {
     title: '会议用时',
