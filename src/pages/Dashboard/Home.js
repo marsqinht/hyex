@@ -668,7 +668,7 @@ export default class Home extends Component {
                 title={<div>今日请假</div>}
                 bordered={false}
               >
-                <div style={{ overflow: 'hidden', height: 320 }}>
+                <div style={{ overflow: 'hidden' }}>
                   <List
                     className={leaveData.length > 8 ? 'mymove' : ''}
                     style={{ position: 'relative' }}
