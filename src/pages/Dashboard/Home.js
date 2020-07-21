@@ -855,8 +855,8 @@ export default class Home extends Component {
                 <div style={{ width: '100%' }}>
                   <a>华谊信息运维</a>
                   <p>
-                    6# 号楼: <br /> 李建新(703897) 丁毅(703895) <br /> 孟爽(703893) 钟强(703889){' '}
-                    <br /> 李磊(709195)
+                    6# 号楼: <br /> 李建新(703897) 丁毅(703895) <br /> 孟爽(703893) {' '}
+                    <br />
                   </p>
                 </div>
                 <div style={{ width: '100%' }}>

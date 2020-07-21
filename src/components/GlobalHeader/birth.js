@@ -51,11 +51,11 @@ const info = item => {
 
 const item = item => {
   if(item.welcomeTitle) return (
-    <div dangerouslySetInnerHTML={{ __html: item.welcomeTitle}} />
+    <div style={{ display: 'flex', width: 320 }} dangerouslySetInnerHTML={{ __html: item.welcomeTitle}} />
   )
   return (
     <div>
-      <div style={{ display: 'flex', width: 300 }}>
+      <div style={{ display: 'flex', width: 320 }}>
         <span style={{ color: '#ff4d4f' }}>温馨提示:</span>{' '}
         <img
           width={20}

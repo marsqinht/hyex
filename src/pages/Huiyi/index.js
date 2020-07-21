@@ -14,10 +14,12 @@ const columns = [
     title: '日期',
     dataIndex: 'BeginDate',
     render: time => <div>{moment(time).format('YYYY-MM-DD')}</div>,
+    width: 100
   },
   {
     title: '星期',
     dataIndex: 'Week',
+    width: 80
   },
   {
     title: '开始时间',
@@ -27,10 +29,12 @@ const columns = [
   {
     title: '会议用时',
     dataIndex: 'Hour',
+    width: 100
   },
   {
     title: '地点',
     dataIndex: 'MeetingRoomNo',
+    width: 150
   },
   {
     title: '会议名称',
@@ -44,14 +48,17 @@ const columns = [
   {
     title: '出席范围',
     dataIndex: 'AtRange',
+    width: 100
   },
   {
     title: '主持人',
     dataIndex: 'Host',
+    width: 80
   },
   {
     title: '召集部门',
     dataIndex: 'DeptName',
+    width: 100
   },
 ];
 export default class Huiyi extends React.Component {

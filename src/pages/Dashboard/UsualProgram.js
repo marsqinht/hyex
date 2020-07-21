@@ -30,7 +30,7 @@ export default class Workplace extends React.Component {
               })
               
             } else {
-              router.push(`/Login?redirect=${encodeURIComponent(redirect)}`)
+              router.push(`/Login?redirect=${encodeURIComponent(window.location.href)}`)
             }
             
           } catch (error) {
