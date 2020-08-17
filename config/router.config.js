@@ -165,10 +165,16 @@ export default [
             target: '_blank',
           },
           {
+            path: '/dd/neikong',
+            name: '内控管理手册',
+            component: './Standard/neikong',
+          },
+          {
             path: '/dd/standard',
             name: '常用文档模板',
             component: './Standard/index',
           },
+         
           {
             path: '/dd/s',
             name: '技术标准',

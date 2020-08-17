@@ -417,8 +417,11 @@ class Employee extends React.Component {
                           <div className={styles.info}>
                             <div style={{ flex: 1 }}>
                                 <Descriptions bordered title="基本信息" size="small">
-                                <Descriptions.Item label="姓名" span={3}>
+                                <Descriptions.Item label="姓名">
                                   {detailInfo.Name}
+                                </Descriptions.Item>
+                                <Descriptions.Item label="所属部门" >
+                                  {detailInfo.DeptName}
                                 </Descriptions.Item>
                                 <Descriptions.Item label="职位">
                                   {detailInfo.PosiName}
