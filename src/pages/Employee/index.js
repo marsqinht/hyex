@@ -421,7 +421,7 @@ class Employee extends React.Component {
                                   {detailInfo.Name}
                                 </Descriptions.Item>
                                 <Descriptions.Item label="所属部门" >
-                                  {detailInfo.DeptName}
+                                  {detailInfo.dept}
                                 </Descriptions.Item>
                                 <Descriptions.Item label="职位">
                                   {detailInfo.PosiName}
