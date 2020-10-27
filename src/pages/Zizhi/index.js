@@ -2,6 +2,8 @@ import React from 'react';
 import { Alert, Tabs, Card, Tree , List, Typography, Icon, Select, Button, Modal, Upload, message, Table } from 'antd';
 import styles from './index.less'
 import { queryZizhiTree, queryZhiwuTree, queryQualificationList, queryEngageList } from '../../services/zizhi';
+import { renderYear } from '@/utils/utils';
+import moment from 'moment';
 
 const { TabPane } = Tabs;
 const { TreeNode } = Tree;
@@ -293,19 +295,15 @@ class Content extends React.Component {
             bordered={false}
             extra={<div>
               <Button type="link">年度职称聘任</Button>
-              <Select defaultValue="" style={{ width: 120 , marginRight: 14}} size="small" onSelect={(key)=> {
+              <Select defaultValue={moment().year()} style={{ width: 120 , marginRight: 14}} size="small" onSelect={(key)=> {
                 this.fetchQualificationList({
                   year: key,
                   id: currentId
                 })}}>
                 <Option value="">年度过滤</Option>
-                <Option value="2020">2020</Option>
-                <Option value="2019">2019</Option>
-                <Option value="2018">2018</Option>
-                <Option value="2017">2017</Option>
-                <Option value="2016">2016</Option>
-                <Option value="2015">2015</Option>
-                <Option value="2014">2014</Option>
+                {renderYear().map(v => (
+                    <Option value={v}>{v}</Option>
+                  ))}
               </Select>
             </div>}
           >

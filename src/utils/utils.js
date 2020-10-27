@@ -7,10 +7,12 @@ export function fixedZero(val) {
   return val * 1 < 10 ? `0${val}` : val;
 }
 
-export function renderYear () {
-  let currentYear = moment().year();
+export function renderYear (year) {
+  let currentYear = year || moment().year();
+  const lastYear = moment('2011-01-01').year()
+  const gap = currentYear  - lastYear
   const arr = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i <= gap; i++) {
     arr.push(currentYear)
     currentYear--;
     

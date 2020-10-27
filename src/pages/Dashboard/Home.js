@@ -664,7 +664,7 @@ export default class Home extends Component {
               </Card>
               <Card
                 className="blue-bg grandient-bg"
-                style={{ marginTop: 14, height: 368, overflow: 'hidden' }}
+                style={{ marginTop: 14, maxHeight: 368, overflow: 'hidden' }}
                 title={<div>今日请假</div>}
                 bordered={false}
               >

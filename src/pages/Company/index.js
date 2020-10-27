@@ -96,7 +96,7 @@ class Content extends React.Component {
     visible: false,
     data: [],
     currentTab: '计划与总结',
-    selectYear: '2020',
+    selectYear: moment().year(),
     currentPage: 1,
     selectedDept: '',
     total: 0,
@@ -333,7 +333,7 @@ class Content extends React.Component {
           </div>
           <div>
             <Select
-              defaultValue="2020"
+              defaultValue={moment().year()}
               style={{ width: 120, marginRight: 14 }}
               size="small"
               onChange={key => {

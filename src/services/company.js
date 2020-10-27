@@ -2,7 +2,8 @@ import {
   stringify
 } from 'qs';
 import {
-  cRequest, configRequest
+  cRequest,
+  configRequest
 } from '@/utils/request';
 
 
@@ -21,4 +22,8 @@ export async function queryPlanSummary(params) {
 
 export async function queryConfigJson() {
   return configRequest(`/data-config.json?timestamp=${new Date().getTime()}`);
+}
+
+export async function getPDF() {
+  return cRequest(`/Current`);
 }

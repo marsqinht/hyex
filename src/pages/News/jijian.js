@@ -4,6 +4,7 @@ import router from 'umi/router';
 import moment from 'moment';
 import styles from './jijian.less';
 import { queryPartyWork } from '../../services/party';
+import { renderYear } from '@/utils/utils';
 
 const { TabPane } = Tabs;
 const { Option } = Select;
@@ -128,7 +129,10 @@ export default class Jijian extends React.Component {
                     extra={
                       <div>
                         <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
-                          <Option value="1">年度筛选</Option>
+                          <Option value="">年度筛选</Option>
+                          {renderYear().map(v => (
+                            <Option value={v}>{v}</Option>
+                          ))}
                         </Select>
                         <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
                           <Option value="1">文档主题</Option>
