@@ -145,7 +145,7 @@ export default class Huiyi extends React.Component {
                         style={{ width: 120, marginRight: 14 }}
                         onChange={(key) => this.fetchApi(1, activeKey, '', key)}
                       >
-                        <Option value="">年度筛选</Option>
+                        <Option value="">年度</Option>
                         {renderYear().map(v => (
                           <Option value={v}>{v}</Option>
                         ))}
@@ -202,7 +202,7 @@ export default class Huiyi extends React.Component {
                   extra={
                     <div>
                       <Select defaultValue="" style={{ width: 120, marginRight: 14 }} onChange={(key) => this.fetchApi(1, activeKey, '', key)}>
-                        <Option value="">年度筛选</Option>
+                        <Option value="">年度</Option>
                         {renderYear().map(v => (
                           <Option value={v}>{v}</Option>
                         ))}
@@ -259,7 +259,7 @@ export default class Huiyi extends React.Component {
                   extra={
                     <div>
                       <Select defaultValue="" style={{ width: 120, marginRight: 14 }} onChange={(key) => this.fetchApi(1, activeKey, '', key)}>
-                        <Option value="">年度筛选</Option>
+                        <Option value="">年度</Option>
                         {renderYear().map(v => (
                           <Option value={v}>{v}</Option>
                         ))}

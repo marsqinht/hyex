@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tabs, Table, Select, Input, Card } from 'antd';
 import router from 'umi/router';
+import Icon from 'antd/lib/icon';
 import moment from 'moment';
 import styles from './jijian.less';
 import { queryPartyWork } from '../../services/party';
@@ -27,12 +28,15 @@ const columns = [
 const tabs = [
   {
     name: '工作动态',
+    icon: 'read'
   },
   {
     name: '廉政教育',
+    icon: 'book'
   },
   {
     name: '政策法规',
+    icon:'highlight'
   },
 ];
 
@@ -41,18 +45,20 @@ export default class Jijian extends React.Component {
     data: [],
     type: '工作动态',
     total: 0,
+    year: ''
   };
 
   componentDidMount() {
     this.fetchPartyWork();
   }
 
-  fetchPartyWork = async (page = 1, type = '工作动态', Name = '') => {
+  fetchPartyWork = async (page = 1, type = '工作动态', name = '', year ='') => {
     const { data, success, total } = await queryPartyWork({
       page,
       size: 10,
       type,
-      Name,
+      name,
+      year
     });
     if (success) {
       this.setState({
@@ -63,8 +69,8 @@ export default class Jijian extends React.Component {
   };
 
   onChange = page => {
-    const { type } = this.state;
-    this.fetchPartyWork(page, type);
+    const { type, year } = this.state;
+    this.fetchPartyWork(page, type, '', year);
   };
 
   goDetail = (item, type = '') => {
@@ -93,7 +99,7 @@ export default class Jijian extends React.Component {
   }
 
   render() {
-    const { data, total, type } = this.state;
+    const { data, total, type, year } = this.state;
     const { onChange } = this;
     return (
       <Card>
@@ -102,12 +108,18 @@ export default class Jijian extends React.Component {
           onChange={name => {
             console.log(name);
             this.setState({ type: name });
-            this.fetchPartyWork(1, name);
+            this.fetchPartyWork(1, name, '', year);
           }}
         >
           {tabs.map(tab => {
             return (
-              <TabPane tab={tab.name} key={tab.name} style={{ backgroundColor: '#fff' }}>
+              <TabPane  
+                tab={
+                  <span>
+                    <Icon type={tab.icon} />
+                    {tab.name}
+                  </span>
+                  } key={tab.name} style={{ backgroundColor: '#fff' }}>
                 {/* <div className={styles.search}>
                   <Select defaultValue="lucy" style={{ width: 120 }}>
                     <Option value="jack">标题</Option>
@@ -128,8 +140,13 @@ export default class Jijian extends React.Component {
                   
                     extra={
                       <div>
-                        <Select defaultValue="1" style={{ width: 120, marginRight: 14 }}>
-                          <Option value="">年度筛选</Option>
+                        <Select defaultValue="" style={{ width: 120, marginRight: 14 }} onSelect={value => {
+                            this.setState({
+                              year: value
+                            })
+                            this.fetchPartyWork(1, type, '',value)
+                          }}>
+                          <Option value="">年度</Option>
                           {renderYear().map(v => (
                             <Option value={v}>{v}</Option>
                           ))}
@@ -139,7 +156,7 @@ export default class Jijian extends React.Component {
                         </Select>
                         <Search
                           placeholder="请输入关键字"
-                          onSearch={value => this.fetchPartyWork(1, type, value)}
+                          onSearch={value => this.fetchPartyWork(1, type, value, year)}
                           style={{ width: 200 }}
                         />
                       </div>

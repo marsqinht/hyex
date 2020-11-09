@@ -185,7 +185,7 @@ export default class News extends Component {
               this.getNewsList(1, key);
             }}
           > 
-            <Option value=''>年度筛选</Option>
+            <Option value=''>年度</Option>
             {renderYear().map(v => (
               <Option value={v}>{v}</Option>
                   ))}

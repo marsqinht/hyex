@@ -19,6 +19,37 @@ const ccolumns = [
     dataIndex: 'RowNum',
   },
   {
+    title: '姓名',
+    dataIndex: 'Name',
+  },
+  {
+    title: '毕业时间、院校、专业',
+    dataIndex: 'GraduationTime',
+  },
+  {
+    title: '职称',
+    dataIndex: 'Position',
+  },
+  {
+    title: '专业岗位年限',
+    dataIndex: 'MajorYear',
+  },
+  {
+    title: '管理岗位年限',
+    dataIndex: 'ManageYear',
+  },
+  {
+    title: '职责范围',
+    dataIndex: 'DutyRange'
+  },
+];
+
+const aacolumns = [
+  {
+    title: '序号',
+    dataIndex: 'RowNum',
+  },
+  {
     title: '部门',
     dataIndex: 'Dept',
   },
@@ -28,7 +59,7 @@ const ccolumns = [
   },
   {
     title: '聘任职称',
-    dataIndex: 'Position',
+    dataIndex: 'Positional',
   },
   {
     title: '聘任年度',
@@ -142,6 +173,8 @@ class Content extends React.Component {
     zhiwuTree: [],
     currentId:'',
     list: [],
+    cols: ccolumns,
+    year: moment().year(),
     isFile: false,
     // engageList: []
   }
@@ -184,9 +217,9 @@ class Content extends React.Component {
     console.log(list, 'list')
     this.setState({
       list,
+      cols: typeName === '职称聘任'? aacolumns: ccolumns,
       isFile: list.length && list[0].ServerUrl
-    })
-  }
+    }) }
 
   // fetchEngageList = async (params) => {
   //   const { data } = await queryEngageList(params);
@@ -199,7 +232,7 @@ class Content extends React.Component {
     if(!Array.isArray(trees)) {
       trees = [trees];
     }
-    return trees.map(item => (<TreeNode title={item.Name} key={item.Id}>{item.children.length && this.renderTree(item.children)}</TreeNode>))
+    return trees.map(item => (<TreeNode title={item.Name} key={item.Id} isFile={item.isFile}>{item.children.length && this.renderTree(item.children)}</TreeNode>))
   }
 
   openEdit = () => {
@@ -230,15 +263,16 @@ class Content extends React.Component {
       appartment: info.node.props.title,
       currentId: selectedKeys && selectedKeys[0],
     })
+    const { year } = this.state;
     this.fetchQualificationList({
       id: selectedKeys && selectedKeys[0],
-      year: ''
+      year: info.node.props.isFile ? '' : year,
     })
     console.log('selected', selectedKeys, info);
   };
 
   render() {
-    const { appartment, renzhiTree, zhiwuTree, list,currentId, isFile } = this.state;
+    const { appartment, renzhiTree, zhiwuTree, list,currentId, isFile, cols } = this.state;
     console.log(isFile, 'isFile');
     const { typeName } = this.props;
     return (
@@ -296,6 +330,9 @@ class Content extends React.Component {
             extra={<div>
               <Button type="link">年度职称聘任</Button>
               <Select defaultValue={moment().year()} style={{ width: 120 , marginRight: 14}} size="small" onSelect={(key)=> {
+                this.setState({
+                  year: key
+                })
                 this.fetchQualificationList({
                   year: key,
                   id: currentId
@@ -308,7 +345,7 @@ class Content extends React.Component {
             </div>}
           >
             <div className={styles.right}>
-              <Table columns={ccolumns} dataSource={list} size="small"/>
+              <Table columns={cols} dataSource={list} size="small"/>
             </div>
           </Card> :
           <iframe style={{ border: 0, padding: 0}} height="1000" name="pdf" width="100%" src={isFile} />}
